@@ -1,0 +1,23 @@
+@layer components {
+    .banner {
+        &.banner--homepage {
+            /*@apply bg-amber-200;*/
+
+            /*.banner {*/
+            .banner__marquee {
+                @apply mt-5;
+
+                .marquee__media {
+                    @apply flex gap-3;
+
+                    img {
+                        @apply 3xl:w-[50rem] 3xl:min-w-[50rem];
+                        @apply sm:w-[39.4rem] sm:min-w-[39.4rem];
+                        @apply max-sm:min-w-[var(--image-width)] max-sm:w-[var(--image-width)];
+                    }
+                }
+            }
+            /*}*/
+        }
+    }
+}

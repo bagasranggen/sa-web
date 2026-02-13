@@ -12,26 +12,26 @@ export const HomepageData = async (): Promise<PageDataProps<HomepageIndexProps>>
                 link: {
                     href: '#',
                 },
-                items: [{ ...createPicsumImage({ width: 1600, height: 1200 }), media: 768 }, createPicsumImage({})],
+                items: [createPicsumImage({ width: 800, height: 600 })],
             },
             {
                 link: {
                     href: '#',
                 },
-                items: [{ ...createPicsumImage({ width: 1600, height: 1200 }), media: 768 }, createPicsumImage({})],
+                items: [createPicsumImage({ id: 222, width: 800, height: 600 })],
             },
-            {
-                link: {
-                    href: '#',
-                },
-                items: [{ ...createPicsumImage({ width: 1600, height: 1200 }), media: 768 }, createPicsumImage({})],
-            },
-            {
-                link: {
-                    href: '#',
-                },
-                items: [{ ...createPicsumImage({ width: 1600, height: 1200 }), media: 768 }, createPicsumImage({})],
-            },
+            // {
+            //     link: {
+            //         href: '#',
+            //     },
+            //     items: [createPicsumImage({ id: 400, width: 800, height: 600 })],
+            // },
+            // {
+            //     link: {
+            //         href: '#',
+            //     },
+            //     items: [createPicsumImage({ id: 444, width: 800, height: 600 })],
+            // },
         ],
         description: parse(
             `<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci consectetur corporis culpa eveniet, nobis perspiciatis rem!</p>`

@@ -1,13 +1,18 @@
-import React, { PropsWithChildren } from 'react';
+'use client';
+
+import React, { PropsWithChildren, Ref } from 'react';
 
 import { ArrayStringProps, ClassnameProps } from '@/libs/@types';
 import { joinArrayString } from '@/libs/utils';
+
+import { useMeasure } from 'react-use';
 
 import Container from '@/components/common/Container';
 import Columns from '@/components/common/Columns';
 import Heading from '@/components/common/Heading';
 import Picture, { BaseProps } from '@/components/common/Picture';
 import Button, { BaseAnchorProps } from '@/components/common/Button';
+import Marquee from '@/components/common/Marquee';
 
 export type HomepageMediaItemProps = {
     link: Pick<BaseAnchorProps, 'href' | 'target'>;
@@ -19,6 +24,8 @@ export type HomepageProps = {
 } & (ClassnameProps & PropsWithChildren);
 
 const Homepage = ({ className, description, media, children }: HomepageProps): React.ReactElement => {
+    const [marqueeContainerRef, { width }] = useMeasure();
+
     let bannerClass: ArrayStringProps = ['banner banner--homepage'];
     if (className) bannerClass.push(className);
     bannerClass = joinArrayString(bannerClass);
@@ -44,30 +51,31 @@ const Homepage = ({ className, description, media, children }: HomepageProps): R
                     </Columns>
                 </Container>
 
-                {/* TODO: Change with marquee later on */}
                 {media && media.length > 0 && (
-                    <div className="mt-5 overflow-hidden">
-                        <Container>
-                            <Columns className="flex-nowrap!">
-                                {media.map((item: HomepageMediaItemProps, i: number) => {
-                                    if (!item?.link?.href) return null;
-                                    if (!item?.items || item.items.length === 0) return null;
+                    <Marquee
+                        withContainer
+                        className="marquee-gap-3 banner__marquee">
+                        <div
+                            ref={marqueeContainerRef as Ref<HTMLDivElement>}
+                            className="marquee__media">
+                            {media.map((item, i) => {
+                                if (!item?.link?.href) return null;
+                                if (!item?.items || item.items.length === 0) return null;
 
-                                    return (
-                                        <Columns.Column
-                                            key={i}
-                                            md={4}>
-                                            <Button
-                                                as="anchor"
-                                                {...item.link}>
-                                                <Picture items={item.items} />
-                                            </Button>
-                                        </Columns.Column>
-                                    );
-                                })}
-                            </Columns>
-                        </Container>
-                    </div>
+                                return (
+                                    <Button
+                                        key={i}
+                                        as="anchor"
+                                        {...item.link}>
+                                        <Picture
+                                            items={item.items}
+                                            style={{ '--image-width': `${width}px` } as React.CSSProperties}
+                                        />
+                                    </Button>
+                                );
+                            })}
+                        </div>
+                    </Marquee>
                 )}
             </section>
         </>
