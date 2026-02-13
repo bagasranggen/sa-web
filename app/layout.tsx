@@ -4,6 +4,7 @@ import { Space_Grotesk } from 'next/font/google';
 
 import '@/assets/styles/css/globals.css';
 
+import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
 const aboreto = localFont({
@@ -24,6 +25,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     return (
         <html lang="en">
             <body className={`${aboreto.variable} ${spaceGrotesk.variable}`}>
+                <Header />
 
                 <main>{children}</main>
 
