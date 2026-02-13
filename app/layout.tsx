@@ -4,12 +4,14 @@ import { Space_Grotesk } from 'next/font/google';
 
 import '@/assets/styles/css/globals.css';
 
+import Footer from '@/components/layout/Footer';
+
 const aboreto = localFont({
     src: '../assets/fonts/aboreto/Aboreto-Regular.ttf',
     variable: '--font-aboreto',
 });
 
-const spaceGotesk = Space_Grotesk({
+const spaceGrotesk = Space_Grotesk({
     variable: '--font-space-grotesk',
 });
 
@@ -21,7 +23,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     return (
         <html lang="en">
-            <body className={`${aboreto.variable} ${spaceGotesk.variable} antialiased`}>{children}</body>
+            <body className={`${aboreto.variable} ${spaceGrotesk.variable}`}>
+
+                <main>{children}</main>
+
+                <Footer />
+            </body>
         </html>
     );
 }
