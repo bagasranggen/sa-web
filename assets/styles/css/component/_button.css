@@ -1,0 +1,6 @@
+.btn {
+    @variant hover {
+        @apply md:transition-colors;
+        @apply md:text-sekar-primary;
+    }
+}
