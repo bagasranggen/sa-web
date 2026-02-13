@@ -1,0 +1,13 @@
+@theme {
+    --text-sm: 1rem;
+    --text-base: 1.6rem;
+    --text-md: 2rem;
+}
+
+/*@theme {*/
+/*    --tracking-0\.1: 0.1rem;*/
+/*    --tracking-0\.2: 0.2rem;*/
+/*    --tracking-0\.3: 0.3rem;*/
+/*    --tracking-0\.4: 0.4rem;*/
+/*    --tracking-0\.5: 0.5rem;*/
+/*}*/

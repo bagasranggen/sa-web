@@ -1,0 +1,14 @@
+@layer base {
+    body {
+        @apply antialiased bg-light text-dark text-base font-space-grotesk;
+    }
+
+    p:not(:last-child) {
+        @apply mb-2.5;
+    }
+
+    a,
+    button {
+        @apply cursor-pointer;
+    }
+}

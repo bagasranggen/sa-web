@@ -1,0 +1,8 @@
+@utility container {
+    @apply px-1.5 mx-auto;
+    @apply sm:max-w-[54rem]  md:max-w-[calc(100vw_-_100px)] xl:max-w-[calc(100vw_-_200px)] 3xl:max-w-[180rem];
+}
+
+@utility container-fluid {
+    @apply px-1.5 mx-auto;
+}
