@@ -6,11 +6,13 @@ import { joinArrayString } from '@/libs/utils';
 export type BaseProps = {
     as?: Extract<ElementTagsProps, 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'>;
     variant?: 'title';
+    family?: 'aboreto' | 'space-grotesk';
 } & (React.HTMLAttributes<HTMLHeadingElement> & PropsWithChildren);
 
 const Base = forwardRef<HTMLHeadingElement, BaseProps>(
-    ({ as: Heading = 'h2', className, variant, children, ...props }, ref) => {
+    ({ as: Heading = 'h2', className, variant, family, children, ...props }, ref) => {
         let headingClass: ArrayStringProps = [];
+        if (family === 'aboreto') headingClass.push('font-aboreto');
         // if (variant) headingClass.push('heading');
         // if (variant === 'title') headingClass.push('heading--title');
         if (className) headingClass.push(className);
