@@ -1,0 +1,11 @@
+.nav {
+    @apply py-2;
+
+    & &__links {
+        @apply flex flex-wrap gap-3;
+    }
+
+    & &__link {
+        @apply uppercase font-bold text-md tracking-[.25rem];
+    }
+}
