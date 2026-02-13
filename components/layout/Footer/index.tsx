@@ -2,9 +2,6 @@ import React from 'react';
 
 import Container from '@/components/common/Container';
 import Columns from '@/components/common/Columns';
-import Button from '@/components/common/Button';
-import List from '@/components/common/List';
-import Heading from '@/components/common/Heading';
 import FooterSub from '@/components/layout/Footer/FooterSub';
 
 export type FooterProps = {};
