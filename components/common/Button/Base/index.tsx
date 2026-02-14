@@ -46,47 +46,6 @@ const Base = forwardRef<BaseRefProps, BaseProps>(({ className, as, ...props }, r
         );
     }
 
-    // switch (props?.as) {
-    //     case 'anchor':
-    //         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    //         const { as, linkAs, ...restAnchor } = props;
-    //
-    //         return (
-    //             <Link
-    //                 ref={ref as Ref<HTMLAnchorElement>}
-    //                 as={linkAs}
-    //                 {...restAnchor}
-    //             />
-    //         );
-    //
-    //     case 'button':
-    //         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    //         const { as: btnAs, className: btnClassName, ...restButton } = props;
-    //
-    //         let baseButtonClass: ArrayStringProps = [];
-    //         if (btnClassName) baseButtonClass.push(btnClassName);
-    //         baseButtonClass = joinArrayString(baseButtonClass);
-    //
-    //         return (
-    //             <button
-    //                 ref={ref as Ref<HTMLButtonElement>}
-    //                 className={baseButtonClass}
-    //                 {...restButton}
-    //             />
-    //         );
-    //
-    //     default:
-    //         const { className, children } = props;
-    //         return (
-    //             <div
-    //                 ref={ref as Ref<HTMLDivElement>}
-    //                 className={className}
-    //                 {...(props as any)}>
-    //                 {children}
-    //             </div>
-    //         );
-    // }
-
     return (
         <div
             ref={ref as Ref<HTMLDivElement>}

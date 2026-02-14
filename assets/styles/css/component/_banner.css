@@ -1,9 +1,6 @@
 @layer components {
     .banner {
         &.banner--homepage {
-            /*@apply bg-amber-200;*/
-
-            /*.banner {*/
             .banner__marquee {
                 @apply mt-5;
 
@@ -17,7 +14,6 @@
                     }
                 }
             }
-            /*}*/
         }
     }
 }
