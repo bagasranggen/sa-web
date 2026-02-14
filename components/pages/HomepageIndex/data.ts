@@ -1,5 +1,5 @@
 import { PageDataProps } from '@/libs/@types';
-import { createPicsumImage } from '@/libs/factory';
+import { createArrayFromNumber, createPicsumImage } from '@/libs/factory';
 
 import parse from 'html-react-parser';
 
@@ -68,10 +68,20 @@ export const HomepageData = async (): Promise<PageDataProps<HomepageIndexProps>>
         },
     ];
 
+    const collection: HomepageIndexProps['entries']['collection'] = [];
+
+    createArrayFromNumber(8).forEach((_, i) => {
+        collection.push({
+            link: { href: '#' },
+            media: [createPicsumImage({ id: 151 + i, width: 800, height: 800 })],
+        });
+    });
+
     return {
         entries: {
             banner,
             highlight,
+            collection,
         },
     };
 };
