@@ -39,9 +39,39 @@ export const HomepageData = async (): Promise<PageDataProps<HomepageIndexProps>>
         children: parse(` Lorem ipsum dolor sit amet, consectetur adipisicing elit.`),
     };
 
+    const highlight: HomepageIndexProps['entries']['highlight'] = [
+        {
+            link: { href: '#' },
+            label: 'New Release',
+            description: parse(`
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad autem cumque
+                    error eum eveniet labore laudantium maiores nesciunt quas ratione.
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad autem cumque
+                    error eum eveniet labore laudantium maiores nesciunt quas ratione.
+                </p>
+            `),
+            children: 'Gema black - B026',
+        },
+        {
+            link: { href: '#' },
+            label: 'New Release',
+            description: parse(`
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad autem cumque
+                    error eum eveniet labore laudantium maiores nesciunt quas ratione.
+                </p>
+            `),
+            children: 'Gema black - B026',
+        },
+    ];
+
     return {
         entries: {
             banner,
+            highlight,
         },
     };
 };
