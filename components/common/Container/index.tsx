@@ -5,10 +5,18 @@ import { joinArrayString } from '@/libs/utils';
 
 export type ContainerProps = {
     as?: Extract<ElementTagsProps, 'section' | 'div'>;
+    isFluid?: boolean;
 } & (PropsWithChildren & ClassnameProps);
 
-const Container = ({ as: BlockContainer = 'div', className, children }: ContainerProps): React.ReactElement => {
-    let containerClass: ArrayStringProps = ['container'];
+const Container = ({
+    as: BlockContainer = 'div',
+    className,
+    isFluid,
+    children,
+}: ContainerProps): React.ReactElement => {
+    let containerClass: ArrayStringProps = [];
+    if (!isFluid) containerClass.push('container');
+    if (isFluid) containerClass.push('container-fluid');
     if (className) containerClass.push(className);
     containerClass = joinArrayString(containerClass);
 
