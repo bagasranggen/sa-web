@@ -15,7 +15,29 @@
 
         .cards__description {
             @apply text-dark!;
-            @apply line-clamp-3 sm:line-clamp-5 lg:line-clamp-8;
+            @apply line-clamp-3 sm:line-clamp-5 xl:line-clamp-8;
+        }
+    }
+
+    &.cards--media {
+        @apply justify-center;
+
+        .cards__item {
+            @apply block relative  overflow-hidden;
+        }
+
+        .cards__media {
+            @apply md:transition-transform group-hover:scale-110;
+        }
+
+        .cards__label {
+            @apply absolute top-0 right-0;
+            @apply bg-sekar-accent px-1.5 py-0.5;
+            @apply [writing-mode:sideways-lr];
+        }
+
+        .cards__heading {
+            @apply text-[2rem] text-dark!;
         }
     }
 }
