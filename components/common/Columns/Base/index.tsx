@@ -30,7 +30,7 @@ const Base = ({ className, gutter, gutterX, gutterY, children, ...props }: BaseP
                 handleClassName = GUTTER_HANDLE[type as keyof typeof GUTTER_HANDLE] as string;
             }
 
-            if (typeValue && typeof typeValue !== 'object') {
+            if ((typeValue && typeof typeValue !== 'object') || typeof typeValue === 'number') {
                 if (typeof rowClass !== 'string') {
                     rowClass.push(
                         createBreakpointClass({
