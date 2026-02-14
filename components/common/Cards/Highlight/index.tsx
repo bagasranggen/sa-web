@@ -31,11 +31,11 @@ const Highlight = ({ className, items }: HighlightProps): React.ReactElement | n
                         <Columns.Column
                             offset={{
                                 md: !isOdd ? 2 : undefined,
-                                lg: !isOdd ? 2 : 1,
+                                lg: !isOdd ? 3 : 1,
                                 xl: !isOdd ? 4 : 1,
                             }}
                             md={10}
-                            lg={9}
+                            lg={8}
                             xl={7}>
                             <HighlightItem
                                 className={cardsItemClass}
