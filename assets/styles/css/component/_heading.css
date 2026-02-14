@@ -1,0 +1,6 @@
+.heading {
+    &.heading--section {
+        @apply font-aboreto;
+        @apply text-[4rem];
+    }
+}
