@@ -1,0 +1,21 @@
+.cards {
+    &.cards--highlight {
+        .cards__item {
+            &.cards__item--even {
+                @apply flex-row-reverse;
+            }
+        }
+
+        .cards__content {
+            @apply flex flex-col justify-between;
+            @apply min-h-[calc(100%-10rem)];
+            @apply bg-sekar-accent;
+            @apply pt-1.5 pb-2 px-2;
+        }
+
+        .cards__description {
+            @apply text-dark!;
+            @apply line-clamp-3 sm:line-clamp-5 lg:line-clamp-8;
+        }
+    }
+}
