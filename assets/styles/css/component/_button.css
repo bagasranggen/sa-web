@@ -4,9 +4,36 @@
     }
 
     .btn {
-        @variant hover {
+        &:not(.btn--block) {
+            @variant hover {
+                @apply md:transition-colors;
+                @apply md:text-sekar-primary;
+            }
+        }
+
+        &.btn--block {
+            @apply uppercase font-bold;
+            @apply tracking-[.35rem];
+            @apply border;
             @apply md:transition-colors;
-            @apply md:text-sekar-primary;
+
+            &:not(.btn--lg) {
+                @apply py-[0.6rem] px-[1.8rem];
+                @apply text-sm;
+            }
+
+            &.btn--dark {
+                @variant hover {
+                    @apply bg-dark text-light;
+                }
+
+                &.btn--active {
+                    @apply bg-dark text-light;
+                }
+            }
+
+            &.btn--lg {
+            }
         }
     }
 }
