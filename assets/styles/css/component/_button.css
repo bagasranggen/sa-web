@@ -1,4 +1,8 @@
 @layer components {
+    .btn-container {
+        @apply flex flex-wrap;
+    }
+
     .btn {
         @variant hover {
             @apply md:transition-colors;
