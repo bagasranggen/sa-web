@@ -8,9 +8,10 @@
                     @apply flex gap-3;
 
                     img {
-                        @apply 3xl:w-[50rem] 3xl:min-w-[50rem];
-                        @apply sm:w-[39.4rem] sm:min-w-[39.4rem];
                         @apply max-sm:min-w-[var(--image-width)] max-sm:w-[var(--image-width)];
+                        @apply sm:w-[39.4rem] sm:min-w-[39.4rem];
+                        @apply 2xl:w-[27vw] 2xl:min-w-[27vw];
+                        @apply 3xl:w-[23vw] 3xl:min-w-[23vw];
                     }
                 }
             }
