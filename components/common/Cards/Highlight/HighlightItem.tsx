@@ -65,7 +65,6 @@ const HighlightItem = ({
                             <Button.Container className="mt-2">
                                 <Button.Block
                                     className="inline"
-                                    color="dark"
                                     active={isHover}>
                                     More Detail
                                 </Button.Block>

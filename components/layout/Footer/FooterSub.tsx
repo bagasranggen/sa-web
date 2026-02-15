@@ -28,7 +28,7 @@ const FooterSub = ({ title, list, children }: FooterSubProps): React.ReactElemen
         <>
             <Heading
                 as="h3"
-                className="text-sekar-primary uppercase text-md font-bold tracking-[.3rem]">
+                className="text-sekar-primary uppercase text-lg font-bold tracking-[.3rem]">
                 {title}
             </Heading>
 

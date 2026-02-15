@@ -45,7 +45,7 @@ const Homepage = ({ className, description, media, children }: HomepageProps): R
 
                         {description && (
                             <Columns.Column md={4}>
-                                <div className="text-md">{description}</div>
+                                <div className="text-lg">{description}</div>
                             </Columns.Column>
                         )}
                     </Columns>

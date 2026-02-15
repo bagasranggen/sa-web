@@ -53,7 +53,7 @@ const Thumbnail = ({ items }: ThumbnailProps): React.ReactElement | null => {
                                 <Heading
                                     as="h3"
                                     family="aboreto"
-                                    className="text-md">
+                                    className="text-lg">
                                     {item.children}
                                 </Heading>
 

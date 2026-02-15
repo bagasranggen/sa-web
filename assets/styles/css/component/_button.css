@@ -22,7 +22,7 @@
                 @apply text-sm;
             }
 
-            &.btn--dark {
+            &.btn--light {
                 @variant hover {
                     @apply bg-dark text-light;
                 }
@@ -33,6 +33,8 @@
             }
 
             &.btn--lg {
+                @apply py-[0.8rem] px-2.5;
+                @apply text-[1.8rem];
             }
         }
     }

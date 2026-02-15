@@ -6,6 +6,6 @@
     }
 
     & &__link {
-        @apply uppercase font-bold text-md tracking-[.25rem];
+        @apply uppercase font-bold text-lg tracking-[.25rem];
     }
 }

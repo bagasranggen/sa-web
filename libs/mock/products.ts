@@ -17,3 +17,11 @@ export const PRODUCT_LISTING_LOAD: ThumbnailProps['items'] = createArrayFromNumb
     price: 'Rp130,000/3day(s)',
     children: `Gema black - B0${35 + i}`,
 }));
+
+export const PRODUCT_LISTING_NO_COLORS: ThumbnailProps['items'] = createArrayFromNumber(4).map((_, i) => ({
+    link: { href: '#' },
+    media: [createPicsumImage({ id: 159 + i, width: 600, height: 800 })],
+    // colors: ['#FFC72C', '#4CD964'],
+    price: 'Rp130,000/3day(s)',
+    children: `Gema black - B0${35 + i}`,
+}));
