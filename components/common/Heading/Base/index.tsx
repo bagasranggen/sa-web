@@ -5,7 +5,7 @@ import { joinArrayString } from '@/libs/utils';
 
 export type BaseProps = {
     as?: Extract<ElementTagsProps, 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'>;
-    variant?: 'section';
+    variant?: 'section' | 'page';
     family?: 'aboreto' | 'space-grotesk';
 } & (React.HTMLAttributes<HTMLHeadingElement> & PropsWithChildren);
 
@@ -15,6 +15,7 @@ const Base = forwardRef<HTMLHeadingElement, BaseProps>(
         if (family === 'aboreto') headingClass.push('font-aboreto');
         if (variant) headingClass.push('heading');
         if (variant === 'section') headingClass.push('heading--section');
+        if (variant === 'page') headingClass.push('heading--page');
         if (className) headingClass.push(className);
         headingClass = joinArrayString(headingClass);
 

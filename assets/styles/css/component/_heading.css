@@ -1,4 +1,9 @@
 .heading {
+    &.heading--page {
+        @apply font-aboreto;
+        @apply text-[4.5rem] leading-5;
+    }
+
     &.heading--section {
         @apply font-aboreto;
         @apply text-[4rem];
