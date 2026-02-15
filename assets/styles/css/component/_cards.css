@@ -40,4 +40,19 @@
             @apply text-[2rem] text-dark!;
         }
     }
+
+    &.cards--thumbnail {
+        .cards__colors {
+            @apply flex flex-wrap gap-x-0.5 mt-1;
+        }
+
+        .cards__color {
+            @apply h-1 w-1 border;
+            @apply bg-(--thumbnail-color);
+        }
+
+        .cards__price {
+            @apply text-[1.4rem] uppercase font-bold text-dark! tracking-[.2rem] mt-0.5;
+        }
+    }
 }
