@@ -23,6 +23,8 @@ export type BaseProps = {
 
 const Base = forwardRef<HTMLPictureElement, BaseProps>(
     ({ className, imageClassName, items, style, events, ...props }, ref) => {
+        if (!items || items.length === 0) return null;
+
         let pictureClass: ArrayStringProps = [];
         if (className) pictureClass.push(className);
         pictureClass = joinArrayString(pictureClass);
@@ -39,7 +41,7 @@ const Base = forwardRef<HTMLPictureElement, BaseProps>(
                 {items.map((item, i) => {
                     const isLast = items.length - 1 === i;
 
-                    const Image = items.length - 1 === i ? PictureImage : PictureSource;
+                    const Image = isLast ? PictureImage : PictureSource;
                     const { alt, title, className, ...restItem } = item as any;
 
                     let imgClass: ArrayStringProps = className ? [className] : [];
@@ -48,7 +50,7 @@ const Base = forwardRef<HTMLPictureElement, BaseProps>(
 
                     let props: any = { ...restItem, alt };
                     if (!alt && title) props = Object.assign(props, { alt: title });
-                    if (imgClass) props = Object.assign(props, { className: imgClass });
+                    if (imgClass && isLast) props = Object.assign(props, { className: imgClass });
 
                     return (
                         <Image
