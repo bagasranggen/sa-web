@@ -15,7 +15,7 @@ const Header = ({}: HeaderProps): React.ReactElement => {
                     <Button
                         as="anchor"
                         className="nav__link"
-                        href="#">
+                        href="/collection">
                         Collection
                     </Button>
 

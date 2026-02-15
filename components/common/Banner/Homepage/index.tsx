@@ -37,8 +37,8 @@ const Homepage = ({ className, description, media, children }: HomepageProps): R
                     <Columns className="justify-between items-end">
                         <Columns.Column md={7}>
                             <Heading
-                                family="aboreto"
-                                className="text-[4.5rem] leading-5">
+                                as="h1"
+                                variant="page">
                                 {children}
                             </Heading>
                         </Columns.Column>
