@@ -41,6 +41,7 @@ const Base = forwardRef<BaseRefProps, BaseProps>(({ className, as, ...props }, r
             <button
                 ref={ref as Ref<HTMLButtonElement>}
                 className={btnClass}
+                type={props?.type ?? ('button' as any)}
                 {...(props as BaseButtonProps)}
             />
         );
