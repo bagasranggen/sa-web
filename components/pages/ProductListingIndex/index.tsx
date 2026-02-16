@@ -18,6 +18,7 @@ import ProductListingFilter, {
 export type ProductListingIndexProps = {
     entries: {
         listing: ThumbnailProps['items'];
+        filters: Pick<ProductListingFilterProps, 'sort' | 'filters'>;
     };
 };
 
@@ -132,48 +133,34 @@ const ProductListingIndex = ({ entries }: ProductListingIndexProps): React.React
             </Container>
 
             <Container className="mt-4 mb-15">
-                <ProductListingFilter
-                    className="mb-2"
-                    activeFilter={filter}
-                    filters={[
-                        {
-                            handle: 'color',
-                            children: 'Color',
-                            checkbox: [
-                                { label: 'Red', value: '#555' },
-                                { label: 'Blue', value: '#666' },
-                            ],
-                        },
-                        {
-                            handle: 'size',
-                            children: 'Size',
-                            checkbox: [
-                                { label: 'Extra Small', value: 'xs' },
-                                { label: 'Small', value: 'sm' },
-                            ],
-                        },
-                    ]}
-                    onOpenChange={(open, form) => {
-                        if (!open) {
-                            const searchQuery = convertObjectToSearchParamsQuery({
-                                obj: form,
-                                removeParams: ['page'],
-                            });
+                {entries.filters && (entries.filters?.sort || entries.filters?.filters) && (
+                    <ProductListingFilter
+                        className="mb-2"
+                        activeFilter={filter}
+                        sort={entries.filters.sort}
+                        filters={entries.filters.filters}
+                        onOpenChange={(open, form) => {
+                            if (!open) {
+                                const searchQuery = convertObjectToSearchParamsQuery({
+                                    obj: form,
+                                    removeParams: ['page'],
+                                });
 
-                            let path = pathname;
-                            if (searchQuery) path += searchQuery;
+                                let path = pathname;
+                                if (searchQuery) path += searchQuery;
 
-                            router.push(path);
-                        }
-                    }}
-                    reset={{
-                        active: resetFilterIsActive,
-                        onResetFilters: () => {
-                            router.push(pathname);
-                            setFilter({});
-                        },
-                    }}
-                />
+                                router.push(path);
+                            }
+                        }}
+                        reset={{
+                            active: resetFilterIsActive,
+                            onResetFilters: () => {
+                                router.push(pathname);
+                                setFilter({});
+                            },
+                        }}
+                    />
+                )}
 
                 {listingItems && listingItems.length > 0 && (
                     <>

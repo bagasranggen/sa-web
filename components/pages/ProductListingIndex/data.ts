@@ -1,4 +1,4 @@
-import { PRODUCT_LISTING } from '@/libs/mock';
+import { PRODUCT_LISTING, PRODUCTS_FILTERS, PRODUCTS_SORT } from '@/libs/mock';
 import { PageDataProps } from '@/libs/@types';
 
 import { ProductListingIndexProps } from '@/components/pages/ProductListingIndex';
@@ -8,9 +8,15 @@ export const ProductListingData = async (): Promise<PageDataProps<ProductListing
 
     listing.push(...PRODUCT_LISTING);
 
+    const filters: ProductListingIndexProps['entries']['filters'] = {
+        sort: PRODUCTS_SORT,
+        filters: PRODUCTS_FILTERS,
+    };
+
     return {
         entries: {
             listing,
+            filters,
         },
     };
 };
