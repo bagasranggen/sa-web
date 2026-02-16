@@ -51,7 +51,9 @@ function DropdownMenuContent({ className, sideOffset = 4, ...props }: DropdownMe
     );
 }
 
-function DropdownMenuGroup({ ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.Group>) {
+export type DropdownMenuGroupProps = React.ComponentProps<typeof DropdownMenuPrimitive.Group>;
+
+function DropdownMenuGroup({ ...props }: DropdownMenuGroupProps) {
     return (
         <DropdownMenuPrimitive.Group
             data-slot="dropdown-menu-group"
