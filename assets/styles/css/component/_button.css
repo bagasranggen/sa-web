@@ -27,7 +27,8 @@
                     @apply bg-dark text-light;
                 }
 
-                &.btn--active {
+                &.btn--active,
+                &[aria-expanded='true'] {
                     @apply bg-dark text-light;
                 }
             }
