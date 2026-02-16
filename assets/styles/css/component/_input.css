@@ -1,0 +1,18 @@
+@layer components {
+    .input {
+        &.input--checkbox {
+            label {
+                @apply flex items-center gap-x-0.5 relative cursor-pointer;
+                @apply before:content-[""] before:inline-block before:shrink-0 before:w-[1.4rem] before:h-[1.4rem] before:border before:border-black before:rounded-[.3rem];
+                @apply before:transition-colors before:duration-200;
+                @apply peer-checked:before:bg-dark;
+                @apply [&>svg]:group-has-[.peer:checked]:opacity-100!;
+
+                svg {
+                    @apply transition-opacity;
+                    @apply opacity-0;
+                }
+            }
+        }
+    }
+}
