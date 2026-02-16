@@ -8,10 +8,12 @@ import ProductListingFilterItem, {
     ProductListingFilterItemProps,
 } from '@/components/pages/ProductListingIndex/ProductListingFilterItem';
 import Button from '@/components/common/Button';
+import Columns from '@/components/common/Columns';
 
 export type ProductListingFilterProps = {
     activeFilter?: FilterFormFields;
     filters?: Pick<ProductListingFilterItemProps, 'handle' | 'checkbox' | 'children'>[];
+    sort?: ProductListingFilterItemProps['select'];
     reset?: {
         active?: boolean;
         onResetFilters?: () => void;
@@ -20,87 +22,112 @@ export type ProductListingFilterProps = {
 
 const ProductListingFilter = ({
     className,
+    sort,
     filters,
     activeFilter,
     reset,
     onOpenChange,
-    // onResetFilters,
 }: ProductListingFilterProps): React.ReactElement | null => {
-    let filterClass: ArrayStringProps = ['flex justify-between'];
+    let filterClass: ArrayStringProps = [];
     if (className) filterClass.push(className);
     filterClass = joinArrayString(filterClass);
+
+    const hasSort = sort && sort.length > 0;
+    const sortActive = activeFilter?.['sort'] && activeFilter['sort'].length > 0 ? activeFilter['sort'][0] : undefined;
+
+    let sortActiveFilter = undefined;
+    if (sortActive && activeFilter && sort) {
+        const tmp = sort.find((item) => item?.value === activeFilter?.['sort']?.[0]);
+
+        if (tmp) sortActiveFilter = tmp.value;
+    }
+
+    let sortChildren = '';
+    if (hasSort) sortChildren = `Sort By: ${sort[0].label}`;
+    if (activeFilter?.['sort']) sortChildren = `Sort By: ${sortActiveFilter}`;
 
     if (!filters || filters.length === 0) return null;
 
     return (
         <form>
-            <div className={filterClass}>
+            <Columns
+                gutterY={1}
+                className={filterClass}>
                 {filters && filters.length > 0 && (
-                    <div className="flex flex-wrap gap-x-2">
-                        {/* FILTERS */}
-                        {filters.map((item, i) => {
-                            let filter = undefined;
-                            if (item?.checkbox) filter = item.checkbox;
+                    <Columns.Column className="order-2 md:order-1">
+                        <Button.Container className="gap-x-2 gap-y-1">
+                            {/* FILTERS */}
+                            {filters.map((item, i) => {
+                                let filter = undefined;
+                                if (item?.checkbox) filter = item.checkbox;
 
-                            const active = item?.handle && activeFilter?.[item.handle];
-                            const hasFilter = !!(active && active.length > 0);
+                                const active = item?.handle && activeFilter?.[item.handle];
+                                const hasFilter = !!(active && active.length > 0);
 
-                            let children = `${item.children}`;
-                            if (hasFilter) {
-                                const selected: string[] = [];
+                                let children = `${item.children}`;
+                                if (hasFilter) {
+                                    const selected: string[] = [];
 
-                                if (active && active.length > 0) {
-                                    active.forEach((itm) => {
-                                        if (filter) {
-                                            const find = filter.find((f) => f.value === itm);
+                                    if (active && active.length > 0) {
+                                        active.forEach((itm) => {
+                                            if (filter) {
+                                                const find = filter.find((f) => f.value === itm);
 
-                                            if (find && find?.label) selected.push(find.label);
-                                        }
-                                    });
+                                                if (find && find?.label) selected.push(find.label);
+                                            }
+                                        });
+                                    }
+
+                                    if (selected.length > 0) children += `: ${joinArrayString(selected, ', ')}`;
                                 }
 
-                                if (selected.length > 0) children += `: ${joinArrayString(selected, ', ')}`;
-                            }
+                                return (
+                                    <ProductListingFilterItem
+                                        key={i}
+                                        group={{ className: 'px-1.5 py-1' }}
+                                        handle={item.handle}
+                                        button={{ active: hasFilter }}
+                                        onOpenChange={onOpenChange}
+                                        active={activeFilter}
+                                        checkbox={item?.checkbox}>
+                                        {children}
+                                    </ProductListingFilterItem>
+                                );
+                            })}
 
-                            return (
-                                <ProductListingFilterItem
-                                    key={i}
-                                    group={{ className: 'px-1.5 py-1' }}
-                                    handle={item.handle}
-                                    button={{ active: hasFilter }}
-                                    onOpenChange={onOpenChange}
-                                    active={activeFilter}
-                                    checkbox={item?.checkbox}>
-                                    {children}
-                                </ProductListingFilterItem>
-                            );
-                        })}
-
-                        {/* RESET */}
-                        {reset && reset?.active && (
-                            <Button.Block
-                                as="button"
-                                onClick={reset?.onResetFilters}>
-                                Reset Filter
-                            </Button.Block>
-                        )}
-                    </div>
+                            {/* RESET */}
+                            {reset && reset?.active && (
+                                <Button.Block
+                                    as="button"
+                                    onClick={reset?.onResetFilters}>
+                                    Reset Filter
+                                </Button.Block>
+                            )}
+                        </Button.Container>
+                    </Columns.Column>
                 )}
 
                 {/* SORT */}
-                <div>
-                    <ProductListingFilterItem
-                        content={{ align: 'end' }}
-                        handle="sort"
-                        onOpenChange={onOpenChange}
-                        select={[
-                            { value: 'a-z', label: 'a-z' },
-                            { value: 'z-a', label: 'z-a' },
-                        ]}>
-                        Sort By: a-z
-                    </ProductListingFilterItem>
-                </div>
-            </div>
+                {hasSort && (
+                    <Columns.Column
+                        md="auto"
+                        className="order-1 md:order-2">
+                        <ProductListingFilterItem
+                            content={{
+                                align: 'end',
+                                className: 'max-md:w-[calc(100vw-3rem)]',
+                            }}
+                            handle="sort"
+                            button={{
+                                className: 'max-md:w-full max-md:text-start',
+                            }}
+                            onOpenChange={onOpenChange}
+                            select={sort}>
+                            {sortChildren}
+                        </ProductListingFilterItem>
+                    </Columns.Column>
+                )}
+            </Columns>
         </form>
     );
 };

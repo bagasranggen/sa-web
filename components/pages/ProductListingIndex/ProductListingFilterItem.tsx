@@ -2,6 +2,9 @@
 
 import React, { useEffect } from 'react';
 
+import { ArrayStringProps } from '@/libs/@types';
+import { joinArrayString } from '@/libs/utils';
+
 import { useForm } from 'react-hook-form';
 
 import {
@@ -21,10 +24,10 @@ export type FilterFormFields = Partial<Record<string, string[]>>;
 export type ProductListingCheckboxItemProps = Record<'label' | 'value', string>;
 
 export type ProductListingFilterItemProps = {
-    button?: Pick<BlockProps, 'active'>;
+    button?: Pick<BlockProps, 'active' | 'className'>;
     checkbox?: ProductListingCheckboxItemProps[];
     select?: ProductListingCheckboxItemProps[];
-    content?: Pick<DropdownMenuContentProps, 'align'>;
+    content?: Pick<DropdownMenuContentProps, 'align' | 'className'>;
     group?: Pick<DropdownMenuGroupProps, 'className'>;
     handle?: string;
     active?: FilterFormFields;
@@ -48,6 +51,10 @@ const ProductListingFilterItem = ({
         defaultValues: active,
     });
 
+    let contentClass: ArrayStringProps = ['min-w-15'];
+    if (content?.className) contentClass.push(content.className);
+    contentClass = joinArrayString(contentClass);
+
     useEffect(() => {
         if (!handle) return;
 
@@ -70,13 +77,14 @@ const ProductListingFilterItem = ({
                 <DropdownMenuTrigger asChild>
                     <Button.Block
                         as="button"
+                        className={button?.className}
                         active={button?.active}>
                         {children}
                     </Button.Block>
                 </DropdownMenuTrigger>
 
                 <DropdownMenuContent
-                    className="min-w-15 "
+                    className={contentClass}
                     align={content?.align ?? 'start'}>
                     <DropdownMenuGroup className={group?.className}>
                         {checkbox && checkbox.length > 0 && (
