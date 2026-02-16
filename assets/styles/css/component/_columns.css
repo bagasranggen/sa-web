@@ -67,7 +67,7 @@
     }
 
     .row > .column {
-        @apply grow-1 shrink-0;
+        @apply grow-1 shrink-0 basis-0;
     }
 
     .row > [class*='column-'] {
