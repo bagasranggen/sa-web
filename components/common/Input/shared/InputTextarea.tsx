@@ -32,4 +32,5 @@ const InputTextarea = forwardRef<InputTextareaRef, InputTextareaProps>(({ hook, 
     );
 });
 
+InputTextarea.displayName = 'InputTextArea';
 export default InputTextarea;

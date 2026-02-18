@@ -33,5 +33,4 @@ const Base = forwardRef<HTMLHeadingElement, BaseProps>(
 );
 
 Base.displayName = 'Base';
-
 export default Base;
