@@ -35,9 +35,10 @@ const Column = ({
     lg,
     xl,
     xxl,
+    xxxl,
     ...props
 }: ColumnProps): React.ReactElement => {
-    const sizesArr = Object.entries({ xs, sm, md, lg, xl, xxl }).filter(([key, value]) => !!value);
+    const sizesArr = Object.entries({ xs, sm, md, lg, xl, xxl, xxxl }).filter(([key, value]) => !!value);
     const utilityColumnClassName = 'column';
     const utilityColumnOffsetClassName = 'column-offset';
 

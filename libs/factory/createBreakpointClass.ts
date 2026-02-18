@@ -3,6 +3,7 @@ import { joinArrayString } from '../utils/joinArrayString';
 
 export const BREAKPOINT_HANDLE: Partial<Record<BreakpointsProps, string>> = {
     xxl: '2xl',
+    xxxl: '3xl',
 } as const;
 
 export type CreateBreakpointClassProps = {
