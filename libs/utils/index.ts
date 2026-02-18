@@ -1,4 +1,7 @@
 export * from './cleanArrayString';
 export * from './cn';
 export * from './convertObjectToSearchParamsQuery';
+export * from './delay';
+export * from './getAnimationElement';
+export * from './getElementDimension';
 export * from './joinArrayString';
