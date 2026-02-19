@@ -47,11 +47,9 @@ export const marquee = async ({
     if (xFrom !== 0) tl.set(el, { x: outerWidth * itemsHalf * -1 });
 
     el.addEventListener('mouseenter', () => {
-        console.log('mouseenter');
         tl.pause();
     });
     el.addEventListener('mouseleave', () => {
-        console.log('mouseleave');
         tl.resume();
     });
 

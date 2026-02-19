@@ -51,17 +51,6 @@ const Detail = ({ price, children, info, carousel }: DetailProps): React.ReactEl
                         })}
                     </>
                 )}
-                {/*<DetailInfo*/}
-                {/*    className="mt-3"*/}
-                {/*    title="Size"*/}
-                {/*    list={[{ label: 'Bust', value: '85-90cm' }]}*/}
-                {/*/>*/}
-
-                {/*<DetailInfo*/}
-                {/*    className="mt-3"*/}
-                {/*    title="Size"*/}
-                {/*    list={[{ label: 'Bust', value: '85-90cm' }]}*/}
-                {/*/>*/}
 
                 <Button.Container className="mt-4">
                     <Button.Block
