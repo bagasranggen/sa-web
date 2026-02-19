@@ -1,44 +1,31 @@
 import React from 'react';
 
-import { createPicsumImage } from '@/libs/factory';
-
 import Columns from '@/components/common/Columns';
 import Heading, { BaseProps } from '@/components/common/Heading';
 import Button from '@/components/common/Button';
-import Picture from '@/components/common/Picture';
 import DetailInfo, { DetailInfoProps } from '@/components/common/Banner/Detail/DetailInfo';
+import DetailMedia, { DetailMediaProps } from '@/components/common/Banner/Detail/DetailMedia';
 
 export type DetailProps = {
     info?: DetailInfoProps[];
     price?: BaseProps['children'];
     children: BaseProps['children'];
+    carousel?: DetailMediaProps;
 };
 
-const Detail = ({ price, children, info }: DetailProps): React.ReactElement => {
+const Detail = ({ price, children, info, carousel }: DetailProps): React.ReactElement => {
     return (
-        <Columns>
-            <Columns.Column md={7}>
-                <Columns gutterX={1}>
-                    <Columns.Column md={3}>
-                        <div className="flex flex-col gap-y-1">
-                            <Picture items={[createPicsumImage({ width: 400, height: 560 })]} />
-                            <Picture items={[createPicsumImage({ width: 400, height: 560 })]} />
-                            <Picture items={[createPicsumImage({ width: 400, height: 560 })]} />
-                        </div>
-                    </Columns.Column>
-                    <Columns.Column md={9}>
-                        <Picture items={[createPicsumImage({ width: 1000, height: 1400 })]} />
-                    </Columns.Column>
-                </Columns>
-            </Columns.Column>
+        <Columns
+            gutterY={3}
+            className="banner banner--detail">
+            <Columns.Column md={7}>{carousel && <DetailMedia {...carousel} />}</Columns.Column>
 
             <Columns.Column md={5}>
                 <Heading
                     as="h1"
                     variant="page"
-                    className="mt-3">
+                    className="md:mt-3">
                     {children}
-                    {/*Gema black - B026*/}
                 </Heading>
 
                 {price && (
@@ -46,7 +33,6 @@ const Detail = ({ price, children, info }: DetailProps): React.ReactElement => {
                         as="h2"
                         className="mt-1.5 font-bold text-[2.2rem] uppercase tracking-[.35rem]">
                         {price}
-                        {/*Rp130,000/3day(s)*/}
                     </Heading>
                 )}
 
