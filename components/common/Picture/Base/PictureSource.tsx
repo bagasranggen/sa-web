@@ -3,7 +3,7 @@ import { getImageProps, ImageProps } from 'next/image';
 
 import { joinArrayString } from '@/libs/utils';
 
-import { BaseItemProps } from '@/components/common/Picture';
+import { BaseItemProps } from '@/components/common/Picture/Base';
 
 export type PictureSourceProps = BaseItemProps;
 

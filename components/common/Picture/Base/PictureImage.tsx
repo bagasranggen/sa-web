@@ -4,7 +4,7 @@ import { getImageProps } from 'next/image';
 import { ArrayStringProps } from '@/libs/@types';
 import { joinArrayString } from '@/libs/utils';
 
-import { BaseItemProps } from '@/components/common/Picture';
+import { BaseItemProps } from '@/components/common/Picture/Base';
 
 export type PictureImageProps = BaseItemProps;
 
