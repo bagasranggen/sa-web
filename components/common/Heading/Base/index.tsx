@@ -13,6 +13,7 @@ const Base = forwardRef<HTMLHeadingElement, BaseProps>(
     ({ as: Heading = 'h2', className, variant, family, children, ...props }, ref) => {
         let headingClass: ArrayStringProps = [];
         if (family === 'aboreto') headingClass.push('font-aboreto');
+        if (family === 'space-grotesk') headingClass.push('font-space-grotesk');
         if (variant) headingClass.push('heading');
         if (variant === 'section') headingClass.push('heading--section');
         if (variant === 'page') headingClass.push('heading--page');

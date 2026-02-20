@@ -31,6 +31,7 @@ const Detail = ({ price, children, info, carousel }: DetailProps): React.ReactEl
                 {price && (
                     <Heading
                         as="h2"
+                        family="space-grotesk"
                         className="mt-1.5 font-bold text-[2.2rem] uppercase tracking-[.35rem]">
                         {price}
                     </Heading>
