@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
 // import { fn } from 'storybook/test';
 
-import { CAROUSEL_MEDIA_PREVIEW, CAROUSEL_MEDIA_THUMB } from '@/libs/mock';
+import { BANNER_PRODUCT_INFO, CAROUSEL_MEDIA_PREVIEW, CAROUSEL_MEDIA_THUMB } from '@/libs/mock';
 
 import Detail from './index';
 import Container from '@/components/common/Container';
@@ -40,6 +40,7 @@ type Story = StoryObj<typeof meta>;
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Default: Story = {
     args: {
+        info: BANNER_PRODUCT_INFO,
         carousel: {
             thumbnail: CAROUSEL_MEDIA_THUMB,
             media: CAROUSEL_MEDIA_PREVIEW,
