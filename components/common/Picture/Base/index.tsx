@@ -30,7 +30,7 @@ const Base = forwardRef<HTMLPictureElement, BaseProps>(({ className, imageClassN
 
     let pictureProps = props;
     // if (style) pictureProps = { ...pictureProps, style: style };
-    if (style) pictureProps = Object.assign(pictureProps, style);
+    if (style) pictureProps = Object.assign(pictureProps, { style });
     // if (events) pictureProps = { ...pictureProps, ...events };
 
     return (
