@@ -1,4 +1,4 @@
-import React, { JSX } from 'react';
+import React, { ExoticComponent, FragmentProps, JSX } from 'react';
 import { Metadata } from 'next';
 
 export type ObjectProps<Props> = { [key: string]: Props };
@@ -38,6 +38,8 @@ export type ClassnameProps = { className?: string };
 export type ArrayStringProps = string[] | string;
 
 export type ElementTagsProps = keyof JSX.IntrinsicElements;
+
+export type FragmentTagsProps = ExoticComponent<FragmentProps>;
 
 export type ResponsiveProps = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl';
 
