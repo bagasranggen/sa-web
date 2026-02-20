@@ -19,9 +19,16 @@ export type BaseItemProps = PropsWithChildren;
 export type BaseProps = {
     items: BaseItemProps[];
     modulesVariant?: BaseVariantProps;
-} & SwiperProps;
+} & (SwiperProps & PropsWithChildren);
 
-const Base = ({ items, autoplay, modulesVariant, modules: modulesProps, ...props }: BaseProps): React.ReactElement => {
+const Base = ({
+    items,
+    autoplay,
+    modulesVariant,
+    modules: modulesProps,
+    children,
+    ...props
+}: BaseProps): React.ReactElement => {
     const modules: SwiperModule[] = [];
     if (autoplay) modules.push(Autoplay);
     if (modulesVariant?.modules && Array.isArray(modulesVariant.modules)) modules.push(...modulesVariant.modules);
@@ -40,6 +47,8 @@ const Base = ({ items, autoplay, modulesVariant, modules: modulesProps, ...props
             ))}
 
             {modulesVariant?.element && modulesVariant.element}
+
+            {children}
         </Swiper>
     );
 };
