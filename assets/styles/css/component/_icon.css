@@ -1,0 +1,46 @@
+@layer components {
+    .icon {
+        &.icon--arrow,
+        &.icon--chevron {
+            @apply [&:not(.icon--dark)]:[&>path]:stroke-light;
+            @apply [&.icon--dark]:[&>path]:stroke-dark;
+            @apply [&.icon--left]:rotate-180;
+            @apply [&.icon--up]:rotate-180;
+        }
+
+        &.icon--circle {
+            @apply aspect-square rounded-full;
+            @apply flex justify-center items-center;
+            @apply border;
+
+            &.icon--primary {
+                @apply bg-sekar-primary border-sekar-primary;
+            }
+
+            &.icon--dark {
+                @apply bg-dark border-sekar-primary;
+            }
+
+            &.icon--sm {
+                @apply w-4;
+            }
+
+            &.icon--md {
+                @apply w-4.5 md:w-6.5;
+            }
+
+            &.icon--lg {
+                @apply w-6 md:w-8;
+            }
+        }
+
+        &.icon--circle-arrow {
+            @apply [&.icon--sm]:[&>.icon]:w-2;
+            @apply max-md:[&.icon--md]:[&>.icon]:w-2;
+        }
+
+        &.icon--circle-chevron {
+            @apply [&.icon--sm]:[&>.icon]:w-2;
+        }
+    }
+}
