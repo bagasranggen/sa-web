@@ -1,4 +1,17 @@
-import { CAROUSEL_MEDIA_PREVIEW, CAROUSEL_MEDIA_THUMB } from './carousel';
+import { CAROUSEL_MEDIA_LIGHTBOX, CAROUSEL_MEDIA_PREVIEW, CAROUSEL_MEDIA_THUMB } from './carousel';
+import { MARQUEE_HOMEPAGE } from './marquee';
+
+import parse from 'html-react-parser';
+
+import { DetailProps, HomepageProps } from '@/components/common/Banner';
+
+export const BANNER_HOMEPAGE: HomepageProps = {
+    media: MARQUEE_HOMEPAGE,
+    description: parse(
+        `<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci consectetur corporis culpa eveniet, nobis perspiciatis rem!</p>`
+    ),
+    children: parse(` Lorem ipsum dolor sit amet, consectetur adipisicing elit.`),
+};
 
 export const BANNER_PRODUCT_INFO = [
     {
@@ -11,11 +24,12 @@ export const BANNER_PRODUCT_INFO = [
     },
 ];
 
-export const BANNER_PRODUCT_DETAIL = {
+export const BANNER_PRODUCT_DETAIL: DetailProps = {
     info: BANNER_PRODUCT_INFO,
     carousel: {
         thumbnail: CAROUSEL_MEDIA_THUMB,
         media: CAROUSEL_MEDIA_PREVIEW,
+        lightbox: CAROUSEL_MEDIA_LIGHTBOX,
     },
     price: 'Rp130,000/3day(s)',
     children: 'Gema black - B026',
