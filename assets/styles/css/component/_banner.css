@@ -18,54 +18,6 @@
         }
 
         &.banner--detail {
-            .banner__thumb-wrapper {
-                @apply overflow-hidden;
-                @apply md:h-(--banner-thumb-wrapper);
-            }
-
-            .banner__thumb {
-                --swiper-pagination-color: var(--color-sekar-primary);
-
-                @apply h-full!;
-                @apply max-md:pb-[3.8rem]!;
-                @apply max-md:[&:not([class*='swiper-initialized'])]:hidden!;
-
-                .swiper-slide {
-                    @apply md:h-(--banner-thumb-item-height)!;
-                    @apply transition-[transform,opacity]!;
-                    @apply [&:not([class*='swiper-slide-thumb-active'])]:opacity-55;
-                    @apply cursor-pointer;
-
-                    img {
-                        @apply h-full object-cover;
-                    }
-                }
-
-                .swiper__navigation {
-                    @apply absolute;
-                    @apply z-50;
-                    @apply left-1/2;
-                    @apply -translate-x-1/2;
-
-                    @apply [[class*='--prev']]:top-2;
-                    @apply [[class*='--next']]:bottom-2;
-                }
-            }
-
-            .banner__preview {
-                .swiper__navigation {
-                    @apply absolute;
-                    @apply right-1 md:right-2 bottom-1 md:bottom-2;
-                    @apply z-5;
-                    @apply flex items-end;
-                    @apply gap-x-1 md:gap-x-1.5;
-                    @apply cursor-pointer;
-
-                    .btn {
-                        @apply transition-opacity;
-                    }
-                }
-            }
         }
     }
 }
