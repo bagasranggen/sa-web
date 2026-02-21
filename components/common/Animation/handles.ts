@@ -3,6 +3,9 @@ import { createAnimationHandles } from '@/libs/factory';
 import { fade, fadeIn } from '@/components/common/Animation/elements/fade';
 import { marquee } from '@/components/common/Animation/elements/marquee';
 
+export type * from '@/components/common/Animation/elements/fade';
+export type * from '@/components/common/Animation/elements/marquee';
+
 export const ANIMATION_VARIANTS = {
     FADE: 'fade',
     FADE_IN: 'fade-in',

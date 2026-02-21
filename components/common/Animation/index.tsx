@@ -61,3 +61,5 @@ const Animation = ({ as, type, children, trigger, ...props }: AnimationProps): R
 };
 
 export default Animation;
+
+export type * from '@/components/common/Animation/handles';
