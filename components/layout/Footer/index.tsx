@@ -3,6 +3,9 @@ import React from 'react';
 import Container from '@/components/common/Container';
 import Columns from '@/components/common/Columns';
 import FooterSub from '@/components/layout/Footer/FooterSub';
+import Picture, { BaseItemProps } from '@/components/common/Picture';
+
+import Logo from '@/assets/images/logo-sekar.png';
 
 export type FooterProps = {};
 
@@ -63,7 +66,13 @@ const Footer = ({}: FooterProps): React.ReactElement => {
                     </Columns.Column>
                 </Columns>
 
-                <div className="mt-4 text-center">LOGO</div>
+                <div className="mt-5 text-center">
+                    <Picture
+                        className="inline-block"
+                        imageClassName="max-w-[18rem]"
+                        items={[Logo as BaseItemProps]}
+                    />
+                </div>
             </Container>
         </footer>
     );
