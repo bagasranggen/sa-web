@@ -42,5 +42,25 @@
         &.icon--circle-chevron {
             @apply [&.icon--sm]:[&>.icon]:w-2;
         }
+
+        &.icon--hamburger {
+            @apply relative;
+            @apply w-4;
+            @apply h-1.5;
+            @apply before:bg-dark after:bg-dark;
+            @apply before:h-[.1rem] after:h-[.1rem];
+            @apply before:content-[''] after:content-[''];
+            @apply before:absolute after:absolute;
+            @apply before:left-0 after:left-0;
+            @apply before:w-full after:w-full;
+            @apply after:bottom-0;
+            @apply after:transition-transform before:transition-transform;
+
+            &.icon--active {
+                @apply after:-rotate-45 before:rotate-45;
+                @apply before:translate-x-0 before:translate-y-[0.8rem];
+                @apply after:translate-x-0 after:-translate-y-[0.6rem];
+            }
+        }
     }
 }
