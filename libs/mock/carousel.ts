@@ -12,3 +12,9 @@ export const CAROUSEL_MEDIA_PREVIEW = createArrayFromNumber(CAROUSEL_THUMB_COUNT
     createPicsumImage({ id: 151 + i, width: 1000, height: 1400, media: 768 }),
     createPicsumImage({ id: 151 + i, width: 600, height: 450 }),
 ]);
+
+export const CAROUSEL_MEDIA_LIGHTBOX = createArrayFromNumber(CAROUSEL_THUMB_COUNT).map((_, i) => [
+    // createPicsumImage({ id: 151 + i, width: 1800, height: 2520, media: 992 }),
+    createPicsumImage({ id: 151 + i, width: 1000, height: 1400, media: 768 }),
+    createPicsumImage({ id: 151 + i, width: 600, height: 840 }),
+]);
