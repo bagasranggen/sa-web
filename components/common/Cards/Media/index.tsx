@@ -28,6 +28,7 @@ const Media = ({ items }: MediaProps): React.ReactElement | null => {
                 return (
                     <Columns.Column
                         key={i}
+                        sm={6}
                         md={4}
                         xl={3}>
                         <Button

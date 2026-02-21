@@ -34,7 +34,9 @@ const Homepage = ({ className, description, media, children }: HomepageProps): R
         <>
             <section className={bannerClass}>
                 <Container className="mt-8">
-                    <Columns className="justify-between items-end">
+                    <Columns
+                        className="justify-between items-end"
+                        gutterY={2}>
                         <Columns.Column md={7}>
                             <Heading
                                 as="h1"

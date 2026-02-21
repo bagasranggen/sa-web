@@ -29,33 +29,33 @@ const Header = ({}: HeaderProps): React.ReactElement => {
                         Collection
                     </Button>
 
-                    <Button
-                        as="anchor"
-                        className="nav__link"
-                        href="#">
-                        Collection
-                    </Button>
+                    {/*<Button*/}
+                    {/*    as="anchor"*/}
+                    {/*    className="nav__link"*/}
+                    {/*    href="#">*/}
+                    {/*    Collection*/}
+                    {/*</Button>*/}
 
-                    <Button
-                        as="anchor"
-                        className="nav__link"
-                        href="#">
-                        Collection
-                    </Button>
+                    {/*<Button*/}
+                    {/*    as="anchor"*/}
+                    {/*    className="nav__link"*/}
+                    {/*    href="#">*/}
+                    {/*    Collection*/}
+                    {/*</Button>*/}
 
-                    <Button
-                        as="anchor"
-                        className="nav__link"
-                        href="#">
-                        Collection
-                    </Button>
+                    {/*<Button*/}
+                    {/*    as="anchor"*/}
+                    {/*    className="nav__link"*/}
+                    {/*    href="#">*/}
+                    {/*    Collection*/}
+                    {/*</Button>*/}
 
-                    <Button
-                        as="anchor"
-                        className="nav__link"
-                        href="#">
-                        Collection
-                    </Button>
+                    {/*<Button*/}
+                    {/*    as="anchor"*/}
+                    {/*    className="nav__link"*/}
+                    {/*    href="#">*/}
+                    {/*    Collection*/}
+                    {/*</Button>*/}
                 </div>
             </Container>
         </nav>

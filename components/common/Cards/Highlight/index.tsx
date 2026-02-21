@@ -33,10 +33,12 @@ const Highlight = ({ className, items }: HighlightProps): React.ReactElement | n
                                 md: !isOdd ? 2 : undefined,
                                 lg: !isOdd ? 3 : 1,
                                 xl: !isOdd ? 4 : 1,
+                                xxxl: !isOdd ? 5 : 1,
                             }}
                             md={10}
                             lg={8}
-                            xl={7}>
+                            xl={7}
+                            xxxl={6}>
                             <HighlightItem
                                 className={cardsItemClass}
                                 {...item}

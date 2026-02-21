@@ -2,7 +2,7 @@
     @apply py-2;
 
     & &__links {
-        @apply hidden md:flex flex-wrap gap-3;
+        @apply hidden lg:flex flex-wrap gap-3;
     }
 
     & &__link {
