@@ -3,14 +3,14 @@ import React from 'react';
 import Columns from '@/components/common/Columns';
 import Heading, { BaseProps } from '@/components/common/Heading';
 import Button from '@/components/common/Button';
+import Carousel, { ThumbnailProps } from '@/components/common/Carousel';
 import DetailInfo, { DetailInfoProps } from '@/components/common/Banner/Detail/DetailInfo';
-import DetailMedia, { DetailMediaProps } from '@/components/common/Banner/Detail/DetailMedia';
 
 export type DetailProps = {
     info?: DetailInfoProps[];
     price?: BaseProps['children'];
     children: BaseProps['children'];
-    carousel?: DetailMediaProps;
+    carousel?: Pick<ThumbnailProps, 'thumbnail' | 'media' | 'lightbox'>;
 };
 
 const Detail = ({ price, children, info, carousel }: DetailProps): React.ReactElement => {
@@ -18,7 +18,7 @@ const Detail = ({ price, children, info, carousel }: DetailProps): React.ReactEl
         <Columns
             gutterY={3}
             className="banner banner--detail">
-            <Columns.Column md={7}>{carousel && <DetailMedia {...carousel} />}</Columns.Column>
+            <Columns.Column md={7}>{carousel && <Carousel.Thumbnail {...carousel} />}</Columns.Column>
 
             <Columns.Column md={5}>
                 <Heading

@@ -56,7 +56,8 @@ const Homepage = ({ className, description, media, children }: HomepageProps): R
                 {media && media.length > 0 && (
                     <Marquee
                         withContainer
-                        className="marquee-gap-3 banner__marquee">
+                        className="marquee-gap-3 banner__marquee"
+                        speed={1.25}>
                         <div
                             ref={marqueeContainerRef as Ref<HTMLDivElement>}
                             className="marquee__media">

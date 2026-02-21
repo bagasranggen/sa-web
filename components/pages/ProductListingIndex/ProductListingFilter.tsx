@@ -3,12 +3,15 @@ import React from 'react';
 import { ArrayStringProps, ClassnameProps } from '@/libs/@types';
 import { joinArrayString } from '@/libs/utils';
 
+import { useWindowSize } from 'react-use';
+
 import ProductListingFilterItem, {
     FilterFormFields,
     ProductListingFilterItemProps,
 } from '@/components/pages/ProductListingIndex/ProductListingFilterItem';
 import Button from '@/components/common/Button';
 import Columns from '@/components/common/Columns';
+import Animation from '@/components/common/Animation';
 
 export type ProductListingFilterProps = {
     activeFilter?: FilterFormFields;
@@ -28,6 +31,8 @@ const ProductListingFilter = ({
     reset,
     onOpenChange,
 }: ProductListingFilterProps): React.ReactElement | null => {
+    const { width } = useWindowSize();
+
     let filterClass: ArrayStringProps = [];
     if (className) filterClass.push(className);
     filterClass = joinArrayString(filterClass);
@@ -55,7 +60,7 @@ const ProductListingFilter = ({
                 className={filterClass}>
                 {filters && filters.length > 0 && (
                     <Columns.Column className="order-2 md:order-1">
-                        <Button.Container className="gap-x-2 gap-y-1">
+                        <Button.Container className="gap-x-2 gap-y-1 max-md:justify-center">
                             {/* FILTERS */}
                             {filters.map((item, i) => {
                                 let filter = undefined;
@@ -86,7 +91,10 @@ const ProductListingFilter = ({
                                         key={i}
                                         group={{ className: 'px-1.5 py-1' }}
                                         handle={item.handle}
-                                        button={{ active: hasFilter }}
+                                        content={{
+                                            className: 'max-md:w-[calc(100vw-3rem)]',
+                                        }}
+                                        button={{ active: hasFilter, className: 'max-md:w-full max-md:text-start' }}
                                         onOpenChange={onOpenChange}
                                         active={activeFilter}
                                         checkbox={item?.checkbox}>
@@ -97,11 +105,16 @@ const ProductListingFilter = ({
 
                             {/* RESET */}
                             {reset && reset?.active && (
-                                <Button.Block
-                                    as="button"
-                                    onClick={reset?.onResetFilters}>
-                                    Reset Filter
-                                </Button.Block>
+                                <Animation
+                                    type="fade"
+                                    config={{ direction: width >= 768 ? 'left' : 'up' }}>
+                                    <Button.Block
+                                        as="button"
+                                        onClick={reset?.onResetFilters}
+                                        className="max-md:my-2">
+                                        Reset Filter
+                                    </Button.Block>
+                                </Animation>
                             )}
                         </Button.Container>
                     </Columns.Column>

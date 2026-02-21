@@ -8,15 +8,15 @@ import { createArrayFromNumber } from '@/libs/factory';
 
 import { useWindowSize, useMeasure } from 'react-use';
 
-import Animation from '@/components/common/Animation';
-import BaseItem from '@/components/common/Marquee/Base/BaseItem';
+import Animation, { MarqueeConfigProps } from '@/components/common/Animation';
 import Container, { ContainerProps } from '@/components/common/Container';
+import BaseItem from '@/components/common/Marquee/Base/BaseItem';
 
 export type BaseProps = {
     withContainer?: boolean;
-} & (PropsWithChildren & ClassnameProps);
+} & (PropsWithChildren & ClassnameProps & Pick<MarqueeConfigProps, 'speed'>);
 
-const Base = ({ className, withContainer, children }: BaseProps): React.ReactElement => {
+const Base = ({ className, withContainer, children, speed }: BaseProps): React.ReactElement => {
     const { width: windowWidth } = useWindowSize();
     const [textRef, { width: textWidth }] = useMeasure();
 
@@ -33,7 +33,8 @@ const Base = ({ className, withContainer, children }: BaseProps): React.ReactEle
     return (
         <Animation
             type="marquee"
-            trigger={repeat}>
+            trigger={repeat}
+            config={{ speed }}>
             <div className={marqueeClass}>
                 <MarqueeContainer>
                     <Animation
