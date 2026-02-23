@@ -69,66 +69,64 @@ const ProductListingFilterItem = ({
     if (!children) return null;
 
     return (
-        <>
-            <DropdownMenu
-                onOpenChange={(open) => {
-                    if (onOpenChange) onOpenChange(open, { ...getValues() });
-                }}>
-                <DropdownMenuTrigger asChild>
-                    <Button.Block
-                        as="button"
-                        className={button?.className}
-                        active={button?.active}>
-                        {children}
-                    </Button.Block>
-                </DropdownMenuTrigger>
+        <DropdownMenu
+            onOpenChange={(open) => {
+                if (onOpenChange) onOpenChange(open, { ...getValues() });
+            }}>
+            <DropdownMenuTrigger asChild>
+                <Button.Block
+                    as="button"
+                    className={button?.className}
+                    active={button?.active}>
+                    {children}
+                </Button.Block>
+            </DropdownMenuTrigger>
 
-                <DropdownMenuContent
-                    className={contentClass}
-                    align={content?.align ?? 'start'}>
-                    <DropdownMenuGroup className={group?.className}>
-                        {checkbox && checkbox.length > 0 && (
-                            <>
-                                {checkbox.map((item, i) => {
-                                    return (
-                                        <Input
-                                            key={i}
-                                            type="checkbox"
-                                            value={item.value}
-                                            id={`${handle}_${item.value}`}
-                                            hook={{
-                                                register,
-                                                name: handle,
-                                            }}>
-                                            {item.label}
-                                        </Input>
-                                    );
-                                })}
-                            </>
-                        )}
+            <DropdownMenuContent
+                className={contentClass}
+                align={content?.align ?? 'start'}>
+                <DropdownMenuGroup className={group?.className}>
+                    {checkbox && checkbox.length > 0 && (
+                        <>
+                            {checkbox.map((item, i) => {
+                                return (
+                                    <Input
+                                        key={i}
+                                        type="checkbox"
+                                        value={item.value}
+                                        id={`${handle}_${item.value}`}
+                                        hook={{
+                                            register,
+                                            name: handle,
+                                        }}>
+                                        {item.label}
+                                    </Input>
+                                );
+                            })}
+                        </>
+                    )}
 
-                        {select && select.length > 0 && (
-                            <>
-                                {select.map((item, i) => {
-                                    return (
-                                        <DropdownMenuItem
-                                            key={i}
-                                            onClick={() => {
-                                                setValue(handle, [item.value]);
-                                            }}
-                                            className="md:hover:bg-dark/10 md:transition-colors cursor-pointer uppercase tracking-0.3">
-                                            {item.label}
-                                        </DropdownMenuItem>
-                                    );
-                                })}
-                            </>
-                        )}
-                    </DropdownMenuGroup>
+                    {select && select.length > 0 && (
+                        <>
+                            {select.map((item, i) => {
+                                return (
+                                    <DropdownMenuItem
+                                        key={i}
+                                        onClick={() => {
+                                            setValue(handle, [item.value]);
+                                        }}
+                                        className="md:hover:bg-dark/10 md:transition-colors cursor-pointer uppercase tracking-0.3">
+                                        {item.label}
+                                    </DropdownMenuItem>
+                                );
+                            })}
+                        </>
+                    )}
+                </DropdownMenuGroup>
 
-                    {/*<DropdownMenuSeparator />*/}
-                </DropdownMenuContent>
-            </DropdownMenu>
-        </>
+                {/*<DropdownMenuSeparator />*/}
+            </DropdownMenuContent>
+        </DropdownMenu>
     );
 };
 
