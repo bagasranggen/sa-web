@@ -4,6 +4,7 @@ import { Space_Grotesk } from 'next/font/google';
 
 import '@/assets/styles/css/globals.css';
 
+import { NAVIGATION_LINKS } from '@/libs/mock';
 import ContextProvider from '@/store/context';
 
 import Header from '@/components/layout/Header';
@@ -28,7 +29,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <ContextProvider>
             <html lang="en">
                 <body className={`${aboreto.variable} ${spaceGrotesk.variable}`}>
-                    <Header />
+                    <Header items={NAVIGATION_LINKS} />
 
                     <main>{children}</main>
 
