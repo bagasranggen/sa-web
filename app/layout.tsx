@@ -4,6 +4,8 @@ import { Space_Grotesk } from 'next/font/google';
 
 import '@/assets/styles/css/globals.css';
 
+import ContextProvider from '@/store/context';
+
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
@@ -23,14 +25,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     return (
-        <html lang="en">
-            <body className={`${aboreto.variable} ${spaceGrotesk.variable}`}>
-                <Header />
+        <ContextProvider>
+            <html lang="en">
+                <body className={`${aboreto.variable} ${spaceGrotesk.variable}`}>
+                    <Header />
 
-                <main>{children}</main>
+                    <main>{children}</main>
 
-                <Footer />
-            </body>
-        </html>
+                    <Footer />
+                </body>
+            </html>
+        </ContextProvider>
     );
 }
