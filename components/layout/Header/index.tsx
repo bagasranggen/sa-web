@@ -1,64 +1,105 @@
-import React from 'react';
+'use client';
+
+import React, { Ref, Suspense, useEffect, useState } from 'react';
+
+import { NAVIGATION_LINKS } from '@/libs/mock';
+import { useLayoutStateContext } from '@/store/context';
+import { NavigationEvents } from '@/libs/hooks';
+
+import { useMeasure } from 'react-use';
+
+import LogoText from '@/assets/images/logo-sekar-text.png';
 
 import Container from '@/components/common/Container';
 import Button from '@/components/common/Button';
 import Picture, { BaseItemProps } from '@/components/common/Picture';
+import Icon from '@/components/common/Icon';
+import HeaderModal from '@/components/layout/Header/HeaderModal';
+import HeaderLink, { HeaderLinkProps } from '@/components/layout/Header/HeaderLink';
 
-import LogoText from '@/assets/images/logo-sekar-text.png';
+export type HeaderProps = {
+    items?: HeaderLinkProps[];
+};
 
-export type HeaderProps = {};
+const Header = ({ items }: HeaderProps): React.ReactElement => {
+    const { setHeaderHeight } = useLayoutStateContext();
+    const [headerRef, { height }] = useMeasure();
+    const [isOpen, setIsOpen] = useState<boolean>(false);
 
-const Header = ({}: HeaderProps): React.ReactElement => {
+    useEffect(() => {
+        if (height === 0) return;
+
+        setHeaderHeight(height);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [height]);
+
     return (
-        <nav className="nav">
-            <Container className="flex items-center justify-between">
-                <Button
-                    as="anchor"
-                    href="/">
-                    <Picture
-                        imageClassName="max-w-[18rem]"
-                        items={[LogoText as BaseItemProps]}
-                    />
-                </Button>
+        <>
+            <Suspense fallback={null}>
+                <NavigationEvents
+                    endHandler={() => {
+                        setIsOpen(false);
+                    }}
+                />
+            </Suspense>
 
-                <div className="nav__links">
+            <nav
+                ref={headerRef as Ref<HTMLDivElement>}
+                className="nav">
+                <Container className="nav__container">
                     <Button
                         as="anchor"
-                        className="nav__link"
-                        href="/collection">
-                        Collection
+                        href="/">
+                        <Picture
+                            imageClassName="max-w-[18rem]"
+                            items={[LogoText as BaseItemProps]}
+                        />
                     </Button>
 
-                    {/*<Button*/}
-                    {/*    as="anchor"*/}
-                    {/*    className="nav__link"*/}
-                    {/*    href="#">*/}
-                    {/*    Collection*/}
-                    {/*</Button>*/}
+                    <Button
+                        as="button"
+                        className="lg:hidden"
+                        onClick={() => setIsOpen((prevState) => !prevState)}>
+                        <Icon.Hamburger active={isOpen} />
+                    </Button>
 
-                    {/*<Button*/}
-                    {/*    as="anchor"*/}
-                    {/*    className="nav__link"*/}
-                    {/*    href="#">*/}
-                    {/*    Collection*/}
-                    {/*</Button>*/}
+                    {items && items.length > 0 && (
+                        <div className="nav__links">
+                            {items.map((item, i) => {
+                                return (
+                                    <HeaderLink
+                                        key={i}
+                                        multiSelectType="dropdown"
+                                        link={item.link}
+                                        child={item.child}
+                                    />
+                                );
+                            })}
+                        </div>
+                    )}
+                </Container>
+            </nav>
 
-                    {/*<Button*/}
-                    {/*    as="anchor"*/}
-                    {/*    className="nav__link"*/}
-                    {/*    href="#">*/}
-                    {/*    Collection*/}
-                    {/*</Button>*/}
-
-                    {/*<Button*/}
-                    {/*    as="anchor"*/}
-                    {/*    className="nav__link"*/}
-                    {/*    href="#">*/}
-                    {/*    Collection*/}
-                    {/*</Button>*/}
-                </div>
-            </Container>
-        </nav>
+            {items && items.length > 0 && (
+                <HeaderModal
+                    open={isOpen}
+                    onClose={() => setIsOpen(false)}>
+                    <Container className="mt-4 flex flex-col items-center gap-y-1">
+                        {items.map((item, i) => {
+                            return (
+                                <HeaderLink
+                                    key={i}
+                                    multiSelectType="collapsible"
+                                    link={item.link}
+                                    child={item.child}
+                                />
+                            );
+                        })}
+                    </Container>
+                </HeaderModal>
+            )}
+        </>
     );
 };
 
