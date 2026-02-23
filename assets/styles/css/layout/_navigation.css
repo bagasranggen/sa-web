@@ -1,11 +1,28 @@
-.nav {
-    @apply py-2;
+@layer components {
+    .nav {
+        .nav__container {
+            @apply py-2;
+            @apply flex items-center justify-between;
+        }
 
-    & &__links {
-        @apply hidden lg:flex flex-wrap gap-3;
+        .nav__links {
+            @apply hidden lg:flex flex-wrap gap-3;
+        }
+
+        .nav__link {
+            @apply uppercase font-bold text-lg tracking-[.25rem];
+        }
     }
 
-    & &__link {
-        @apply uppercase font-bold text-lg tracking-[.25rem];
+    .dropdown__content {
+        .nav__link {
+            @apply uppercase font-bold text-md tracking-[.25rem];
+        }
+    }
+
+    .drawer__content {
+        .nav__link {
+            @apply uppercase font-bold text-lg tracking-[.25rem];
+        }
     }
 }
