@@ -5,7 +5,7 @@ import React, { Ref, Suspense, useEffect, useMemo, useRef } from 'react';
 import { useLayoutStateContext, useNavigationStateContext } from '@/store/context';
 import { ArrayStringProps } from '@/libs/@types';
 import { joinArrayString } from '@/libs/utils';
-import { NavigationEvents } from '@/libs/hooks';
+import { NavigationEvents, useCheckSamePath } from '@/libs/hooks';
 
 import { useMeasure, useWindowScroll, useWindowSize } from 'react-use';
 
@@ -26,6 +26,7 @@ const Header = ({ items }: HeaderProps): React.ReactElement => {
     const { setHeaderHeight } = useLayoutStateContext();
     const { navigationModalIsOpen, setNavigationModalIsOpen, activeDropdown, setActiveDropdown } =
         useNavigationStateContext();
+    const { isSamePath } = useCheckSamePath();
     const [headerRef, { height }] = useMeasure();
     const currentScroll = useRef<number>(0);
     const { y } = useWindowScroll();
@@ -129,7 +130,14 @@ const Header = ({ items }: HeaderProps): React.ReactElement => {
                                 <HeaderLink
                                     key={i}
                                     multiSelectType="collapsible"
-                                    link={item.link}
+                                    link={{
+                                        ...item.link,
+                                        onClick: () => {
+                                            if (isSamePath({ href: item.link.href })) {
+                                                setNavigationModalIsOpen(false);
+                                            }
+                                        },
+                                    }}
                                     child={item.child}
                                 />
                             );
