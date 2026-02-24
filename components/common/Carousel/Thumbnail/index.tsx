@@ -15,18 +15,18 @@ import {
     ThumbnailPreviewNavigation,
     ThumbnailThumbNavigation,
 } from '@/components/common/Carousel/Thumbnail/ThumbnailVariant';
-import ThumbnailLightbox, { ThumbnailLightboxProps } from '@/components/common/Carousel/Thumbnail/ThumbnailLightbox';
+import LightBox, { LightBoxProps } from '@/components/common/Lightbox';
 
 export type ThumbnailProps = {
     thumbnail?: ThumbnailThumbProps['items'];
     media?: ThumbnailPreviewProps['items'];
-    lightbox?: ThumbnailLightboxProps['items'];
+    lightbox?: LightBoxProps['items'];
 } & ClassnameProps;
 
 const Thumbnail = ({ className, media, thumbnail, lightbox }: ThumbnailProps): React.ReactElement | null => {
     const [thumbs, setThumbs] = useState<null | Swiper>(null);
     const [preview, setPreview] = useState<null | Swiper>(null);
-    const [lightboxIndex, setLightboxIndex] = useState<ThumbnailLightboxProps['index']>(-1);
+    const [lightboxIndex, setLightboxIndex] = useState<LightBoxProps['index']>(-1);
     const [previewRef, { height }] = useMeasure();
 
     const hasLightbox = lightbox && lightbox.length > 0;
@@ -84,7 +84,7 @@ const Thumbnail = ({ className, media, thumbnail, lightbox }: ThumbnailProps): R
                 </Columns.Column>
             </Columns>
 
-            <ThumbnailLightbox
+            <LightBox
                 index={lightboxIndex}
                 close={() => {
                     setLightboxIndex(-1);

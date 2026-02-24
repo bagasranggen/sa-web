@@ -1,18 +1,19 @@
 import React, { useMemo } from 'react';
 
 import { useWindowSize } from 'react-use';
-import Lightbox, { LightboxProps, SlideImage } from 'yet-another-react-lightbox';
+import { default as YarlLightbox, LightboxProps, SlideImage } from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
 
 import { BaseProps } from '@/components/common/Picture';
 
-export type ThumbnailLightboxItemProps = BaseProps['items'];
+export type LightboxItemProps = BaseProps['items'];
 
-export type ThumbnailLightboxProps = {
-    items?: ThumbnailLightboxItemProps[];
-} & (Pick<LightboxProps, 'index' | 'close'> & Partial<Pick<LightboxProps, 'on'>>);
+export type LightBoxProps = {
+    items?: LightboxItemProps[];
+    carousel?: Partial<LightboxProps['carousel']>;
+} & (Pick<LightboxProps, 'index' | 'close'> & Partial<Pick<LightboxProps, 'on' | 'render'>>);
 
-const ThumbnailLightbox = ({ items, index, close, on }: ThumbnailLightboxProps): React.ReactElement | null => {
+const LightBox = ({ items, index, close, on, carousel, render }: LightBoxProps): React.ReactElement | null => {
     const { width } = useWindowSize();
 
     const slides: SlideImage[] = useMemo(() => {
@@ -39,12 +40,14 @@ const ThumbnailLightbox = ({ items, index, close, on }: ThumbnailLightboxProps):
         }
 
         return data;
-    }, [width, items]);
+    }, [items, width]);
 
     if (!items || items.length === 0) return null;
 
     return (
-        <Lightbox
+        <YarlLightbox
+            carousel={carousel}
+            render={render}
             open={index >= 0}
             index={index}
             close={close}
@@ -54,4 +57,4 @@ const ThumbnailLightbox = ({ items, index, close, on }: ThumbnailLightboxProps):
     );
 };
 
-export default ThumbnailLightbox;
+export default LightBox;
