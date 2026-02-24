@@ -7,7 +7,7 @@ import Heading from '@/components/common/Heading';
 
 export type MediaItemProps = {
     media: BaseProps['items'];
-    link: Pick<BaseAnchorProps, 'href' | 'target'>;
+    link: Pick<BaseAnchorProps, 'href' | 'target' | 'children'>;
 };
 
 export type MediaProps = {
@@ -34,7 +34,8 @@ const Media = ({ items }: MediaProps): React.ReactElement | null => {
                         <Button
                             as="anchor"
                             className="cards__item group"
-                            {...item.link}>
+                            href={item.link.href}
+                            target={item.link.target}>
                             <Picture
                                 items={item.media}
                                 imageClassName="cards__media"
@@ -44,7 +45,7 @@ const Media = ({ items }: MediaProps): React.ReactElement | null => {
                                 <Heading
                                     family="aboreto"
                                     className="cards__heading">
-                                    FORMAL
+                                    {item.link.children}
                                 </Heading>
                             </div>
                         </Button>
