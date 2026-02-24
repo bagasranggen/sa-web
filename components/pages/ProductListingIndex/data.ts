@@ -13,6 +13,7 @@ export const ProductListingData = async (): Promise<PageDataProps<ProductListing
 
     return {
         entries: {
+            banner: 'formal',
             listing,
             filters,
         },

@@ -8,7 +8,7 @@ import { IntersectionEvents, ParamsEvents } from '@/libs/hooks';
 import { convertObjectToSearchParamsQuery } from '@/libs/utils';
 
 import Container from '@/components/common/Container';
-import Heading from '@/components/common/Heading';
+import Heading, { BaseProps } from '@/components/common/Heading';
 import Cards, { ThumbnailProps } from '@/components/common/Cards';
 import Loader from '@/components/common/Loader';
 import ProductListingFilter, {
@@ -17,6 +17,7 @@ import ProductListingFilter, {
 
 export type ProductListingIndexProps = {
     entries: {
+        banner: BaseProps['children'];
         listing: ThumbnailProps['items'];
         filters: Pick<ProductListingFilterProps, 'sort' | 'filters'>;
     };
@@ -124,13 +125,15 @@ const ProductListingIndex = ({ entries }: ProductListingIndexProps): React.React
                 />
             </Suspense>
 
-            <Container className="mt-8">
-                <Heading
-                    as="h1"
-                    variant="page">
-                    Formal
-                </Heading>
-            </Container>
+            {entries?.banner && (
+                <Container className="mt-8">
+                    <Heading
+                        as="h1"
+                        variant="page">
+                        {entries.banner}
+                    </Heading>
+                </Container>
+            )}
 
             <Container className="mt-4 mb-15">
                 {entries.filters && (entries.filters?.sort || entries.filters?.filters) && (
