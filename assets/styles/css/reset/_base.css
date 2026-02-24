@@ -11,4 +11,8 @@
     button {
         @apply cursor-pointer;
     }
+
+    button {
+        @apply focus-visible:outline-0;
+    }
 }

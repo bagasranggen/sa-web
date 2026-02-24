@@ -42,3 +42,5 @@ next-env.d.ts
 
 # jetbrain
 .idea
+*storybook.log
+storybook-static

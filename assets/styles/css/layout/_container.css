@@ -1,8 +1,12 @@
 @utility container {
     @apply px-1.5 mx-auto;
-    @apply sm:max-w-[54rem]  md:max-w-[calc(100vw_-_100px)] xl:max-w-[calc(100vw_-_200px)] 3xl:max-w-[180rem];
+    @apply sm:max-w-[54rem]  md:max-w-[calc(100vw-10rem)] xl:max-w-[calc(100vw-20rem)] 3xl:max-w-[180rem];
 }
 
 @utility container-fluid {
     @apply px-1.5 mx-auto;
+}
+
+@utility container-full {
+    @apply mx-auto 3xl:max-w-[calc(180rem+20rem)];
 }

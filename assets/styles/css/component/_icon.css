@@ -1,0 +1,66 @@
+@layer components {
+    .icon {
+        &.icon--arrow,
+        &.icon--chevron {
+            @apply [&:not(.icon--dark)]:[&>path]:stroke-light;
+            @apply [&.icon--dark]:[&>path]:stroke-dark;
+            @apply [&.icon--left]:rotate-180;
+            @apply [&.icon--up]:rotate-180;
+        }
+
+        &.icon--circle {
+            @apply aspect-square rounded-full;
+            @apply flex justify-center items-center;
+            @apply border;
+
+            &.icon--primary {
+                @apply bg-sekar-primary border-sekar-primary;
+            }
+
+            &.icon--dark {
+                @apply bg-dark border-sekar-primary;
+            }
+
+            &.icon--sm {
+                @apply w-4;
+            }
+
+            &.icon--md {
+                @apply w-4.5 md:w-6.5;
+            }
+
+            &.icon--lg {
+                @apply w-6 md:w-8;
+            }
+        }
+
+        &.icon--circle-arrow {
+            @apply [&.icon--sm]:[&>.icon]:w-2;
+            @apply max-md:[&.icon--md]:[&>.icon]:w-2;
+        }
+
+        &.icon--circle-chevron {
+            @apply [&.icon--sm]:[&>.icon]:w-2;
+        }
+
+        &.icon--hamburger {
+            @apply relative;
+            @apply w-4;
+            @apply h-1.5;
+            @apply before:bg-dark after:bg-dark;
+            @apply before:h-[.1rem] after:h-[.1rem];
+            @apply before:content-[''] after:content-[''];
+            @apply before:absolute after:absolute;
+            @apply before:left-0 after:left-0;
+            @apply before:w-full after:w-full;
+            @apply after:bottom-0;
+            @apply after:transition-transform before:transition-transform;
+
+            &.icon--active {
+                @apply after:-rotate-45 before:rotate-45;
+                @apply before:translate-x-0 before:translate-y-[0.8rem];
+                @apply after:translate-x-0 after:-translate-y-[0.6rem];
+            }
+        }
+    }
+}

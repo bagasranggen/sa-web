@@ -1,13 +1,8 @@
-export default function Page() {
-    return (
-        <div className="container">
-            <h1 className="font-aboreto">Hello World</h1>
+import HomepageIndex from '@/components/pages/HomepageIndex';
+import { HomepageData } from '@/components/pages/HomepageIndex/data';
 
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore eos inventore, magnam molestias natus
-                nostrum odit? Dignissimos eligendi esse facere, officiis quaerat saepe temporibus? Cum error inventore
-                odio quaerat unde.
-            </p>
-        </div>
-    );
+export default async function Page() {
+    const { entries } = await HomepageData();
+
+    return <HomepageIndex entries={entries} />;
 }

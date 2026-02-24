@@ -1,15 +1,23 @@
+import React from 'react';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import { Space_Grotesk } from 'next/font/google';
 
 import '@/assets/styles/css/globals.css';
 
+import { NAVIGATION_LINKS } from '@/libs/mock';
+import ContextProvider from '@/store/context';
+
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
+import Main from '@/components/layout/Main';
+
 const aboreto = localFont({
     src: '../assets/fonts/aboreto/Aboreto-Regular.ttf',
     variable: '--font-aboreto',
 });
 
-const spaceGotesk = Space_Grotesk({
+const spaceGrotesk = Space_Grotesk({
     variable: '--font-space-grotesk',
 });
 
@@ -20,8 +28,18 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     return (
-        <html lang="en">
-            <body className={`${aboreto.variable} ${spaceGotesk.variable} antialiased`}>{children}</body>
-        </html>
+        <ContextProvider>
+            <html lang="en">
+                <body className={`${aboreto.variable} ${spaceGrotesk.variable}`}>
+                    <Main>
+                        <Header items={NAVIGATION_LINKS} />
+
+                        <main>{children}</main>
+
+                        <Footer />
+                    </Main>
+                </body>
+            </html>
+        </ContextProvider>
     );
 }
