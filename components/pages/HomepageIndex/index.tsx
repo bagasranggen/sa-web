@@ -16,7 +16,12 @@ export type HomepageIndexProps = {
 const HomepageIndex = ({ entries }: HomepageIndexProps): React.ReactElement => {
     return (
         <>
-            {entries?.banner && <Banner.Homepage {...entries.banner} />}
+            {entries?.banner && (
+                <Banner.Homepage
+                    className="mt-8"
+                    {...entries.banner}
+                />
+            )}
 
             {entries?.highlight && entries.highlight.length > 0 && (
                 <Container

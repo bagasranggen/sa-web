@@ -33,7 +33,7 @@ const Homepage = ({ className, description, media, children }: HomepageProps): R
     return (
         <>
             <section className={bannerClass}>
-                <Container className="mt-8">
+                <Container>
                     <Columns
                         className="justify-between items-end"
                         gutterY={2}>
