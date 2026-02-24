@@ -3,17 +3,14 @@ import React, { PropsWithChildren } from 'react';
 import { ArrayStringProps, ElementTagsProps, ClassnameProps } from '@/libs/@types';
 import { joinArrayString } from '@/libs/utils';
 
+import DynamicWrapper from '@/components/common/DynamicWrapper';
+
 export type ContainerProps = {
     as?: Extract<ElementTagsProps, 'section' | 'div'>;
-    type?: 'fluid' | 'regular' | 'full-screen';
+    type?: 'fluid' | 'regular' | 'full-screen' | 'none';
 } & (PropsWithChildren & ClassnameProps);
 
-const Container = ({
-    as: BlockContainer = 'div',
-    type = 'regular',
-    className,
-    children,
-}: ContainerProps): React.ReactElement => {
+const Container = ({ as = 'div', type = 'regular', className, children }: ContainerProps): React.ReactElement => {
     let containerClass: ArrayStringProps = [];
     if (type === 'regular') containerClass.push('container');
     if (type === 'fluid') containerClass.push('container-fluid');
@@ -21,7 +18,13 @@ const Container = ({
     if (className) containerClass.push(className);
     containerClass = joinArrayString(containerClass);
 
-    return <BlockContainer className={containerClass}>{children}</BlockContainer>;
+    return (
+        <DynamicWrapper
+            as={as}
+            className={containerClass}>
+            {children}
+        </DynamicWrapper>
+    );
 };
 
 export default Container;
