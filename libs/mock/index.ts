@@ -1,6 +1,7 @@
 export * from './banner';
 export * from './cards';
 export * from './carousel';
+export * from './category';
 export * from './contentBlocks';
 export * from './marquee';
 export * from './navigation';
