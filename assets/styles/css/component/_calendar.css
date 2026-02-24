@@ -4,9 +4,11 @@
         --rdp-today-color: var(--color-light) !important;
         --rdp-day_button-border-radius: 0 !important;
         --rdp-nav_button-disabled-opacity: 0.25 !important;
-        /*--rdp-accent-color: red;*/
+        --rdp-disabled-opacity: 0.25 !important;
+        --rdp-range_start-background: var(--rdp-accent-color) !important;
+        --rdp-accent-background-color: --alpha(var(--color-sekar-primary) / 50%) !important;
+        --rdp-range_end-background: var(--rdp-accent-color) !important;
 
-        /*background: red;*/
         .rdp-today,
         .rdp-selected {
             @apply bg-(--rdp-accent-color);
@@ -24,6 +26,10 @@
             .rdp-day_button {
                 @apply border-0!;
             }
+        }
+
+        .rdp-footer {
+            @apply mt-1;
         }
     }
 }
