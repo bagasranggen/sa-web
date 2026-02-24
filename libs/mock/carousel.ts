@@ -18,3 +18,11 @@ export const CAROUSEL_MEDIA_LIGHTBOX = createArrayFromNumber(CAROUSEL_THUMB_COUN
     createPicsumImage({ id: 151 + i, width: 1000, height: 1400, media: 768 }),
     createPicsumImage({ id: 151 + i, width: 600, height: 840 }),
 ]);
+
+export const SIZE_GUIDES_LIGHTBOX = [
+    [createPicsumImage({ width: 1000, height: 1400, media: 768 }), createPicsumImage({ width: 600, height: 840 })],
+    // [
+    //     createPicsumImage({ id: 44, width: 1000, height: 1400, media: 768 }),
+    //     createPicsumImage({ id: 44, width: 600, height: 840 }),
+    // ],
+];
