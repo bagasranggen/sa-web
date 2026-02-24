@@ -7,6 +7,7 @@ import {
     CAROUSEL_MEDIA_PREVIEW,
     CAROUSEL_MEDIA_THUMB,
     CAROUSEL_MEDIA_LIGHTBOX,
+    SIZE_GUIDES_LIGHTBOX,
 } from '@/libs/mock';
 
 import Detail from './index';
@@ -14,7 +15,7 @@ import Container from '@/components/common/Container';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
-    title: 'Banner/Detail',
+    title: 'Components/Banner/Detail',
     component: Detail,
     decorators: [
         (Story) => (
@@ -51,6 +52,8 @@ export const Default: Story = {
             media: CAROUSEL_MEDIA_PREVIEW,
             lightbox: CAROUSEL_MEDIA_LIGHTBOX,
         },
+        sizeGuides: SIZE_GUIDES_LIGHTBOX,
+        calendar: { disabled: [new Date(2026, 1, 26)] },
         price: 'Rp300.000/3day(s)',
         children: 'Heading',
     },
