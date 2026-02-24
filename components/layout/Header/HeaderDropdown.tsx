@@ -1,9 +1,12 @@
-import React, { Suspense } from 'react';
+'use client';
+
+import React, { Suspense, useState } from 'react';
 
 import { useNavigationStateContext } from '@/store/context';
 import { NavigationEvents, useCheckSamePath } from '@/libs/hooks';
 
 import { ChevronDown } from 'lucide-react';
+import { useProgress } from '@bprogress/react';
 
 import {
     DropdownMenu,
@@ -19,7 +22,8 @@ export type HeaderDropdownProps = Pick<HeaderLinkProps, 'link'> & Pick<DropdownM
 const HeaderDropdown = ({ link, children }: HeaderDropdownProps): React.ReactElement => {
     const { activeDropdown, setActiveDropdown } = useNavigationStateContext();
     const { isSamePath } = useCheckSamePath();
-    const [isOpen, setIsOpen] = React.useState<boolean>(false);
+    const { stop } = useProgress();
+    const [isOpen, setIsOpen] = useState<boolean>(false);
 
     return (
         <>
@@ -54,6 +58,7 @@ const HeaderDropdown = ({ link, children }: HeaderDropdownProps): React.ReactEle
                             e.preventDefault();
                             e.stopPropagation();
 
+                            stop(80);
                             setActiveDropdown(link.children);
                             setIsOpen((prevState) => {
                                 if (prevState && !activeDropdown) return true;
