@@ -1,4 +1,8 @@
 @layer components {
+    [data-radix-popper-content-wrapper] {
+        @apply z-1040!;
+    }
+
     .dropdown__content {
         @apply bg-background text-foreground;
         @apply data-[state=open]:animate-in data-[state=closed]:animate-out;

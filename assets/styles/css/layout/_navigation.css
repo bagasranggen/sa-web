@@ -1,6 +1,6 @@
 @layer components {
     .nav {
-        @apply sticky top-0;
+        @apply sticky top-0 z-1040;
         @apply bg-light;
         @apply transition-transform;
         @apply [&.nav--hide]:-translate-y-full;
