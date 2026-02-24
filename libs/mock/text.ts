@@ -112,3 +112,5 @@ export const TEXT_2_PARAGRAPH = `
         Duis sagittis nisi ut faucibus dapibus. Sed nec bibendum magna.
     </p>
 `;
+
+export const TEXT_SHORT = `<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad autem cumque error eum eveniet labore laudantium maiores nesciunt quas ratione.</p>`;

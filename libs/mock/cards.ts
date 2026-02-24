@@ -6,12 +6,11 @@ import { createPicsumImage } from '../factory/createPicsumImage';
 import parse from 'html-react-parser';
 
 import { HighlightProps, MediaProps } from '@/components/common/Cards';
+import { TEXT_SHORT } from '@/libs/mock/text';
 
 export const CARDS_HIGHLIGHT: HighlightProps['items'] = createArrayFromNumber(2).map((_, i) => {
-    let description = `<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad autem cumque error eum eveniet labore laudantium maiores nesciunt quas ratione.</p>`;
-    if (i % 2 === 0) {
-        description += `<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad autem cumque error eum eveniet labore laudantium maiores nesciunt quas ratione.</p>`;
-    }
+    let description = TEXT_SHORT;
+    if (i % 2 === 0) description += TEXT_SHORT;
 
     return {
         link: {
