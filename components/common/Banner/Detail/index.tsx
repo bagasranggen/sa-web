@@ -1,4 +1,8 @@
+'use client';
+
 import React, { useState } from 'react';
+
+import { CalendarDays, Ruler } from 'lucide-react';
 
 import Columns from '@/components/common/Columns';
 import Heading, { BaseProps } from '@/components/common/Heading';
@@ -67,14 +71,27 @@ const Detail = ({ price, children, info, carousel, calendar, sizeGuides }: Detai
                         <DetailCalendar
                             selected={selectedDate}
                             setSelected={setSelectedDate}
-                            disabled={calendar?.disabled}
-                            // disabled={[new Date(2026, 1, 26)]}
-                        />
+                            disabled={calendar?.disabled}>
+                            <Button.Block
+                                as="button"
+                                className="flex items-center justify-center">
+                                <CalendarDays
+                                    size={16}
+                                    className="me-1"
+                                />
+                                Check Availability
+                            </Button.Block>
+                        </DetailCalendar>
 
                         {hasSizeGuide && (
                             <Button.Block
                                 as="button"
-                                onClick={() => setLightboxIndex(0)}>
+                                onClick={() => setLightboxIndex(0)}
+                                className="flex items-center justify-center">
+                                <Ruler
+                                    size={16}
+                                    className="me-1"
+                                />
                                 Size Guide
                             </Button.Block>
                         )}
@@ -93,6 +110,7 @@ const Detail = ({ price, children, info, carousel, calendar, sizeGuides }: Detai
 
             {hasSizeGuide && (
                 <LightBox
+                    className="lightbox lightbox--backdrop-semi-transparent"
                     index={lightboxIndex}
                     items={sizeGuides}
                     carousel={{

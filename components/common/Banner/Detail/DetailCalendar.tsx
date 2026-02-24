@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 
-import { CalendarDays } from 'lucide-react';
 import { DateRange } from 'react-day-picker';
 
 import {
@@ -10,27 +9,23 @@ import {
     DropdownMenuTrigger,
 } from '@/components/shadcn/DropdownMenu';
 import Calendar, { CalendarProps } from '@/components/common/Calendar';
-import Button from '@/components/common/Button';
 
 export type DetailCalendarProps = {
     selected?: DateRange;
     setSelected?: React.Dispatch<React.SetStateAction<DateRange | undefined>>;
-} & Pick<CalendarProps, 'disabled'>;
+} & (Pick<CalendarProps, 'disabled'> & PropsWithChildren);
 
-const DetailCalendar = ({ disabled, selected, setSelected }: DetailCalendarProps): React.ReactElement => {
+const DetailCalendar = ({
+    disabled,
+    selected,
+    setSelected,
+    children,
+}: DetailCalendarProps): React.ReactElement | null => {
+    if (!children) return null;
+
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Button.Block
-                    as="button"
-                    className="flex items-center justify-center">
-                    <CalendarDays
-                        size={16}
-                        className="me-1"
-                    />
-                    Check Availability
-                </Button.Block>
-            </DropdownMenuTrigger>
+            <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
 
             <DropdownMenuContent align="start">
                 <DropdownMenuGroup>

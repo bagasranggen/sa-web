@@ -75,9 +75,7 @@ const Thumbnail = ({ className, media, thumbnail, lightbox }: ThumbnailProps): R
                             onSwiper={setPreview}
                             thumbs={{ swiper: thumbs }}
                             items={media}
-                            onClick={hasLightbox ? (index) => setLightboxIndex(index) : undefined}
-                            // onClick={(index) => setLightboxIndex(index)}
-                        >
+                            onClick={hasLightbox ? (index) => setLightboxIndex(index) : undefined}>
                             {media.length > 1 && <ThumbnailPreviewNavigation />}
                         </ThumbnailPreview>
                     </div>
@@ -85,6 +83,7 @@ const Thumbnail = ({ className, media, thumbnail, lightbox }: ThumbnailProps): R
             </Columns>
 
             <LightBox
+                className="lightbox lightbox--backdrop-semi-transparent"
                 index={lightboxIndex}
                 close={() => {
                     setLightboxIndex(-1);

@@ -11,9 +11,17 @@ export type LightboxItemProps = BaseProps['items'];
 export type LightBoxProps = {
     items?: LightboxItemProps[];
     carousel?: Partial<LightboxProps['carousel']>;
-} & (Pick<LightboxProps, 'index' | 'close'> & Partial<Pick<LightboxProps, 'on' | 'render'>>);
+} & (Pick<LightboxProps, 'index' | 'close'> & Partial<Pick<LightboxProps, 'on' | 'render' | 'className'>>);
 
-const LightBox = ({ items, index, close, on, carousel, render }: LightBoxProps): React.ReactElement | null => {
+const LightBox = ({
+    items,
+    index,
+    close,
+    on,
+    carousel,
+    render,
+    className,
+}: LightBoxProps): React.ReactElement | null => {
     const { width } = useWindowSize();
 
     const slides: SlideImage[] = useMemo(() => {
@@ -46,6 +54,7 @@ const LightBox = ({ items, index, close, on, carousel, render }: LightBoxProps):
 
     return (
         <YarlLightbox
+            className={className}
             carousel={carousel}
             render={render}
             open={index >= 0}
