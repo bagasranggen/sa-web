@@ -2,7 +2,7 @@
 
 import React, { Ref, Suspense, useEffect, useState } from 'react';
 
-import { NAVIGATION_LINKS } from '@/libs/mock';
+import { useLayoutStateContext, useNavigationStateContext } from '@/store/context';
 import { useLayoutStateContext } from '@/store/context';
 import { NavigationEvents, useCheckSamePath } from '@/libs/hooks';
 
@@ -23,7 +23,8 @@ export type HeaderProps = {
 
 const Header = ({ items }: HeaderProps): React.ReactElement => {
     const { setHeaderHeight } = useLayoutStateContext();
-    const { isSamePath } = useCheckSamePath();
+    const { navigationModalIsOpen, setNavigationModalIsOpen, activeDropdown, setActiveDropdown } =
+        useNavigationStateContext();
     const [headerRef, { height }] = useMeasure();
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -40,7 +41,7 @@ const Header = ({ items }: HeaderProps): React.ReactElement => {
             <Suspense fallback={null}>
                 <NavigationEvents
                     endHandler={() => {
-                        setIsOpen(false);
+                        setNavigationModalIsOpen(false);
                     }}
                 />
             </Suspense>
@@ -61,8 +62,8 @@ const Header = ({ items }: HeaderProps): React.ReactElement => {
                     <Button
                         as="button"
                         className="lg:hidden"
-                        onClick={() => setIsOpen((prevState) => !prevState)}>
-                        <Icon.Hamburger active={isOpen} />
+                        onClick={() => setNavigationModalIsOpen((prevState) => !prevState)}>
+                        <Icon.Hamburger active={navigationModalIsOpen} />
                     </Button>
 
                     {items && items.length > 0 && (
@@ -84,20 +85,15 @@ const Header = ({ items }: HeaderProps): React.ReactElement => {
 
             {items && items.length > 0 && (
                 <HeaderModal
-                    open={isOpen}
-                    onClose={() => setIsOpen(false)}>
+                    open={navigationModalIsOpen}
+                    onClose={() => setNavigationModalIsOpen(false)}>
                     <Container className="mt-4 flex flex-col items-center gap-y-1">
                         {items.map((item, i) => {
                             return (
                                 <HeaderLink
                                     key={i}
                                     multiSelectType="collapsible"
-                                    link={{
-                                        ...item.link,
-                                        onClick: () => {
-                                            setIsOpen(false);
-                                        },
-                                    }}
+                                    link={item.link}
                                     child={item.child}
                                 />
                             );

@@ -16,7 +16,7 @@ export type HeaderLinkProps = {
 };
 
 const HeaderLink = ({ multiSelectType = 'dropdown', link, child }: HeaderLinkProps): React.ReactElement => {
-    const { setActiveDropdown } = useNavigationStateContext();
+    const { setActiveDropdown, setNavigationModalIsOpen } = useNavigationStateContext();
     const { isSamePath } = useCheckSamePath();
 
     if (link && link?.href && child && child.length > 0) {
@@ -29,13 +29,13 @@ const HeaderLink = ({ multiSelectType = 'dropdown', link, child }: HeaderLinkPro
                     multiSelectType={multiSelectType}
                     link={{
                         ...item.link,
-                        onClick: (e) => {
+                        onClick: () => {
                             if (multiSelectType === 'dropdown' && isSamePath({ href: item?.link?.href })) {
                                 setActiveDropdown(undefined);
                             }
 
-                            if (multiSelectType === 'collapsible' && link?.onClick) {
-                                link.onClick(e);
+                            if (multiSelectType === 'collapsible' && isSamePath({ href: item?.link?.href })) {
+                                setNavigationModalIsOpen(false);
                             }
                         },
                     }}
