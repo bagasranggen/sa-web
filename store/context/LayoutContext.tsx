@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react';
+import React, { createContext, PropsWithChildren, useEffect, useState } from 'react';
 
 export type LayoutState = {
     headerHeight: number;
@@ -13,12 +13,7 @@ export const LayoutStateContext = createContext<LayoutState>({
 });
 
 export const LayoutStateContextProvider = ({ children }: PropsWithChildren) => {
-    const [headerHeight, setHeaderHeight] = useState<number>(0);
-
-    const defaultContext = {
-        headerHeight,
-        setHeaderHeight,
-    };
+    const [headerHeight, setHeaderHeight] = useState<LayoutState['headerHeight']>(0);
 
     useEffect(() => {
         const body = document.body;
@@ -28,6 +23,8 @@ export const LayoutStateContextProvider = ({ children }: PropsWithChildren) => {
 
         body.style.setProperty('--header-height', `${headerHeight}px`);
     }, [headerHeight]);
+
+    const defaultContext = { headerHeight, setHeaderHeight };
 
     return <LayoutStateContext.Provider value={defaultContext}>{children}</LayoutStateContext.Provider>;
 };
