@@ -1,10 +1,12 @@
 'use client';
 
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 
 import { ProgressProvider } from '@bprogress/next/app';
 
-export default function Template({ children }: { children: React.ReactNode }) {
+export type MainProps = {} & PropsWithChildren;
+
+const Main = ({ children }: MainProps): React.ReactElement => {
     return (
         <ProgressProvider
             height="2px"
@@ -14,4 +16,6 @@ export default function Template({ children }: { children: React.ReactNode }) {
             {children}
         </ProgressProvider>
     );
-}
+};
+
+export default Main;

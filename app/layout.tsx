@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import { Space_Grotesk } from 'next/font/google';
@@ -9,6 +10,7 @@ import ContextProvider from '@/store/context';
 
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import Main from '@/components/layout/Main';
 
 const aboreto = localFont({
     src: '../assets/fonts/aboreto/Aboreto-Regular.ttf',
@@ -29,11 +31,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <ContextProvider>
             <html lang="en">
                 <body className={`${aboreto.variable} ${spaceGrotesk.variable}`}>
-                    <Header items={NAVIGATION_LINKS} />
+                    <Main>
+                        <Header items={NAVIGATION_LINKS} />
 
-                    <main>{children}</main>
+                        <main>{children}</main>
 
-                    <Footer />
+                        <Footer />
+                    </Main>
                 </body>
             </html>
         </ContextProvider>
