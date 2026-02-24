@@ -1,6 +1,6 @@
 export const CATEGORY_TITLE_OBJ: Record<string, string> = {
+    'hijab-friendly': 'Hijab Friendly',
     prom: 'Prom',
     'night-party': 'Night Party',
-    'hijab-friendly': 'Hijab Friendly',
     'wedding-guest': 'Wedding Guest',
 };

@@ -1,3 +1,5 @@
+import { CATEGORY_TITLE_OBJ } from './category';
+
 import { createArrayFromNumber } from '../factory/createArrayFromNumber';
 import { createPicsumImage } from '../factory/createPicsumImage';
 
@@ -26,7 +28,9 @@ export const CARDS_HIGHLIGHT: HighlightProps['items'] = createArrayFromNumber(2)
     };
 });
 
-export const CARDS_MEDIA: MediaProps['items'] = createArrayFromNumber(8).map((_, i) => ({
-    link: { href: '/collection/formal' },
-    media: [createPicsumImage({ id: 151 + i, width: 800, height: 800 })],
-}));
+export const CARDS_MEDIA: MediaProps['items'] = Object.entries(CATEGORY_TITLE_OBJ).map(([key, value], i) => {
+    return {
+        link: { href: `/collection/${key}`, children: value },
+        media: [createPicsumImage({ id: 151 + i, width: 800, height: 800 })],
+    };
+});

@@ -1,4 +1,9 @@
-import { CAROUSEL_MEDIA_LIGHTBOX, CAROUSEL_MEDIA_PREVIEW, CAROUSEL_MEDIA_THUMB } from './carousel';
+import {
+    CAROUSEL_MEDIA_LIGHTBOX,
+    CAROUSEL_MEDIA_PREVIEW,
+    CAROUSEL_MEDIA_THUMB,
+    SIZE_GUIDES_LIGHTBOX,
+} from './carousel';
 import { MARQUEE_HOMEPAGE } from './marquee';
 
 import parse from 'html-react-parser';
@@ -31,6 +36,7 @@ export const BANNER_PRODUCT_DETAIL: DetailProps = {
         media: CAROUSEL_MEDIA_PREVIEW,
         lightbox: CAROUSEL_MEDIA_LIGHTBOX,
     },
+    sizeGuides: SIZE_GUIDES_LIGHTBOX,
     price: 'Rp130,000/3day(s)',
     children: 'Gema black - B026',
 };
