@@ -1,0 +1,29 @@
+@layer components {
+    .rdp-root.calendar {
+        --rdp-accent-color: var(--color-sekar-primary) !important;
+        --rdp-today-color: var(--color-light) !important;
+        --rdp-day_button-border-radius: 0 !important;
+        --rdp-nav_button-disabled-opacity: 0.25 !important;
+        /*--rdp-accent-color: red;*/
+
+        /*background: red;*/
+        .rdp-today,
+        .rdp-selected {
+            @apply bg-(--rdp-accent-color);
+        }
+
+        .rdp-selected {
+            @apply text-light font-normal! text-base!;
+        }
+
+        .rdp-day {
+            &:not(.rdp-disabled):not(.rdp-selected) {
+                @apply md:hover:bg-sekar-primary/80 md:hover:text-light md:transition-colors;
+            }
+
+            .rdp-day_button {
+                @apply border-0!;
+            }
+        }
+    }
+}
