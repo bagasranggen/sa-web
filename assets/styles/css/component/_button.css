@@ -14,7 +14,7 @@
         &.btn--block {
             @apply uppercase font-bold;
             @apply tracking-[.35rem];
-            @apply border;
+            @apply border border-dark;
             @apply md:transition-colors;
 
             &:not(.btn--lg) {
