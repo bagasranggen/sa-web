@@ -55,7 +55,11 @@ const HeaderDropdown = ({ link, children }: HeaderDropdownProps): React.ReactEle
                             e.stopPropagation();
 
                             setActiveDropdown(link.children);
-                            setIsOpen((prevState) => !prevState);
+                            setIsOpen((prevState) => {
+                                if (prevState && !activeDropdown) return true;
+
+                                return !prevState;
+                            });
                         }}>
                         <ChevronDown className="ms-0.75 transition-transform group-aria-expanded:rotate-180" />
                     </DropdownMenuTrigger>

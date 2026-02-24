@@ -3,6 +3,8 @@
         @apply sticky top-0;
         @apply bg-light;
         @apply transition-transform;
+        @apply [&.nav--hide]:-translate-y-full;
+
         .nav__container {
             @apply py-2;
             @apply flex items-center justify-between;

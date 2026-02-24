@@ -1,12 +1,13 @@
 'use client';
 
-import React, { Ref, Suspense, useEffect, useState } from 'react';
+import React, { Ref, Suspense, useEffect, useMemo, useRef } from 'react';
 
 import { useLayoutStateContext, useNavigationStateContext } from '@/store/context';
-import { useLayoutStateContext } from '@/store/context';
-import { NavigationEvents, useCheckSamePath } from '@/libs/hooks';
+import { ArrayStringProps } from '@/libs/@types';
+import { joinArrayString } from '@/libs/utils';
+import { NavigationEvents } from '@/libs/hooks';
 
-import { useMeasure } from 'react-use';
+import { useMeasure, useWindowScroll, useWindowSize } from 'react-use';
 
 import LogoText from '@/assets/images/logo-sekar-text.png';
 
@@ -26,15 +27,50 @@ const Header = ({ items }: HeaderProps): React.ReactElement => {
     const { navigationModalIsOpen, setNavigationModalIsOpen, activeDropdown, setActiveDropdown } =
         useNavigationStateContext();
     const [headerRef, { height }] = useMeasure();
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const currentScroll = useRef<number>(0);
+    const { y } = useWindowScroll();
+    const { width } = useWindowSize();
+
+    const isMobile = useMemo(() => {
+        let data = false;
+
+        if (width < 992) data = true;
+
+        return data;
+    }, [width]);
+
+    const isNavHide = useMemo(() => {
+        let data = false;
+
+        if (y > height && currentScroll.current < y) data = true;
+        currentScroll.current = y;
+
+        return data;
+    }, [y, height]);
+
+    let navClass: ArrayStringProps = ['nav'];
+    if (isNavHide) navClass.push('nav--hide');
+    navClass = joinArrayString(navClass);
+
+    useEffect(() => {
+        if (!isMobile && navigationModalIsOpen) setNavigationModalIsOpen(false);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isMobile, navigationModalIsOpen]);
 
     useEffect(() => {
         if (height === 0) return;
 
         setHeaderHeight(height);
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [height]);
+
+    useEffect(() => {
+        if (!activeDropdown) return;
+        if (!isNavHide) return;
+
+        setActiveDropdown(undefined);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isNavHide, activeDropdown]);
 
     return (
         <>
@@ -48,7 +84,7 @@ const Header = ({ items }: HeaderProps): React.ReactElement => {
 
             <nav
                 ref={headerRef as Ref<HTMLDivElement>}
-                className="nav">
+                className={navClass}>
                 <Container className="nav__container">
                     <Button
                         as="anchor"
