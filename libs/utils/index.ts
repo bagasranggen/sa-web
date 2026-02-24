@@ -4,4 +4,5 @@ export * from './convertObjectToSearchParamsQuery';
 export * from './delay';
 export * from './getAnimationElement';
 export * from './getElementDimension';
+export * from './getEnv';
 export * from './joinArrayString';
