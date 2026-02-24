@@ -1,10 +1,13 @@
 import React from 'react';
 
+import { useNavigationStateContext } from '@/store/context';
+import { useCheckSamePath } from '@/libs/hooks';
+
 import Button, { BaseAnchorProps } from '@/components/common/Button';
 import HeaderCollapsible from '@/components/layout/Header/HeaderCollapsible';
 import HeaderDropdown from '@/components/layout/Header/HeaderDropdown';
 
-export type HeaderLinkItemProps = Pick<BaseAnchorProps, 'href' | 'target' | 'children'>;
+export type HeaderLinkItemProps = Pick<BaseAnchorProps, 'href' | 'target' | 'children' | 'onClick'>;
 
 export type HeaderLinkProps = {
     multiSelectType?: 'collapsible' | 'dropdown';
@@ -13,14 +16,29 @@ export type HeaderLinkProps = {
 };
 
 const HeaderLink = ({ multiSelectType = 'dropdown', link, child }: HeaderLinkProps): React.ReactElement => {
+    const { setActiveDropdown } = useNavigationStateContext();
+    const { isSamePath } = useCheckSamePath();
+
     if (link && link?.href && child && child.length > 0) {
         const links: React.ReactElement[] = [];
 
-        child.forEach((item) => {
+        child.forEach((item, i) => {
             links.push(
                 <HeaderLink
+                    key={i}
                     multiSelectType={multiSelectType}
-                    link={item.link}
+                    link={{
+                        ...item.link,
+                        onClick: (e) => {
+                            if (multiSelectType === 'dropdown' && isSamePath({ href: item?.link?.href })) {
+                                setActiveDropdown(undefined);
+                            }
+
+                            if (multiSelectType === 'collapsible' && link?.onClick) {
+                                link.onClick(e);
+                            }
+                        },
+                    }}
                 />
             );
         });

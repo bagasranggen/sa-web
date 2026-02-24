@@ -3,7 +3,7 @@
 import React, { createContext, PropsWithChildren, useState } from 'react';
 
 export type NavigationState = {
-    activeDropdown: string | undefined;
+    activeDropdown: React.ReactNode | string | undefined;
     setActiveDropdown: React.Dispatch<React.SetStateAction<NavigationState['activeDropdown']>>;
 };
 

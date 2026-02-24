@@ -18,10 +18,7 @@ const HeaderCollapsible = ({ link, children }: HeaderCollapsibleProps): React.Re
 
     return (
         <Collapsible open={isOpen}>
-            <Button
-                as="anchor"
-                href="/collection"
-                className="flex items-center justify-center">
+            <div className="flex items-center justify-center">
                 <Button
                     as="anchor"
                     className="nav__link"
@@ -37,7 +34,7 @@ const HeaderCollapsible = ({ link, children }: HeaderCollapsibleProps): React.Re
                     }}>
                     <ChevronDown className="ms-0.75 transition-transform group-data-[state=open]:rotate-180" />
                 </CollapsibleTrigger>
-            </Button>
+            </div>
 
             <CollapsibleContent className="overflow-hidden data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up text-center">
                 {children}

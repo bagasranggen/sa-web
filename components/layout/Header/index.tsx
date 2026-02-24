@@ -4,7 +4,7 @@ import React, { Ref, Suspense, useEffect, useState } from 'react';
 
 import { NAVIGATION_LINKS } from '@/libs/mock';
 import { useLayoutStateContext } from '@/store/context';
-import { NavigationEvents } from '@/libs/hooks';
+import { NavigationEvents, useCheckSamePath } from '@/libs/hooks';
 
 import { useMeasure } from 'react-use';
 
@@ -23,6 +23,7 @@ export type HeaderProps = {
 
 const Header = ({ items }: HeaderProps): React.ReactElement => {
     const { setHeaderHeight } = useLayoutStateContext();
+    const { isSamePath } = useCheckSamePath();
     const [headerRef, { height }] = useMeasure();
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -91,7 +92,12 @@ const Header = ({ items }: HeaderProps): React.ReactElement => {
                                 <HeaderLink
                                     key={i}
                                     multiSelectType="collapsible"
-                                    link={item.link}
+                                    link={{
+                                        ...item.link,
+                                        onClick: () => {
+                                            setIsOpen(false);
+                                        },
+                                    }}
                                     child={item.child}
                                 />
                             );
