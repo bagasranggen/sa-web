@@ -2,12 +2,12 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
 // import { fn } from 'storybook/test';
 
-import Arrow from './index';
+import Hamburger from './index';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
-    title: 'Icon/Arrow',
-    component: Arrow,
+    title: 'Components/Icon/Hamburger',
+    component: Hamburger,
     parameters: {
         // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
         layout: 'centered',
@@ -20,7 +20,7 @@ const meta = {
     },
     // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#story-args
     // args: { onClick: fn() },
-} satisfies Meta<typeof Arrow>;
+} satisfies Meta<typeof Hamburger>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -30,44 +30,8 @@ export const Default: Story = {
     args: {},
 };
 
-export const WithCircleDark: Story = {
+export const Active: Story = {
     args: {
-        withCircle: {
-            color: 'dark',
-        },
-    },
-};
-
-export const WithCircleLight: Story = {
-    args: {
-        withCircle: {
-            color: 'light',
-        },
-    },
-};
-
-export const WithCircleSmall: Story = {
-    args: {
-        withCircle: {
-            color: 'dark',
-            size: 'sm',
-        },
-    },
-};
-
-export const WithCircleRegular: Story = {
-    args: {
-        withCircle: {
-            color: 'light',
-        },
-    },
-};
-
-export const WithCircleLarge: Story = {
-    args: {
-        withCircle: {
-            color: 'primary',
-            size: 'lg',
-        },
+        active: true,
     },
 };
