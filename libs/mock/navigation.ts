@@ -33,4 +33,18 @@ export const NAVIGATION_LINKS: HeaderLinkProps[] = [
             children: 'Collection',
         },
     },
+    {
+        link: {
+            href: '/collection',
+            children: 'Collection',
+        },
+        child: [
+            {
+                link: {
+                    href: '/collection/formal',
+                    children: 'Hijab Friendly',
+                },
+            },
+        ],
+    },
 ];
