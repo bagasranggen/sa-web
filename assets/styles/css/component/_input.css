@@ -69,6 +69,7 @@
 
     .input__label {
         @apply block uppercase transition-all origin-top-left;
+        @apply pointer-events-none;
         @apply text-[2.5rem] whitespace-nowrap;
         @apply tracking-0.5;
         @apply px-2 py-1;
