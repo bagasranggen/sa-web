@@ -14,6 +14,7 @@ import InputRadio from '@/components/common/Input/shared/InputRadio';
 import InputCheckbox from '@/components/common/Input/shared/InputCheckbox';
 import InputSelect, { BaseInputSelectProps, InputSelectItemProps } from '@/components/common/Input/shared/InputSelect';
 import InputTextarea, { BaseInputTextareaProps } from '@/components/common/Input/shared/InputTextarea';
+import InputDayPicker, { BaseInputDayPickerProps } from '@/components/common/Input/shared/InputDayPicker';
 
 export type BaseInputRef = InputRegularRef | InputSelectRef | InputTextareaRef;
 
@@ -22,8 +23,8 @@ export type BaseInputHookProps = {
 };
 
 export type BaseInputProps = BaseInputHookProps & {
-    type: HTMLInputTypeAttribute | 'select' | 'textarea';
-} & (BaseRegularInputProps & BaseInputSelectProps & BaseInputTextareaProps);
+    type: HTMLInputTypeAttribute | 'select' | 'textarea' | 'day-picker';
+} & (BaseRegularInputProps & BaseInputSelectProps & BaseInputTextareaProps & BaseInputDayPickerProps);
 
 export type BaseProps = {
     error?: React.ReactNode;
@@ -72,6 +73,17 @@ const Base = forwardRef<BaseInputRef, BaseProps>(({ error, ...props }, ref) => {
         input = (
             <InputTextarea
                 ref={ref as RefObject<InputTextareaRef>}
+                {...restProps}
+            />
+        );
+    }
+
+    if (props?.type === 'day-picker') {
+        const { type, ...restProps } = props;
+
+        input = (
+            <InputDayPicker
+                ref={ref as RefObject<InputRegularRef>}
                 {...restProps}
             />
         );

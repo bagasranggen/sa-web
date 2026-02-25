@@ -29,10 +29,32 @@
                 }
             }
 
+            &.input--day-picker {
+                svg {
+                    @apply absolute right-2 top-1/2 -translate-y-1/2;
+                }
+
+                input {
+                    @apply pe-7;
+                }
+
+                .input__label {
+                    @apply scale-50 font-semibold translate-x-[1.2rem];
+                }
+            }
+
+            &:not(.input--day-picker) {
+                input,
+                textarea,
+                select {
+                    @apply placeholder:opacity-0;
+                }
+            }
+
             input,
             textarea,
             select {
-                @apply w-full placeholder:opacity-0 bg-transparent focus-visible:outline-none;
+                @apply w-full  bg-transparent focus-visible:outline-none;
                 @apply min-h-[6.7rem];
                 @apply text-[2rem];
                 @apply border-b-2 border-b-sekar-primary/10;

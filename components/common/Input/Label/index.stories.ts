@@ -69,6 +69,17 @@ export const Select: Story = {
         ],
     },
 };
+
+export const Checkbox: Story = {
+    // parameters: {},
+    args: {
+        type: 'checkbox',
+        id: 'test',
+        label: 'Label',
+        children: 'Children',
+    },
+};
+
 export const SelectMultiple: Story = {
     // parameters: {},
     args: {
@@ -80,5 +91,29 @@ export const SelectMultiple: Story = {
             { value: '', label: '-- Please Select --' },
             { value: '1', label: 'Option 1' },
         ],
+    },
+};
+
+export const DayPickerSingle: Story = {
+    // parameters: {},
+    args: {
+        type: 'day-picker',
+        id: 'test',
+        label: 'Label',
+        calendar: {
+            mode: 'single',
+        },
+    },
+};
+
+export const DayPickerRange: Story = {
+    // parameters: {},
+    args: {
+        type: 'day-picker',
+        id: 'test',
+        label: 'Label',
+        calendar: {
+            mode: 'range',
+        },
     },
 };
