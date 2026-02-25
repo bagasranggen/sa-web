@@ -55,6 +55,7 @@ export const Default: Story = {
         sizeGuides: SIZE_GUIDES_LIGHTBOX,
         calendar: { disabled: [new Date(2026, 1, 26)] },
         price: 'Rp300.000/3day(s)',
+        slug: 'gema',
         children: 'Heading',
     },
 };

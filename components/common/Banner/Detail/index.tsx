@@ -18,10 +18,11 @@ export type DetailProps = {
     carousel?: Pick<ThumbnailProps, 'thumbnail' | 'media' | 'lightbox'>;
     calendar?: Pick<DetailCalendarProps, 'disabled'>;
     sizeGuides?: LightBoxProps['items'];
+    slug: string;
     children: BaseProps['children'];
 };
 
-const Detail = ({ price, children, info, carousel, calendar, sizeGuides }: DetailProps): React.ReactElement => {
+const Detail = ({ price, children, info, carousel, calendar, sizeGuides, slug }: DetailProps): React.ReactElement => {
     const [lightboxIndex, setLightboxIndex] = useState<number>(-1);
     const [selectedDate, setSelectedDate] = useState<DetailCalendarProps['selected']>();
 
@@ -99,9 +100,10 @@ const Detail = ({ price, children, info, carousel, calendar, sizeGuides }: Detai
 
                     <Button.Container className="mt-1.5">
                         <Button.Block
-                            as="button"
+                            as="anchor"
                             size="lg"
-                            className="w-full">
+                            className="w-full text-center"
+                            href={`/order?collection=${slug}`}>
                             RENT
                         </Button.Block>
                     </Button.Container>
