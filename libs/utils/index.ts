@@ -5,4 +5,5 @@ export * from './delay';
 export * from './getAnimationElement';
 export * from './getElementDimension';
 export * from './getEnv';
+export * from './getInputDayPickerValue';
 export * from './joinArrayString';

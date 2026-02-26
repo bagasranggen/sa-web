@@ -3,6 +3,7 @@ export * from './cards';
 export * from './carousel';
 export * from './category';
 export * from './contentBlocks';
+export * from './formOrder';
 export * from './marquee';
 export * from './navigation';
 export * from './productsFilters';

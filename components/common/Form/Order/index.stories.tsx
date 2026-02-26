@@ -1,22 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
-// import { fn } from 'storybook/test';
+import { expect, fn } from 'storybook/test';
 
-import {
-    BANNER_PRODUCT_INFO,
-    CAROUSEL_MEDIA_PREVIEW,
-    CAROUSEL_MEDIA_THUMB,
-    CAROUSEL_MEDIA_LIGHTBOX,
-    SIZE_GUIDES_LIGHTBOX,
-} from '@/libs/mock';
+import { DELIVERY_ADDRESS_PICKUP, ORDER_COLLECTION } from '@/libs/mock';
 
-import Detail from './index';
+import Order from './index';
 import Container from '@/components/common/Container';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
-    title: 'Components/Banner/Detail',
-    component: Detail,
+    title: 'Components/Form/Order',
+    component: Order,
     decorators: [
         (Story) => (
             <div style={{ maxWidth: '100vw' }}>
@@ -34,30 +28,24 @@ const meta = {
     // tags: ['autodocs'],
     // More on argTypes: https://storybook.js.org/docs/api/argtypes
     argTypes: {
-        // backgroundColor: { control: 'color' },
+        // hidden: { control: 'boolean' },
+        // required: { control: 'boolean' },
     },
     // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#story-args
     // args: { onClick: fn() },
-} satisfies Meta<typeof Detail>;
+} satisfies Meta<typeof Order>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Default: Story = {
+    // parameters: {},
     args: {
-        info: BANNER_PRODUCT_INFO,
-        carousel: {
-            thumbnail: CAROUSEL_MEDIA_THUMB,
-            media: CAROUSEL_MEDIA_PREVIEW,
-            lightbox: CAROUSEL_MEDIA_LIGHTBOX,
+        onFormSubmit: (data) => {
+            console.log({ data });
         },
-        sizeGuides: SIZE_GUIDES_LIGHTBOX,
-        calendar: { disabled: [new Date(2026, 1, 26)] },
-        price: 'Rp300.000/3day(s)',
-        button: {
-            href: '/order?=collection=gema',
-        },
-        children: 'Heading',
+        collection: ORDER_COLLECTION,
+        pickupAddress: DELIVERY_ADDRESS_PICKUP,
     },
 };

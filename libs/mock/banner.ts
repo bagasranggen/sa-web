@@ -38,5 +38,8 @@ export const BANNER_PRODUCT_DETAIL: DetailProps = {
     },
     sizeGuides: SIZE_GUIDES_LIGHTBOX,
     price: 'Rp130,000/3day(s)',
+    button: {
+        href: '/order?collection=gema',
+    },
     children: 'Gema black - B026',
 };

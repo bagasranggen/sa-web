@@ -6,7 +6,7 @@ import { CalendarDays, Ruler } from 'lucide-react';
 
 import Columns from '@/components/common/Columns';
 import Heading, { BaseProps } from '@/components/common/Heading';
-import Button from '@/components/common/Button';
+import Button, { BaseAnchorProps } from '@/components/common/Button';
 import Carousel, { ThumbnailProps } from '@/components/common/Carousel';
 import DetailInfo, { DetailInfoProps } from '@/components/common/Banner/Detail/DetailInfo';
 import DetailCalendar, { DetailCalendarProps } from '@/components/common/Banner/Detail/DetailCalendar';
@@ -18,10 +18,11 @@ export type DetailProps = {
     carousel?: Pick<ThumbnailProps, 'thumbnail' | 'media' | 'lightbox'>;
     calendar?: Pick<DetailCalendarProps, 'disabled'>;
     sizeGuides?: LightBoxProps['items'];
+    button?: Pick<BaseAnchorProps, 'target' | 'href'>;
     children: BaseProps['children'];
 };
 
-const Detail = ({ price, children, info, carousel, calendar, sizeGuides }: DetailProps): React.ReactElement => {
+const Detail = ({ price, children, info, carousel, calendar, sizeGuides, button }: DetailProps): React.ReactElement => {
     const [lightboxIndex, setLightboxIndex] = useState<number>(-1);
     const [selectedDate, setSelectedDate] = useState<DetailCalendarProps['selected']>();
 
@@ -97,14 +98,18 @@ const Detail = ({ price, children, info, carousel, calendar, sizeGuides }: Detai
                         )}
                     </Button.Container>
 
-                    <Button.Container className="mt-1.5">
-                        <Button.Block
-                            as="button"
-                            size="lg"
-                            className="w-full">
-                            RENT
-                        </Button.Block>
-                    </Button.Container>
+                    {button?.href && (
+                        <Button.Container className="mt-1.5">
+                            <Button.Block
+                                as="anchor"
+                                size="lg"
+                                className="w-full text-center"
+                                target={button.target}
+                                href={button.href}>
+                                RENT
+                            </Button.Block>
+                        </Button.Container>
+                    )}
                 </Columns.Column>
             </Columns>
 
