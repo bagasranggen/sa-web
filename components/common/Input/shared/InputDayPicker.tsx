@@ -2,12 +2,12 @@
 
 import React, { forwardRef, useMemo, useState } from 'react';
 
-import { ArrayStringProps, BaseRegularInputProps, InputRegularRef } from '@/libs/@types';
+import { BaseRegularInputProps, InputRegularRef } from '@/libs/@types';
 import { createInputHooks } from '@/libs/factory';
-import { joinArrayString } from '@/libs/utils';
+import { getInputDayPickerValue } from '@/libs/utils';
 
 import { CalendarDays, LucideProps } from 'lucide-react';
-import { DateRange } from 'react-day-picker';
+import { DateRange, PropsRange, PropsSingle } from 'react-day-picker';
 
 import { BaseInputHookProps } from '@/components/common/Input';
 import {
@@ -16,10 +16,12 @@ import {
     DropdownMenuGroup,
     DropdownMenuTrigger,
 } from '@/components/shadcn/DropdownMenu';
-import Calendar, { CalendarProps } from '@/components/common/Calendar';
+import Calendar from '@/components/common/Calendar';
 
 export type BaseInputDayPickerProps = {
-    calendar?: Partial<Pick<CalendarProps, 'mode'>>;
+    calendar?: {
+        onSelect?: (day: DateRange | Date) => void;
+    } & (PropsSingle | PropsRange);
     icon?: Pick<LucideProps, 'size'>;
 } & Omit<BaseRegularInputProps, 'type' | 'disabled' | 'placeholder' | 'value'>;
 
@@ -27,30 +29,11 @@ export type InputDayPickerProps = BaseInputDayPickerProps & BaseInputHookProps;
 
 const InputDayPicker = forwardRef<InputRegularRef, InputDayPickerProps>(({ hook, calendar, icon, ...props }, ref) => {
     const inputHook = createInputHooks(hook, props);
-    const [selectedDate, setSelectedDate] = useState<DateRange | undefined>(undefined);
+    const [selectedDate, setSelectedDate] = useState<PropsSingle['selected'] | PropsRange['selected']>(undefined);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
 
     const value = useMemo(() => {
-        const mode = calendar?.mode;
-
-        let data = undefined;
-
-        if (selectedDate) {
-            const from = selectedDate.from?.toLocaleDateString('en-GB');
-            const to = selectedDate.to?.toLocaleDateString('en-GB');
-
-            let tmp: ArrayStringProps = [];
-            if ((from && mode === 'range' && from !== to) || (from && mode === 'single')) tmp.push(from);
-            if (mode === 'range' && to && from !== to) tmp.push(to);
-            tmp = joinArrayString(tmp, ' - ');
-
-            console.log({ from, to });
-
-            if (tmp) data = tmp;
-        }
-
-        // console.log({ selectedDate, mode });
-
-        return data;
+        return getInputDayPickerValue({ date: selectedDate, mode: calendar?.mode });
     }, [selectedDate, calendar?.mode]);
 
     let inputRef = { ref: ref };
@@ -67,17 +50,10 @@ const InputDayPicker = forwardRef<InputRegularRef, InputDayPickerProps>(({ hook,
     let placeholder = 'DD/MM/YYYY';
     if (calendar?.mode === 'range') placeholder = 'DD/MM/YYYY - DD/MM/YYYY';
 
-    // let inputClass: ArrayStringProps = ['input input--day-picker'];
-    // if (className) inputClass.push(className);
-    // inputClass = joinArrayString(inputClass);
-
     return (
         <>
-            <DropdownMenu>
-                <div
-                    className="flex items-center gap-x-1"
-                    // className={inputClass}
-                >
+            <DropdownMenu open={isOpen}>
+                <div className="flex items-center gap-x-1">
                     <input
                         type="text"
                         disabled
@@ -89,7 +65,9 @@ const InputDayPicker = forwardRef<InputRegularRef, InputDayPickerProps>(({ hook,
                         //{...(hook ? { defaultValue: value } : { value: value })}
                         //{...(hook ? { defaultValue: value } : { value: value })}
                     />
-                    <DropdownMenuTrigger asChild>
+                    <DropdownMenuTrigger
+                        asChild
+                        onClick={() => setIsOpen((prevState) => !prevState)}>
                         <CalendarDays
                             size={icon?.size ?? 16}
                             className="cursor-pointer"
@@ -101,20 +79,16 @@ const InputDayPicker = forwardRef<InputRegularRef, InputDayPickerProps>(({ hook,
                     <DropdownMenuGroup>
                         <Calendar
                             className="px-2 py-1.5"
-                            // mode={(calendar?.mode as any) || 'single'}
-                            // mode={'range' || 'single'}
-                            // mode={'single'}
-                            mode="range"
-                            // disabled={disabled}
-                            // required={true}
+                            {...(calendar as any)}
                             selected={selectedDate}
-                            onSelect={(selected) => {
-                                // console.log('run');
-
-                                // if (!selectedDate) return;
+                            onSelect={(selected: DateRange | Date | undefined) => {
                                 if (!selected) return;
 
                                 setSelectedDate(selected);
+                                if (calendar?.onSelect) calendar.onSelect(selected);
+
+                                const date = getInputDayPickerValue({ date: selected, mode: calendar?.mode });
+                                if (date) setIsOpen(false);
                             }}
                             excludeDisabled={calendar?.mode !== 'range'}
                         />

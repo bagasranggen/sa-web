@@ -44,6 +44,8 @@ export const DayPickerRange: Story = {
         // placeholder: 'Placeholder',
         calendar: {
             mode: 'range',
+            min: 1,
+            max: 2,
         },
         hidden: false,
     },
