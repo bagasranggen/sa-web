@@ -2,9 +2,10 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
 import { expect, fn } from 'storybook/test';
 
+import { DELIVERY_ADDRESS_PICKUP, ORDER_COLLECTION } from '@/libs/mock';
+
 import Order from './index';
 import Container from '@/components/common/Container';
-import { ORDER_COLLECTION } from '@/libs/mock';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
@@ -45,5 +46,6 @@ export const Default: Story = {
             console.log({ data });
         },
         collection: ORDER_COLLECTION,
+        pickupAddress: DELIVERY_ADDRESS_PICKUP,
     },
 };
