@@ -8,7 +8,7 @@ import Form, { OrderProps } from '@/components/common/Form';
 
 export type OrderIndexProps = {
     entries: {
-        form: Pick<OrderProps, 'collection'>;
+        form: Pick<OrderProps, 'collection' | 'pickupAddress'>;
     };
 };
 
@@ -32,6 +32,7 @@ const OrderIndex = ({ entries }: OrderIndexProps): React.ReactElement => {
                     className="mt-8 mb-15">
                     <Form.Order
                         collection={entries.form.collection}
+                        pickupAddress={entries.form.pickupAddress}
                         onFormSubmit={(data) => {
                             console.log({ data });
                         }}

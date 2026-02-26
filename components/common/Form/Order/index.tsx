@@ -79,7 +79,9 @@ const Order = ({ collection, onFormSubmit, pickupAddress }: OrderProps): React.R
                 onSubmit={handleSubmit((data) => {
                     if (onFormSubmit) onFormSubmit(data);
                 })}>
-                <Columns className="mb-3">
+                <Columns
+                    gutterY={3}
+                    className="mb-3">
                     <Columns.Column md={4}>
                         <Input.Label
                             type="text"
@@ -123,7 +125,9 @@ const Order = ({ collection, onFormSubmit, pickupAddress }: OrderProps): React.R
                     </Columns.Column>
                 </Columns>
 
-                <Columns className="mb-3">
+                <Columns
+                    gutterY={3}
+                    className="mb-3">
                     {collection && collection.length > 0 && (
                         <Columns.Column md={6}>
                             <Input.Label
@@ -157,8 +161,6 @@ const Order = ({ collection, onFormSubmit, pickupAddress }: OrderProps): React.R
                                 max: 2,
                                 onSelect: (selected) => {
                                     const date = getInputDayPickerValue({ date: selected, mode: 'range' });
-
-                                    console.log({ date });
 
                                     if (date) {
                                         setValue(ORDER_FORM_HANDLE.DATE, date);
