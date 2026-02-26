@@ -20,11 +20,8 @@ const Label = forwardRef<BaseInputRef, LabelProps>(
         inputGroupClass.push(`input--${type}`);
         if (hidden) inputGroupClass.push('input--hidden');
         if (!isFocus && type !== 'textarea') inputGroupClass.push('input--blur');
+        if (className) inputGroupClass.push(className);
         inputGroupClass = joinArrayString(inputGroupClass);
-
-        let inputClass: ArrayStringProps = ['peer'];
-        if (className) inputClass.push(className);
-        inputClass = joinArrayString(inputClass);
 
         let inputProps = props;
         if (type !== 'day-picker') inputProps = Object.assign(inputProps, { placeholder: label });
@@ -37,7 +34,7 @@ const Label = forwardRef<BaseInputRef, LabelProps>(
                         ref={ref}
                         type={type}
                         id={id}
-                        className={inputClass}
+                        className="peer"
                         hidden={hidden}
                         onFocus={(e: any) => {
                             setIsFocus(true);
