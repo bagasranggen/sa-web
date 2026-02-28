@@ -1,0 +1,64 @@
+@layer components {
+    .cb--text {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        ul,
+        ol {
+            @apply not-last:mb-2.5;
+        }
+
+        h1 {
+            @apply text-[5rem];
+        }
+
+        h2 {
+            @apply text-[4.25rem];
+        }
+
+        h3 {
+            @apply text-[3.5rem];
+        }
+
+        h4 {
+            @apply text-5xl;
+        }
+
+        h5 {
+            @apply text-4xl;
+        }
+
+        h6 {
+            @apply text-lg;
+        }
+
+        ul,
+        ol {
+            @apply ms-1.5;
+
+            ul,
+            ol {
+                @apply ms-2.5;
+            }
+        }
+
+        ul {
+            @apply list-disc;
+
+            ul {
+                @apply list-[circle];
+            }
+        }
+
+        ol {
+            @apply list-decimal;
+
+            ol {
+                @apply list-[lower-roman];
+            }
+        }
+    }
+}

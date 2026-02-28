@@ -1,0 +1,117 @@
+@layer components {
+    .input {
+        &.input--checkbox {
+            label {
+                @apply flex items-center gap-x-0.5 relative cursor-pointer;
+                @apply before:content-[""] before:inline-block before:shrink-0 before:w-[1.4rem] before:h-[1.4rem] before:border before:border-black before:rounded-[.3rem];
+                @apply before:transition-colors before:duration-200;
+                @apply peer-checked:before:bg-dark;
+                @apply [&>svg]:group-has-[.peer:checked]:opacity-100!;
+
+                svg {
+                    @apply transition-opacity;
+                    @apply opacity-0;
+                }
+            }
+        }
+
+        &.input--label {
+            @apply relative;
+            @apply after:content-[''] after:bg-sekar-primary after:transition-[width];
+            @apply after:absolute after:left-0 after:bottom-0;
+            @apply after:w-0 after:h-[.2rem];
+            @apply hover:after:w-full focus-within:after:w-full;
+            @apply [&.input--hidden]:hidden;
+
+            &.input--blur {
+                .input__label {
+                    @apply peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2;
+                }
+            }
+
+            &.input--day-picker {
+                svg {
+                    @apply absolute right-2 top-1/2 -translate-y-1/2;
+                }
+
+                input {
+                    @apply pe-7;
+                }
+
+                .input__label {
+                    @apply scale-50 font-semibold translate-x-[1.2rem];
+                }
+            }
+
+            &:not(.input--day-picker) {
+                input,
+                textarea,
+                select {
+                    @apply placeholder:opacity-0;
+                }
+            }
+
+            input,
+            textarea,
+            select {
+                @apply w-full  bg-transparent focus-visible:outline-none;
+                @apply min-h-[6.7rem];
+                @apply text-[2rem];
+                @apply border-b-2 border-b-sekar-primary/10;
+            }
+
+            input,
+            select:not([multiple]) {
+                @apply pt-2;
+            }
+
+            input,
+            textarea {
+                @apply px-2;
+            }
+
+            textarea {
+                @apply pt-3;
+                @apply -mb-0.5;
+            }
+
+            select {
+                @apply px-[1.75rem];
+            }
+
+            select[multiple] {
+                @apply mt-3;
+            }
+
+            + .input__error {
+                @apply text-rose-500 font-semibold;
+            }
+        }
+    }
+
+    .input__label {
+        @apply block uppercase transition-all origin-top-left;
+        @apply pointer-events-none;
+        @apply text-[2.5rem] whitespace-nowrap;
+        @apply tracking-0.5;
+        @apply px-2 py-1;
+        @apply group-focus-within:scale-50 group-focus-within:font-semibold group-focus-within:translate-x-[1.2rem];
+        @apply peer-[:not(:placeholder-shown)]:scale-50 peer-[:not(:placeholder-shown)]:font-semibold peer-[:not(:placeholder-shown)]:translate-x-[1.2rem];
+
+        &:not(.input__label--standalone) {
+            @apply absolute left-0 top-0;
+        }
+
+        &.input__label--standalone {
+            @apply -mb-2.5;
+        }
+
+        &.input__label--active {
+            @apply scale-50 translate-x-[1.2rem] font-semibold;
+        }
+
+        sup {
+            @apply text-rose-500;
+        }
+    }
+}

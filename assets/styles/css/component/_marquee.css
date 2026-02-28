@@ -1,0 +1,17 @@
+@utility marquee-gap-* {
+    --marquee-gap: --spacing(--value(integer));
+}
+
+@layer components {
+    .marquee {
+        @apply overflow-hidden;
+
+        & &__wrapper {
+            @apply flex gap-[var(--marquee-gap)];
+        }
+
+        & &__item {
+            @apply flex-shrink-0 max-sm:w-full;
+        }
+    }
+}

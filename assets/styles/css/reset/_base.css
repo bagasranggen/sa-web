@@ -1,5 +1,6 @@
 @layer base {
-    body {
+    body,
+    #storybook-root > main {
         @apply antialiased bg-light text-dark text-base font-space-grotesk;
     }
 
@@ -10,5 +11,9 @@
     a,
     button {
         @apply cursor-pointer;
+    }
+
+    button {
+        @apply focus-visible:outline-0;
     }
 }

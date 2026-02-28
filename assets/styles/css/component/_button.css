@@ -1,0 +1,42 @@
+@layer components {
+    .btn-container {
+        @apply flex flex-wrap;
+    }
+
+    .btn {
+        &:not(.btn--block) {
+            @variant hover {
+                @apply md:transition-colors;
+                @apply md:text-sekar-primary;
+            }
+        }
+
+        &.btn--block {
+            @apply uppercase font-bold;
+            @apply tracking-[.35rem];
+            @apply border border-dark;
+            @apply md:transition-colors;
+
+            &:not(.btn--lg) {
+                @apply py-[0.6rem] px-[1.8rem];
+                @apply text-sm;
+            }
+
+            &.btn--light {
+                @variant hover {
+                    @apply bg-dark text-light;
+                }
+
+                &.btn--active,
+                &[aria-expanded='true'] {
+                    @apply bg-dark text-light;
+                }
+            }
+
+            &.btn--lg {
+                @apply py-[0.8rem] px-2.5;
+                @apply text-[1.8rem];
+            }
+        }
+    }
+}
