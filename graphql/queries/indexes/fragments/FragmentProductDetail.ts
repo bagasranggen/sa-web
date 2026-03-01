@@ -1,0 +1,23 @@
+import { gql } from '@apollo/client';
+
+export const FRAGMENT_PRODUCT_DETAIL = gql`
+    fragment productDetail on Product {
+        summaries {
+            title
+
+            details {
+                label {
+                    slug
+                    title
+                }
+
+                value
+            }
+        }
+
+        bookedDates {
+            from
+            to
+        }
+    }
+`;
