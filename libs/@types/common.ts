@@ -27,7 +27,7 @@ export type PageDataProps<Props> = {
     //     seomatic: any;
     // };
     meta?: Metadata;
-} & (Pick<PageDataParamsProps, 'type'> & Props);
+} & (Pick<PageDataParamsProps, 'typeHandle'> & Props);
 
 export type Component<Props> = { (props: Props): React.ReactElement | null };
 
