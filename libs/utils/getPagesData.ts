@@ -1,0 +1,53 @@
+import { PageDataParamsProps, PageDataProps } from '@/libs/@types';
+
+import { apolloClient } from '@/libs/fetchers';
+import { PAGES_ENTRY_QUERY } from '@/graphql';
+
+import { PAGES_DATA_HANDLES } from '@/components/pages/handlesData';
+
+export type GetPagesDataProps = Pick<PageDataParamsProps, 'uri' | 'slug'>;
+
+export const getPagesData = async ({ uri, slug }: GetPagesDataProps) => {
+    let typeHandle = undefined;
+
+    try {
+        const { data } = await apolloClient().query({
+            query: PAGES_ENTRY_QUERY,
+            variables: {
+                uri,
+            },
+        });
+
+        if (data) {
+            const pagesObj = Object.values(data);
+
+            if (pagesObj && pagesObj.length > 0) {
+                pagesObj.forEach((item) => {
+                    // console.log({ item });
+                    if (!item?.docs) return;
+                    if (item.docs.length === 0) return;
+                    if (!item.docs[0]?.typeHandle) return;
+
+                    typeHandle = item.docs[0].typeHandle;
+                });
+            }
+        }
+    } catch {}
+
+    let dataProcessor: any = undefined;
+    if (typeHandle && PAGES_DATA_HANDLES?.[typeHandle]) dataProcessor = PAGES_DATA_HANDLES[typeHandle];
+
+    let data: PageDataProps<any> | undefined = undefined;
+
+    if (typeHandle && dataProcessor) {
+        try {
+            data = await dataProcessor({
+                type: typeHandle,
+                uri,
+                slug,
+            });
+        } catch (err) {}
+    }
+
+    return data;
+};
