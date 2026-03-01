@@ -133,3 +133,5 @@ const Detail = ({ price, children, info, carousel, calendar, sizeGuides, button 
 };
 
 export default Detail;
+
+export type { DetailInfoProps };

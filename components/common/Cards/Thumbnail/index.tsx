@@ -61,7 +61,7 @@ const Thumbnail = ({ items }: ThumbnailProps): React.ReactElement | null => {
                                     <Heading
                                         as="h4"
                                         className="cards__price">
-                                        Rp130,000/3day(s)
+                                        {item.price}
                                     </Heading>
                                 )}
                             </div>
