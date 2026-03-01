@@ -4,11 +4,13 @@ import { ElementTagsProps } from '@/libs/@types';
 import { getEnv } from '@/libs/utils';
 
 export type DynamicElementProps<Props> = {
+    handles?: string;
     component?: FunctionComponent<Props> | ElementTagsProps;
     props?: Props;
 } & PropsWithChildren;
 
 const DynamicElement = <Props extends {}>({
+    handles,
     component,
     props,
     children,
@@ -16,7 +18,7 @@ const DynamicElement = <Props extends {}>({
     const { isProduction } = getEnv();
 
     if (!component) {
-        if (!isProduction) console.warn('component is not defined');
+        if (!isProduction) console.warn(`component: ${handles} is not defined`);
 
         return null;
     }
