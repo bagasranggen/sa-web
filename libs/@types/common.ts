@@ -13,7 +13,7 @@ export type PageProps = {
 };
 
 export type PageDataParamsProps = {
-    type?: string;
+    typeHandle?: string;
     uri?: string;
     slug?: string;
 };

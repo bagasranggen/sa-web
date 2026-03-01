@@ -23,7 +23,6 @@ export const getPagesData = async ({ uri, slug }: GetPagesDataProps) => {
 
             if (pagesObj && pagesObj.length > 0) {
                 pagesObj.forEach((item) => {
-                    // console.log({ item });
                     if (!item?.docs) return;
                     if (item.docs.length === 0) return;
                     if (!item.docs[0]?.typeHandle) return;
@@ -42,11 +41,11 @@ export const getPagesData = async ({ uri, slug }: GetPagesDataProps) => {
     if (typeHandle && dataProcessor) {
         try {
             data = await dataProcessor({
-                type: typeHandle,
+                typeHandle,
                 uri,
                 slug,
             });
-        } catch (err) {}
+        } catch {}
     }
 
     return data;
