@@ -7,7 +7,7 @@ import Banner, { DetailProps } from '@/components/common/Banner';
 
 export type ProductDetailIndexProps = {
     entries: {
-        banner: DetailProps;
+        banner?: DetailProps;
         recommendation: ThumbnailProps['items'];
     };
 };
