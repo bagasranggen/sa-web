@@ -7,6 +7,7 @@ import { CATEGORY_ENTRY_QUERY, PRODUCT_LISTING_INDEX_QUERY } from '@/graphql';
 
 import { ProductListingIndexProps } from '@/components/pages/ProductListingIndex';
 import { ThumbnailItemProps } from '@/components/common/Cards';
+import { ProductListingFilterProps } from '@/components/pages/ProductListingIndex/ProductListingFilter';
 
 export const ProductListingData = async ({
     typeHandle,
@@ -30,14 +31,29 @@ export const ProductListingData = async ({
 
     const listing: ProductListingIndexProps['entries']['listing'] = [];
 
+    // const tmpColorSet = new Set();
+    const tmpColorSet = new Set();
+    const tmpColorMap = new Map();
+    let tmpColor = [];
+
     if (products && products.length > 0) {
         products.forEach((item: Product, i: number) => {
             if (!item?.url) return;
 
             const colors: ThumbnailItemProps['colors'] = [];
             if (item?.colors && item.colors.length > 0) {
-                item.colors.forEach((itm: Color | number) => {
-                    if (typeof itm !== 'number' && itm?.color) colors.push(itm.color);
+                item.colors.forEach((itm: NonNullable<Product['colors']>[number]) => {
+                    if (typeof itm !== 'number' && itm?.color) {
+                        colors.push(itm.color);
+                        tmpColorSet.add({ value: itm.slug, label: itm.title });
+
+                        if (!tmpColorMap.has(itm.slug)) {
+                            tmpColorMap.set(itm.slug, item.title);
+                        }
+
+                        tmpColorMap.set(itm.slug, itm.title);
+                        tmpColor.push({ value: itm.slug, label: itm.title });
+                    }
                 });
             }
 
@@ -53,6 +69,27 @@ export const ProductListingData = async ({
             });
         });
     }
+
+    if (tmpColor.length > 0) {
+        console.log({ test: [...new Map(tmpColor.map((item) => [item.slug, item])).values()] });
+    }
+
+    console.log({
+        tmpColorSet,
+        tmpColorMap,
+        tmpColor,
+        test: tmpColorSet.has({ value: 'black', label: 'Black' }),
+        test2: tmpColorSet.has('black'),
+    });
+
+    // const tmpColorSet = new Set();
+
+    // const tmpColor: NonNullable<ProductListingFilterProps['filters']>[number]['checkbox'] = Array.from(new Set());
+    // const tmpColor: NonNullable<ProductListingFilterProps['filters']>[number]['checkbox'] = {
+    // handle: 'color',
+    // children: 'Color',
+    // checkbox: [],
+    // };
 
     const filters: ProductListingIndexProps['entries']['filters'] = {
         sort: PRODUCTS_SORT,

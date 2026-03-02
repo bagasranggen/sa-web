@@ -15,6 +15,9 @@ import ProductListingFilter, {
     ProductListingFilterProps,
 } from '@/components/pages/ProductListingIndex/ProductListingFilter';
 
+import { useLazyQuery } from '@apollo/client/react';
+import { PRODUCT_LISTING_LOAD_QUERY } from '@/graphql';
+
 export type ProductListingIndexProps = {
     entries: {
         banner: BaseProps['children'];
@@ -33,6 +36,10 @@ const ProductListingIndex = ({ entries }: ProductListingIndexProps): React.React
     const [isLoading, setIsLoading] = useState(false);
     const [page, setPage] = useState(0);
     const [listingLoadItems, setListingLoadItems] = useState<ThumbnailProps['items']>([]);
+
+    const [loadProducts, { called, loading, data }] = useLazyQuery(PRODUCT_LISTING_LOAD_QUERY, {});
+
+    // console.log({ data, loading });
 
     const resetFilterIsActive = useMemo(() => {
         let data = false;
@@ -74,52 +81,59 @@ const ProductListingIndex = ({ entries }: ProductListingIndexProps): React.React
     return (
         <>
             <Suspense fallback={null}>
-                <IntersectionEvents
-                    ref={loadMoreRef}
-                    onIntersection={() => {
-                        if (!isLoading) {
-                            pageLoadHandler({ page: page + 1, scroll: false });
-                        }
-                    }}
-                />
+                {/*<IntersectionEvents*/}
+                {/*    ref={loadMoreRef}*/}
+                {/*    onIntersection={() => {*/}
+                {/*        if (!isLoading) {*/}
+                {/*            pageLoadHandler({ page: page + 1, scroll: false });*/}
+                {/*        }*/}
+                {/*    }}*/}
+                {/*/>*/}
 
                 {/* TODO: change items fetching with real data later on */}
                 <ParamsEvents
                     onChange={({ params }) => {
                         const { page, ...rest } = params;
-
-                        const paramsPage = page ? Number(page) : undefined;
-
-                        if (paramsPage && paramsPage > 0) {
-                            setPage(paramsPage);
-
-                            setTimeout(() => {
-                                setIsLoading(false);
-                                setListingLoadItems((prev) => [...prev, ...PRODUCT_LISTING_LOAD]);
-                            }, 1000);
-                        }
-
-                        if (!paramsPage) {
-                            setPage(0);
-
-                            setTimeout(() => {
-                                setIsLoading(false);
-                                setListingLoadItems([]);
-                            }, 1000);
-                        }
-
+                        // const paramsPage = page ? Number(page) : undefined;
+                        //
+                        // if (paramsPage && paramsPage > 0) {
+                        //     setPage(paramsPage);
+                        //
+                        //     setTimeout(() => {
+                        //         setIsLoading(false);
+                        //         setListingLoadItems((prev) => [...prev, ...PRODUCT_LISTING_LOAD]);
+                        //     }, 1000);
+                        // }
+                        //
+                        // if (!paramsPage) {
+                        //     setPage(0);
+                        //
+                        //     setTimeout(() => {
+                        //         setIsLoading(false);
+                        //         setListingLoadItems([]);
+                        //     }, 1000);
+                        // }
+                        //
                         const restArr = Object.entries(rest);
 
                         if (restArr.length > 0) {
-                            let tmp = {};
+                            console.log({ restArr });
 
-                            restArr.forEach(([key, value]) => {
-                                tmp = Object.assign(tmp, {
-                                    [key]: value.split(','),
-                                });
-                            });
+                            // loadProducts({
+                            //     variables: {
+                            //         categoryId: 1,
+                            //     },
+                            // });
 
-                            setFilter((prevState) => ({ ...prevState, ...tmp }));
+                            //     let tmp = {};
+                            //
+                            //     restArr.forEach(([key, value]) => {
+                            //         tmp = Object.assign(tmp, {
+                            //             [key]: value.split(','),
+                            //         });
+                            //     });
+                            //
+                            //     setFilter((prevState) => ({ ...prevState, ...tmp }));
                         }
                     }}
                 />
