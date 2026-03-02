@@ -15,7 +15,7 @@ const Page = async ({ params: paramsProps }: PageProps): Promise<React.ReactElem
     return (
         <DynamicElement
             handles={data?.typeHandle}
-            component={PAGES_INDEX_HANDLES?.[data?.type as keyof typeof PAGES_INDEX_HANDLES] as any}
+            component={PAGES_INDEX_HANDLES?.[data?.typeHandle as keyof typeof PAGES_INDEX_HANDLES] as any}
             props={data}
         />
     );
