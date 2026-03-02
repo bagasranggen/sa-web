@@ -11,6 +11,7 @@ import ContextProvider from '@/store/context';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Main from '@/components/layout/Main';
+import Apollo from '@/components/layout/Apollo';
 
 const aboreto = localFont({
     src: '../assets/fonts/aboreto/Aboreto-Regular.ttf',
@@ -31,13 +32,15 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <ContextProvider>
             <html lang="en">
                 <body className={`${aboreto.variable} ${spaceGrotesk.variable}`}>
-                    <Main>
-                        <Header items={NAVIGATION_LINKS} />
+                    <Apollo>
+                        <Main>
+                            <Header items={NAVIGATION_LINKS} />
 
-                        <main>{children}</main>
+                            <main>{children}</main>
 
-                        <Footer />
-                    </Main>
+                            <Footer />
+                        </Main>
+                    </Apollo>
                 </body>
             </html>
         </ContextProvider>
