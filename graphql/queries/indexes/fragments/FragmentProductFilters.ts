@@ -1,5 +1,8 @@
 import { gql } from '@apollo/client';
+
 import { FRAGMENT_CATEGORY } from '@/graphql/queries/common/FragmentCategory';
+import { FRAGMENT_SIZE } from '@/graphql/queries/common/FragmentSize';
+import { FRAGMENT_COLOR } from '@/graphql/queries/common/FragmentColor';
 
 export const FRAGMENT_PRODUCT_FILTERS = gql`
     fragment productFilters on Product {
@@ -8,18 +11,15 @@ export const FRAGMENT_PRODUCT_FILTERS = gql`
         }
 
         sizes {
-            id
-            slug
-            title
+            ...size
         }
 
         colors {
-            id
-            slug
-            title
-            color
+            ...color
         }
     }
 
     ${FRAGMENT_CATEGORY}
+    ${FRAGMENT_SIZE}
+    ${FRAGMENT_COLOR}
 `;
