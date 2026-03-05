@@ -10,7 +10,7 @@ const Page = async ({ params: paramsProps }: PageProps): Promise<React.ReactElem
 
     console.log({ params });
 
-    const { entries } = await ProductDetailData();
+    const { entries } = await ProductDetailData({});
 
     return <ProductDetailIndex entries={entries} />;
 };

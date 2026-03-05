@@ -2,6 +2,7 @@ export * from './cleanArrayString';
 export * from './cn';
 export * from './convertIntToCurrency';
 export * from './convertObjectToSearchParamsQuery';
+export * from './convertSearchParamsToObject';
 export * from './delay';
 export * from './getAnimationElement';
 export * from './getElementDimension';

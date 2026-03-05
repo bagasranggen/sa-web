@@ -3,9 +3,15 @@
 import React, { Suspense, useMemo, useRef, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 
-import { PRODUCT_LISTING_LOAD } from '@/libs/mock';
+import { PRODUCT_LOAD_LIMIT } from '@/libs/constants';
+import { Product } from '@/libs/@types';
 import { IntersectionEvents, ParamsEvents } from '@/libs/hooks';
-import { convertObjectToSearchParamsQuery } from '@/libs/utils';
+import { convertObjectToSearchParamsQuery, convertSearchParamsToObject } from '@/libs/utils';
+import { createProductItem } from '@/libs/factory';
+
+import { useLazyQuery } from '@apollo/client/react';
+import { OperationVariables } from '@apollo/client';
+import { FILTERS_ID_QUERY, PRODUCT_LISTING_LOAD_QUERY } from '@/graphql';
 
 import Container from '@/components/common/Container';
 import Heading, { BaseProps } from '@/components/common/Heading';
@@ -14,12 +20,15 @@ import Loader from '@/components/common/Loader';
 import ProductListingFilter, {
     ProductListingFilterProps,
 } from '@/components/pages/ProductListingIndex/ProductListingFilter';
-
-import { useLazyQuery } from '@apollo/client/react';
-import { PRODUCT_LISTING_LOAD_QUERY } from '@/graphql';
+import ProductListingNotFound, {
+    ProductListingNotFoundProps,
+} from '@/components/pages/ProductListingIndex/ProductListingNotFound';
+import ProductListingWrapper from '@/components/pages/ProductListingIndex/ProductListingWrapper';
 
 export type ProductListingIndexProps = {
     entries: {
+        category?: { id?: number };
+        otherRecommendations?: ProductListingNotFoundProps['links'];
         banner: BaseProps['children'];
         listing: ThumbnailProps['items'];
         filters: Pick<ProductListingFilterProps, 'sort' | 'filters'>;
@@ -27,21 +36,21 @@ export type ProductListingIndexProps = {
 };
 
 const ProductListingIndex = ({ entries }: ProductListingIndexProps): React.ReactElement => {
-    const [filter, setFilter] = useState<ProductListingFilterProps['activeFilter']>({});
-
     const router = useRouter();
     const pathname = usePathname();
 
+    const [loadProducts, { loading }] = useLazyQuery(PRODUCT_LISTING_LOAD_QUERY, {});
+    const [getFilterId] = useLazyQuery(FILTERS_ID_QUERY);
+
     const loadMoreRef = useRef(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [page, setPage] = useState(0);
-    const [listingLoadItems, setListingLoadItems] = useState<ThumbnailProps['items']>([]);
 
-    const [loadProducts, { called, loading, data }] = useLazyQuery(PRODUCT_LISTING_LOAD_QUERY, {});
+    const [filter, setFilter] = useState<ProductListingFilterProps['activeFilter']>({});
+    const [listingItems, setListingItems] = useState<ThumbnailProps['items']>(entries.listing);
+    const [loadMoreIsLoading, setLoadMoreIsLoading] = useState(false);
+    const [paginationPage, setPaginationPage] = useState(1);
+    const [hasLoadMore, setHasLoadMore] = useState<boolean>(entries?.listing?.length > 0);
 
-    // console.log({ data, loading });
-
-    const resetFilterIsActive = useMemo(() => {
+    const filterIsActive = useMemo(() => {
         let data = false;
 
         const filterArr = Object.entries(filter ?? {});
@@ -56,19 +65,8 @@ const ProductListingIndex = ({ entries }: ProductListingIndexProps): React.React
         return data;
     }, [filter]);
 
-    const listingItems = useMemo(() => {
-        const data = [];
-
-        const initialListing = entries.listing;
-
-        if (initialListing && initialListing.length > 0) data.push(...initialListing);
-        if (listingLoadItems && listingLoadItems.length > 0 && page > 0) data.push(...listingLoadItems);
-
-        return data;
-    }, [entries.listing, listingLoadItems, page]);
-
     const pageLoadHandler = ({ page, scroll = false }: { page: number; scroll?: boolean }) => {
-        setIsLoading(true);
+        setLoadMoreIsLoading(true);
 
         const searchQuery = convertObjectToSearchParamsQuery({ obj: { page: page } });
 
@@ -78,62 +76,145 @@ const ProductListingIndex = ({ entries }: ProductListingIndexProps): React.React
         router.push(path, { scroll });
     };
 
+    const productsFilterHandler = ({
+        page,
+        filterVars,
+        searchParams,
+    }: {
+        page: number;
+        filterVars?: OperationVariables;
+        searchParams?: ProductListingFilterProps['activeFilter'];
+    }) => {
+        let isMultipleLoad = false;
+        if (page - paginationPage > 1) isMultipleLoad = true;
+        if (page > 1 && Object.keys(filterVars ?? {}).length > 0) isMultipleLoad = true;
+
+        let productsVariable = {};
+
+        if (entries?.category?.id) {
+            productsVariable = Object.assign(productsVariable, { categoryId: entries.category.id });
+        }
+        if (!isMultipleLoad) {
+            productsVariable = Object.assign(productsVariable, { limit: PRODUCT_LOAD_LIMIT, page });
+        }
+        if (isMultipleLoad) {
+            productsVariable = Object.assign(productsVariable, { limit: PRODUCT_LOAD_LIMIT * page });
+        }
+
+        getFilterId({
+            variables: filterVars,
+        }).then((res) => {
+            const resArr = Object.entries(res?.data ?? {});
+
+            resArr.forEach(([key, value]) => {
+                productsVariable = Object.assign(productsVariable, {
+                    [key]: value.docs?.map((item: any) => item?.id),
+                });
+            });
+
+            loadProducts({
+                variables: productsVariable,
+            })
+                .then((res) => {
+                    const data = (res as any)?.data?.Products;
+
+                    const tmpProducts: ThumbnailProps['items'] = [];
+                    if (data?.docs && data.docs.length > 0) {
+                        data.docs.forEach((item: Product, i: number) => {
+                            const product = createProductItem({ item, index: i });
+
+                            if (product) tmpProducts.push(product);
+                        });
+                    }
+
+                    setListingItems((prevState) => {
+                        if (page === 1 || isMultipleLoad) return tmpProducts;
+
+                        return [...prevState, ...tmpProducts];
+                    });
+
+                    setHasLoadMore(data?.loadMore);
+                })
+                .then(() => {
+                    setLoadMoreIsLoading(false);
+
+                    if (page && page > 0) setPaginationPage(page);
+                    if (searchParams) setFilter((prevState) => ({ ...prevState, ...searchParams }));
+                });
+        });
+    };
+
+    const listingIsEmpty = entries?.listing?.length === 0;
+    const listingFilterIsEmpty = filterIsActive && listingItems && listingItems.length === 0;
+
+    let notFound: Pick<ProductListingNotFoundProps, 'links' | 'children' | 'subtitle'> = {};
+
+    if (listingIsEmpty) {
+        let tmp: Pick<ProductListingNotFoundProps, 'links' | 'children' | 'subtitle'> = {
+            children: "We're preparing this style. It will be available shortly",
+        };
+
+        if (entries?.otherRecommendations && entries.otherRecommendations.length > 0) {
+            tmp = Object.assign(tmp, {
+                subtitle: 'In the meantime, browse our other styles',
+                links: entries.otherRecommendations,
+            });
+        }
+
+        notFound = Object.assign(notFound, tmp);
+    }
+
+    if (listingFilterIsEmpty) {
+        notFound = Object.assign(notFound, {
+            children: "We couldn't find styles that fit your selection",
+            subtitle: 'Try adjusting or clearing some filters to see more styles',
+        });
+    }
+
     return (
         <>
             <Suspense fallback={null}>
-                {/*<IntersectionEvents*/}
-                {/*    ref={loadMoreRef}*/}
-                {/*    onIntersection={() => {*/}
-                {/*        if (!isLoading) {*/}
-                {/*            pageLoadHandler({ page: page + 1, scroll: false });*/}
-                {/*        }*/}
-                {/*    }}*/}
-                {/*/>*/}
+                <IntersectionEvents
+                    ref={loadMoreRef}
+                    onIntersection={() => {
+                        if (!loading && !loadMoreIsLoading && hasLoadMore) {
+                            pageLoadHandler({ page: paginationPage + 1, scroll: false });
+                        }
+                    }}
+                />
 
-                {/* TODO: change items fetching with real data later on */}
                 <ParamsEvents
                     onChange={({ params }) => {
                         const { page, ...rest } = params;
-                        // const paramsPage = page ? Number(page) : undefined;
-                        //
-                        // if (paramsPage && paramsPage > 0) {
-                        //     setPage(paramsPage);
-                        //
-                        //     setTimeout(() => {
-                        //         setIsLoading(false);
-                        //         setListingLoadItems((prev) => [...prev, ...PRODUCT_LISTING_LOAD]);
-                        //     }, 1000);
-                        // }
-                        //
-                        // if (!paramsPage) {
-                        //     setPage(0);
-                        //
-                        //     setTimeout(() => {
-                        //         setIsLoading(false);
-                        //         setListingLoadItems([]);
-                        //     }, 1000);
-                        // }
-                        //
-                        const restArr = Object.entries(rest);
+                        const paramsPage = page ? Number(page) : 1;
 
-                        if (restArr.length > 0) {
-                            console.log({ restArr });
+                        const { params: searchParams, paramsArr, paramsLength } = convertSearchParamsToObject(rest);
 
-                            // loadProducts({
-                            //     variables: {
-                            //         categoryId: 1,
-                            //     },
-                            // });
+                        if (paramsLength === 0) {
+                            setFilter({});
+                            if (entries.listing.length > 0) setHasLoadMore(true);
+                        }
 
-                            //     let tmp = {};
-                            //
-                            //     restArr.forEach(([key, value]) => {
-                            //         tmp = Object.assign(tmp, {
-                            //             [key]: value.split(','),
-                            //         });
-                            //     });
-                            //
-                            //     setFilter((prevState) => ({ ...prevState, ...tmp }));
+                        if (paramsLength === 0 && paramsPage === 1) setListingItems(entries.listing);
+
+                        if (paramsPage === 1) setPaginationPage(1);
+
+                        if (paramsLength > 0 || paramsPage > 1) {
+                            let variablesCategory = searchParams;
+
+                            if (paramsArr && paramsLength > 0) {
+                                paramsArr.forEach(([key]) => {
+                                    variablesCategory = Object.assign(variablesCategory, {
+                                        [`${key}Filter`]: true,
+                                    });
+                                });
+                            }
+
+                            productsFilterHandler({
+                                filterVars: variablesCategory,
+                                page: paramsPage,
+                                searchParams,
+                            });
                         }
                     }}
                 />
@@ -170,24 +251,34 @@ const ProductListingIndex = ({ entries }: ProductListingIndexProps): React.React
                             }
                         }}
                         reset={{
-                            active: resetFilterIsActive,
+                            active: filterIsActive,
                             onResetFilters: () => {
                                 router.push(pathname);
-                                setFilter({});
                             },
                         }}
                     />
                 )}
 
                 {listingItems && listingItems.length > 0 && (
-                    <>
+                    <ProductListingWrapper isLoading={!loadMoreIsLoading && loading}>
                         <Cards.Thumbnail items={listingItems} />
-
-                        {isLoading && <Loader className="flex flex-col items-center mt-12 mb-3">Loading</Loader>}
-
-                        <div ref={loadMoreRef} />
-                    </>
+                    </ProductListingWrapper>
                 )}
+
+                <ProductListingNotFound
+                    className="mt-12"
+                    show={listingIsEmpty || listingFilterIsEmpty}
+                    subtitle={notFound?.subtitle}
+                    links={notFound?.links}>
+                    {notFound?.children}
+                </ProductListingNotFound>
+
+                {loadMoreIsLoading && <Loader className="flex flex-col items-center mt-12 mb-3">Loading</Loader>}
+
+                <div
+                    ref={loadMoreRef}
+                    id="loadMore"
+                />
             </Container>
         </>
     );

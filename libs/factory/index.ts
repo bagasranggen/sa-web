@@ -3,4 +3,6 @@ export * from './createArrayFromNumber';
 export * from './createBreakpointClass';
 export * from './createInputHooks';
 export * from './createPicsumImage';
+export * from './createProductFilter';
+export * from './createProductItem';
 export * from './createProductPrice';
