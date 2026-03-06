@@ -24,7 +24,7 @@ const ErrorIndex = ({ entries }: ErrorIndexProps): React.ReactElement => {
                 </Heading>
 
                 <div className="mt-2 text-lg">
-                    <p className=" mb-0">
+                    <p className="mb-0">
                         Looks like our server tried on too many outfits at once and tripped over the rack.
                     </p>
                     <p>We&#39;re fixing the fit right now.</p>

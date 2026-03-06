@@ -14,8 +14,6 @@ export const fadeIn = ({ element, config, id }: FadeProps) => {
         },
     });
 
-    console.log({ config });
-
     let fadeConfig: FadeProps['config'] = config ?? {};
     if (!config?.direction) fadeConfig = Object.assign(fadeConfig, { direction: 'up' });
     // if(config?.direction) fadeConfig = Object.assign(fadeConfig, { direction: 'up' });

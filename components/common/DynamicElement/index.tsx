@@ -18,7 +18,9 @@ const DynamicElement = <Props extends {}>({
     const { isProduction } = getEnv();
 
     if (!component) {
-        if (!isProduction) console.warn(`component: ${handles} is not defined`);
+        if (!isProduction) {
+            console.warn({ handles, message: `component: ${handles} is not defined` });
+        }
 
         return null;
     }
