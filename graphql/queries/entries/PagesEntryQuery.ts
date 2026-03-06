@@ -13,5 +13,11 @@ export const PAGES_ENTRY_QUERY = gql`
                 typeHandle
             }
         }
+
+        StaticPages(where: { uri: { equals: $uri } }) {
+            docs {
+                typeHandle
+            }
+        }
     }
 `;
