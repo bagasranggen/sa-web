@@ -31,7 +31,9 @@ export const getPagesData = async ({ uri, slug }: GetPagesDataProps) => {
                 });
             }
         }
-    } catch {}
+    } catch (e) {
+        throw new Error(e as any);
+    }
 
     let dataProcessor: any = undefined;
     if (typeHandle && PAGES_DATA_HANDLES?.[typeHandle]) dataProcessor = PAGES_DATA_HANDLES[typeHandle];
