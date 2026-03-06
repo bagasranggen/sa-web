@@ -1,24 +1,21 @@
 import { gql } from '@apollo/client';
-import { FRAGMENT_LINK } from '@/graphql/queries/common/FragmentLink';
+
+import { FRAGMENT_NAVIGATION } from '@/graphql/queries/global/fragments/FragmentNavigation';
+import { FRAGMENT_FOOTER } from '@/graphql/queries/global/fragments/FragmentFooter';
 
 export const GLOBAL_QUERY = gql`
     query GlobalQuery {
         Navigation {
             navigations {
-                entryStatus
-
-                link {
-                    ...link
-                }
-
-                children {
-                    link {
-                        ...link
-                    }
-                }
+                ...navigation
             }
+        }
+
+        Footer {
+            ...footer
         }
     }
 
-    ${FRAGMENT_LINK}
+    ${FRAGMENT_NAVIGATION}
+    ${FRAGMENT_FOOTER}
 `;

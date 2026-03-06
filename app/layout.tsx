@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-    const { header } = await LayoutData();
+    const { header, footer } = await LayoutData();
 
     return (
         <ContextProvider>
@@ -40,7 +40,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
 
                             <main>{children}</main>
 
-                            <Footer />
+                            <Footer {...footer} />
                         </Main>
                     </Apollo>
                 </body>

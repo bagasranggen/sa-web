@@ -1,10 +1,11 @@
-import { Navigation } from '@/libs/@types';
+import { Footer, Navigation } from '@/libs/@types';
 import { createLinkItem } from '@/libs/factory';
 
 import { apolloClient } from '@/libs/fetchers';
 import { GLOBAL_QUERY } from '@/graphql';
 
 import { HeaderProps } from '@/components/layout/Header';
+import { FooterProps } from '@/components/layout/Footer';
 
 export const LayoutData = async () => {
     let data: any | undefined = undefined;
@@ -18,6 +19,7 @@ export const LayoutData = async () => {
     } catch {}
 
     const headerNavigation = data?.Navigation?.navigations;
+    const footerNavigation = data?.Footer;
 
     const header: HeaderProps['items'] = [];
 
@@ -51,7 +53,51 @@ export const LayoutData = async () => {
         });
     }
 
+    let footer: FooterProps | undefined = undefined;
+
+    if (footerNavigation?.generalInfo && footerNavigation.generalInfo.length > 0) {
+        const tmp: FooterProps['generalInfo'] = [];
+
+        footerNavigation.generalInfo.forEach((item: NonNullable<Footer['generalInfo']>[number]) => {
+            const { linkIsValid, link } = createLinkItem(item?.link);
+
+            if (linkIsValid && link) tmp.push(link);
+        });
+
+        if (tmp.length > 0) footer = Object.assign(footer ?? {}, { generalInfo: tmp });
+    }
+
+    if (footerNavigation?.socials && footerNavigation.socials.length > 0) {
+        const tmp: FooterProps['socials'] = [];
+
+        footerNavigation.socials.forEach((item: NonNullable<Footer['generalInfo']>[number]) => {
+            const { linkIsValid, link } = createLinkItem(item?.link);
+
+            if (linkIsValid && link) tmp.push(link);
+        });
+
+        if (tmp.length > 0) footer = Object.assign(footer ?? {}, { socials: tmp });
+    }
+
+    let tmpLocation: FooterProps['location'] = undefined;
+    if (footerNavigation?.locationLink) {
+        const { linkIsValid, link } = createLinkItem(footerNavigation.locationLink);
+
+        if (linkIsValid && link) {
+            tmpLocation = Object.assign(tmpLocation ?? {}, { link });
+        }
+        if (footerNavigation?.locationTitle) {
+            tmpLocation = Object.assign(tmpLocation ?? {}, { title: footerNavigation.locationTitle });
+        }
+        if (footerNavigation?.locationAddress) {
+            tmpLocation = Object.assign(tmpLocation ?? {}, { description: footerNavigation.locationAddress });
+        }
+    }
+
+    if (tmpLocation) footer = Object.assign(footer ?? {}, { location: tmpLocation });
+
     return {
         header,
+        footer,
     };
 };
