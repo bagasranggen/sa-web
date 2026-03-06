@@ -14,7 +14,7 @@ const ErrorIndex = ({ entries }: ErrorIndexProps): React.ReactElement => {
     return (
         <Container
             as="section"
-            className="mt-15 mb-15">
+            className="mt-21 mb-24">
             <div className="text-center">
                 <Heading
                     as="h1"
