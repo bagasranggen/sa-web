@@ -3,6 +3,7 @@ import { PageDataParamsProps, PageDataProps } from '@/libs/@types';
 import { apolloClient } from '@/libs/fetchers';
 import { PAGES_ENTRY_QUERY } from '@/graphql';
 
+import { PAGES_HANDLES } from '@/components/pages/handles';
 import { PAGES_DATA_HANDLES } from '@/components/pages/handlesData';
 
 export type GetPagesDataProps = Pick<PageDataParamsProps, 'uri' | 'slug'>;
@@ -30,6 +31,8 @@ export const getPagesData = async ({ uri, slug }: GetPagesDataProps) => {
                     typeHandle = item.docs[0].typeHandle;
                 });
             }
+
+            if (!typeHandle) typeHandle = PAGES_HANDLES.NOT_FOUND;
         }
     } catch (e) {
         throw new Error(e as any);
@@ -42,7 +45,7 @@ export const getPagesData = async ({ uri, slug }: GetPagesDataProps) => {
 
     if (typeHandle && dataProcessor) {
         try {
-            data = await dataProcessor({
+            data = dataProcessor({
                 typeHandle,
                 uri,
                 slug,
