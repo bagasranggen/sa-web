@@ -41,7 +41,7 @@ export const NAVIGATION_LINKS: HeaderLinkProps[] = [
     },
     {
         link: {
-            href: '/terms-conditions',
+            href: '/terms-and-conditions',
             children: 'Terms & Conditions',
         },
     },
