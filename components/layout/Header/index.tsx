@@ -96,12 +96,14 @@ const Header = ({ items }: HeaderProps): React.ReactElement => {
                         />
                     </Button>
 
-                    <Button
-                        as="button"
-                        className="lg:hidden"
-                        onClick={() => setNavigationModalIsOpen((prevState) => !prevState)}>
-                        <Icon.Hamburger active={navigationModalIsOpen} />
-                    </Button>
+                    {items && items.length > 0 && (
+                        <Button
+                            as="button"
+                            className="lg:hidden"
+                            onClick={() => setNavigationModalIsOpen((prevState) => !prevState)}>
+                            <Icon.Hamburger active={navigationModalIsOpen} />
+                        </Button>
+                    )}
 
                     {items && items.length > 0 && (
                         <div className="nav__links">
