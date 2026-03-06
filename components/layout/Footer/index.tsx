@@ -47,10 +47,10 @@ const Footer = ({ location, generalInfo, socials }: FooterProps): React.ReactEle
                                             {...location.link}>
                                             <div className="flex max-md:justify-center gap-x-0.5">
                                                 <MapPin
-                                                    size={18}
-                                                    className="shrink-0 mt-0.25"
+                                                    size={14}
+                                                    className="shrink-0 mt-0.5"
                                                 />
-                                                {location?.title}
+                                                {location?.title && <strong>{location?.title}</strong>}
                                             </div>
 
                                             {location?.description && (
