@@ -2,6 +2,7 @@ export * from './createAnimationHandles';
 export * from './createArrayFromNumber';
 export * from './createBreakpointClass';
 export * from './createInputHooks';
+export * from './createLinkItem';
 export * from './createPicsumImage';
 export * from './createProductFilter';
 export * from './createProductItem';
