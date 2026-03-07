@@ -8,13 +8,7 @@ export const PAGES_ENTRY_QUERY = gql`
             }
         }
 
-        ProductsCategories(where: { uri: { equals: $uri } }) {
-            docs {
-                typeHandle
-            }
-        }
-
-        StaticPages(where: { uri: { equals: $uri } }) {
+        Pages(where: { uri: { equals: $uri } }) {
             docs {
                 typeHandle
             }

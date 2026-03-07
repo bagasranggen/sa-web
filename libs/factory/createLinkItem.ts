@@ -20,15 +20,6 @@ export const createLinkItem = (item?: Link) => {
             });
             break;
 
-        case 'categories':
-            const category = item?.category && typeof item.category !== 'number' ? item.category : undefined;
-
-            link = Object.assign({
-                href: category?.url,
-                children: item?.label || category?.title,
-            });
-            break;
-
         case 'pages':
             const page = item?.page && typeof item.page !== 'number' ? item.page : undefined;
 

@@ -8,11 +8,6 @@ export const FRAGMENT_LINK = gql`
         target
         label
 
-        category {
-            url
-            title
-        }
-
         product {
             url
             title

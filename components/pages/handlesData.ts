@@ -9,5 +9,6 @@ export const PAGES_DATA_HANDLES = {
     [PAGES_HANDLES.NOT_FOUND]: NotFoundData,
     [PAGES_HANDLES.PRODUCT_DETAIL]: ProductDetailData,
     [PAGES_HANDLES.PRODUCT_LISTING]: ProductListingData,
+    [PAGES_HANDLES.PRODUCT_CATEGORIES]: ProductListingData,
     [PAGES_HANDLES.STATIC_PAGES]: StaticPageData,
 };

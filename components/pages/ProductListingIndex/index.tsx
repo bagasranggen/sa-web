@@ -28,6 +28,7 @@ import ProductListingWrapper from '@/components/pages/ProductListingIndex/Produc
 export type ProductListingIndexProps = {
     entries: {
         category?: { id?: number };
+        products?: { hasLoadMore?: boolean };
         otherRecommendations?: ProductListingNotFoundProps['links'];
         banner: BaseProps['children'];
         listing: ThumbnailProps['items'];
@@ -48,7 +49,7 @@ const ProductListingIndex = ({ entries }: ProductListingIndexProps): React.React
     const [listingItems, setListingItems] = useState<ThumbnailProps['items']>(entries.listing);
     const [loadMoreIsLoading, setLoadMoreIsLoading] = useState(false);
     const [paginationPage, setPaginationPage] = useState(1);
-    const [hasLoadMore, setHasLoadMore] = useState<boolean>(entries?.listing?.length > 0);
+    const [hasLoadMore, setHasLoadMore] = useState<boolean>(!!entries?.products?.hasLoadMore);
 
     const filterIsActive = useMemo(() => {
         let data = false;
@@ -192,7 +193,7 @@ const ProductListingIndex = ({ entries }: ProductListingIndexProps): React.React
 
                         if (paramsLength === 0) {
                             setFilter({});
-                            if (entries.listing.length > 0) setHasLoadMore(true);
+                            if (!!entries?.products?.hasLoadMore) setHasLoadMore(true);
                         }
 
                         if (paramsLength === 0 && paramsPage === 1) setListingItems(entries.listing);

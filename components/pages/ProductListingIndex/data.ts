@@ -1,11 +1,12 @@
 import { PRODUCTS_SORT } from '@/libs/mock';
 import { PRODUCT_LOAD_LIMIT } from '@/libs/constants';
-import { PageDataParamsProps, PageDataProps, Product, ProductsCategory } from '@/libs/@types';
+import { Page, PageDataParamsProps, PageDataProps, Product } from '@/libs/@types';
 import { createProductFilter, createProductItem } from '@/libs/factory';
 
 import { apolloClient } from '@/libs/fetchers';
 import { CATEGORY_ENTRY_QUERY, PRODUCT_LISTING_INDEX_QUERY } from '@/graphql';
 
+import { PAGES_HANDLES } from '@/components/pages/handles';
 import { ProductListingIndexProps } from '@/components/pages/ProductListingIndex';
 
 export const ProductListingData = async ({
@@ -13,6 +14,8 @@ export const ProductListingData = async ({
     uri,
     slug,
 }: PageDataParamsProps): Promise<PageDataProps<ProductListingIndexProps>> => {
+    const isAllProducts = typeHandle === PAGES_HANDLES.PRODUCT_LISTING;
+
     const { data: categoryData } = await apolloClient().query({
         query: CATEGORY_ENTRY_QUERY,
         variables: { slug },
@@ -22,18 +25,24 @@ export const ProductListingData = async ({
 
     const { data } = await apolloClient().query({
         query: PRODUCT_LISTING_INDEX_QUERY,
-        variables: { uri, categoryId, limit: PRODUCT_LOAD_LIMIT },
+        variables: {
+            typeHandle: [PAGES_HANDLES.PRODUCT_LISTING, PAGES_HANDLES.PRODUCT_CATEGORIES],
+            uri,
+            categoryId,
+            limit: PRODUCT_LOAD_LIMIT,
+        },
     });
 
-    const category = (data as any)?.ProductsCategories?.docs?.[0];
-    const otherCategory = (data as any)?.OtherProductsCategories?.docs;
-    const products = (data as any)?.Products?.docs;
+    const page = (data as any)?.Pages?.docs?.[0];
+    const otherPage = (data as any)?.OtherPages?.docs;
+    const products = (data as any)?.Products;
+    const productsListing = products.docs;
     const productsFilters = (data as any)?.ProductsFilters?.docs;
 
     const listing: ProductListingIndexProps['entries']['listing'] = [];
 
-    if (products && products.length > 0) {
-        products.forEach((item: Product, i: number) => {
+    if (productsListing && productsListing.length > 0) {
+        productsListing.forEach((item: Product, i: number) => {
             const product = createProductItem({ item, index: i });
 
             if (product) listing.push(product);
@@ -42,8 +51,8 @@ export const ProductListingData = async ({
 
     const otherRecommendations: ProductListingIndexProps['entries']['otherRecommendations'] = [];
 
-    if (listing.length === 0 && otherCategory && otherCategory.length > 0) {
-        otherCategory.forEach((item: ProductsCategory) => {
+    if (listing.length === 0 && otherPage && otherPage.length > 0) {
+        otherPage.forEach((item: Page) => {
             if (!item?.url) return;
 
             otherRecommendations.push({
@@ -53,11 +62,18 @@ export const ProductListingData = async ({
         });
     }
 
+    const tmpCategoryMap = new Map();
     const tmpColorMap = new Map();
     const tmpSizeMap = new Map();
 
     if (productsFilters && productsFilters.length > 0) {
         productsFilters.forEach((item: Product) => {
+            if (item?.category && typeof item.category !== 'number' && isAllProducts) {
+                if (!tmpCategoryMap.has(item.category.slug)) {
+                    tmpCategoryMap.set(item.category.slug, item.category.title);
+                }
+            }
+
             if (item?.sizes && item.sizes.length > 0) {
                 item.sizes.forEach((itm: NonNullable<Product['sizes']>[number]) => {
                     if (typeof itm !== 'number') {
@@ -80,6 +96,12 @@ export const ProductListingData = async ({
         });
     }
 
+    const filterCategories = createProductFilter({
+        map: tmpCategoryMap,
+        handle: 'category',
+        children: 'Category',
+    });
+
     const filterColors = createProductFilter({
         map: tmpColorMap,
         handle: 'color',
@@ -94,6 +116,7 @@ export const ProductListingData = async ({
 
     const productFilters: NonNullable<ProductListingIndexProps['entries']['filters']>['filters'] = [];
 
+    if (filterCategories) productFilters.push(filterCategories);
     if (filterColors) productFilters.push(filterColors);
     if (filterSizes) productFilters.push(filterSizes);
 
@@ -106,8 +129,9 @@ export const ProductListingData = async ({
         typeHandle,
         entries: {
             category: { id: categoryId },
+            products: { hasLoadMore: products?.loadMore },
             otherRecommendations,
-            banner: category?.title ?? 'Collection',
+            banner: page?.title ?? 'Collection',
             listing,
             filters,
         },
