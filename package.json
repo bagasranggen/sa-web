@@ -14,6 +14,7 @@
         "@apollo/client": "^4.1.6",
         "@bprogress/next": "^3.2.12",
         "@gsap/react": "^2.1.2",
+        "@payloadcms/richtext-lexical": "^3.79.0",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
         "graphql": "^16.13.0",
