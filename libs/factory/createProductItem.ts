@@ -16,7 +16,7 @@ export const createProductItem = ({
     index,
     item,
     colorsFn,
-}: CreateProductItemProps): ThumbnailItemProps | undefined => {
+}: CreateProductItemProps): (ThumbnailItemProps & { slug: string }) | undefined => {
     if (!item?.url) return undefined;
 
     const colors: ThumbnailItemProps['colors'] = [];
@@ -31,6 +31,7 @@ export const createProductItem = ({
     }
 
     return {
+        slug: item?.slug,
         link: { href: item.url },
         media: [
             createPicsumImage({ id: 151 + (index ?? 1), width: 600, height: 800, media: 768 }),
