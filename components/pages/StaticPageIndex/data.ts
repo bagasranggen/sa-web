@@ -1,5 +1,8 @@
-import { CB_LABEL_CONTENT } from '@/libs/mock';
 import { PageDataParamsProps, PageDataProps } from '@/libs/@types';
+import { createContentBlocks } from '@/libs/factory';
+
+import { apolloClient } from '@/libs/fetchers';
+import { STATIC_PAGES_INDEX_QUERY } from '@/graphql';
 
 import { StaticPageIndexProps } from '@/components/pages/StaticPageIndex';
 
@@ -7,17 +10,20 @@ export const StaticPageData = async ({
     typeHandle,
     uri,
 }: PageDataParamsProps): Promise<PageDataProps<StaticPageIndexProps>> => {
-    const contentBlocks: StaticPageIndexProps['entries']['contentBlocks'] = [
-        CB_LABEL_CONTENT,
-        { ...CB_LABEL_CONTENT, heading: 'Deposit & Jaminan Sewa' },
-        { ...CB_LABEL_CONTENT, heading: 'Periode', className: 'mt-6 mb-15' },
-    ];
+    const { data } = await apolloClient().query({
+        query: STATIC_PAGES_INDEX_QUERY,
+        variables: {
+            uri,
+        },
+    });
+
+    const d = (data as any)?.Pages?.docs?.[0];
 
     return {
         typeHandle,
         entries: {
             header: 'Terms & Conditions',
-            contentBlocks,
+            contentBlocks: createContentBlocks({ items: d?.contentBlocks?.blocks }),
         },
     };
 };
