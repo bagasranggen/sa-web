@@ -313,8 +313,50 @@ export interface Page {
     url?: string | null;
     uri?: string | null;
     productCategory?: (number | null) | Category;
+    contentBlocks?: ContentBlocks;
     updatedAt: string;
     createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContentBlocks".
+ */
+export interface ContentBlocks {
+    blocks?: CbLabelContent[] | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CbLabelContent".
+ */
+export interface CbLabelContent {
+    heading: string;
+    content?: {
+        root: {
+            type: string;
+            children: {
+                type: any;
+                version: number;
+                [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+        };
+        [k: string]: unknown;
+    } | null;
+    cbSpacing?: CbSpacing;
+    id?: string | null;
+    blockName?: string | null;
+    blockType: 'labelContent';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CbSpacing".
+ */
+export interface CbSpacing {
+    marginTop?: ('1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10') | null;
+    marginBottom?: ('1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -615,8 +657,39 @@ export interface PagesSelect<T extends boolean = true> {
     url?: T;
     uri?: T;
     productCategory?: T;
+    contentBlocks?: T | ContentBlocksSelect<T>;
     updatedAt?: T;
     createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContentBlocks_select".
+ */
+export interface ContentBlocksSelect<T extends boolean = true> {
+    blocks?:
+        | T
+        | {
+              labelContent?: T | CbLabelContentSelect<T>;
+          };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CbLabelContent_select".
+ */
+export interface CbLabelContentSelect<T extends boolean = true> {
+    heading?: T;
+    content?: T;
+    cbSpacing?: T | CbSpacingSelect<T>;
+    id?: T;
+    blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CbSpacing_select".
+ */
+export interface CbSpacingSelect<T extends boolean = true> {
+    marginTop?: T;
+    marginBottom?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
