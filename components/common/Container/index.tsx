@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React, { forwardRef, PropsWithChildren } from 'react';
 
 import { ArrayStringProps, ElementTagsProps, ClassnameProps } from '@/libs/@types';
 import { joinArrayString } from '@/libs/utils';
@@ -10,21 +10,25 @@ export type ContainerProps = {
     type?: 'fluid' | 'regular' | 'full-screen' | 'none';
 } & (PropsWithChildren & ClassnameProps);
 
-const Container = ({ as = 'div', type = 'regular', className, children }: ContainerProps): React.ReactElement => {
-    let containerClass: ArrayStringProps = [];
-    if (type === 'regular') containerClass.push('container');
-    if (type === 'fluid') containerClass.push('container-fluid');
-    if (type === 'full-screen') containerClass.push('container-full');
-    if (className) containerClass.push(className);
-    containerClass = joinArrayString(containerClass);
+const Container = forwardRef<HTMLElement, ContainerProps>(
+    ({ as = 'div', type = 'regular', className, children }, ref) => {
+        let containerClass: ArrayStringProps = [];
+        if (type === 'regular') containerClass.push('container');
+        if (type === 'fluid') containerClass.push('container-fluid');
+        if (type === 'full-screen') containerClass.push('container-full');
+        if (className) containerClass.push(className);
+        containerClass = joinArrayString(containerClass);
 
-    return (
-        <DynamicWrapper
-            as={as}
-            className={containerClass}>
-            {children}
-        </DynamicWrapper>
-    );
-};
+        return (
+            <DynamicWrapper
+                as={as}
+                ref={ref}
+                className={containerClass}>
+                {children}
+            </DynamicWrapper>
+        );
+    }
+);
 
+Container.displayName = 'Container';
 export default Container;
