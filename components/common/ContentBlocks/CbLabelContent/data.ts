@@ -3,9 +3,6 @@ import { CbLabelContentProps } from '@/components/common/ContentBlocks/CbLabelCo
 export const CbLabelContentData = (
     props: Partial<CbLabelContentProps>
 ): Partial<Pick<CbLabelContentProps, 'content' | 'heading'>> => {
-    console.log('run');
-    console.log({ props });
-
     return {
         content: props?.content,
         heading: props.heading,
