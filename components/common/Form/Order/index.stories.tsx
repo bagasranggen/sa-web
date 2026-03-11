@@ -2,7 +2,8 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
 import { expect, fn } from 'storybook/test';
 
-import { DELIVERY_ADDRESS_PICKUP, ORDER_COLLECTION } from '@/libs/mock';
+import { ORDER_COLLECTION } from '@/libs/mock';
+import { DELIVERY_ADDRESS_PICKUP } from '@/libs/constants';
 
 import Order from './index';
 import Container from '@/components/common/Container';
