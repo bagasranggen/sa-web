@@ -17,7 +17,7 @@ const StaticPageIndex = ({ entries }: StaticPageIndexProps): React.ReactElement 
             {entries?.header && (
                 <Container
                     as="section"
-                    className="mt-8">
+                    className="mt-8 last:mb-15">
                     <Heading
                         as="h1"
                         variant="page">
