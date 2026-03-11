@@ -24,6 +24,7 @@ import ProductListingNotFound, {
     ProductListingNotFoundProps,
 } from '@/components/pages/ProductListingIndex/ProductListingNotFound';
 import ProductListingWrapper from '@/components/pages/ProductListingIndex/ProductListingWrapper';
+import Animation from '@/components/common/Animation';
 
 export type ProductListingIndexProps = {
     entries: {
@@ -222,65 +223,69 @@ const ProductListingIndex = ({ entries }: ProductListingIndexProps): React.React
             </Suspense>
 
             {entries?.banner && (
-                <Container className="mt-8">
-                    <Heading
-                        as="h1"
-                        variant="page">
-                        {entries.banner}
-                    </Heading>
-                </Container>
+                <Animation type="fade-in">
+                    <Container className="mt-8">
+                        <Heading
+                            as="h1"
+                            variant="page">
+                            {entries.banner}
+                        </Heading>
+                    </Container>
+                </Animation>
             )}
 
-            <Container className="mt-4 mb-15">
-                {entries.filters && (entries.filters?.sort || entries.filters?.filters) && (
-                    <ProductListingFilter
-                        className="mb-2"
-                        activeFilter={filter}
-                        sort={entries.filters.sort}
-                        filters={entries.filters.filters}
-                        onOpenChange={(open, form) => {
-                            if (!open) {
-                                const searchQuery = convertObjectToSearchParamsQuery({
-                                    obj: form,
-                                    removeParams: ['page'],
-                                });
+            <Animation type="fade-in">
+                <Container className="mt-4 mb-15">
+                    {entries.filters && (entries.filters?.sort || entries.filters?.filters) && (
+                        <ProductListingFilter
+                            className="mb-2"
+                            activeFilter={filter}
+                            sort={entries.filters.sort}
+                            filters={entries.filters.filters}
+                            onOpenChange={(open, form) => {
+                                if (!open) {
+                                    const searchQuery = convertObjectToSearchParamsQuery({
+                                        obj: form,
+                                        removeParams: ['page'],
+                                    });
 
-                                let path = pathname;
-                                if (searchQuery) path += searchQuery;
+                                    let path = pathname;
+                                    if (searchQuery) path += searchQuery;
 
-                                router.push(path);
-                            }
-                        }}
-                        reset={{
-                            active: filterIsActive,
-                            onResetFilters: () => {
-                                router.push(pathname);
-                            },
-                        }}
+                                    router.push(path);
+                                }
+                            }}
+                            reset={{
+                                active: filterIsActive,
+                                onResetFilters: () => {
+                                    router.push(pathname);
+                                },
+                            }}
+                        />
+                    )}
+
+                    {listingItems && listingItems.length > 0 && (
+                        <ProductListingWrapper isLoading={!loadMoreIsLoading && loading}>
+                            <Cards.Thumbnail items={listingItems} />
+                        </ProductListingWrapper>
+                    )}
+
+                    <ProductListingNotFound
+                        className="mt-12"
+                        show={listingIsEmpty || listingFilterIsEmpty}
+                        subtitle={notFound?.subtitle}
+                        links={notFound?.links}>
+                        {notFound?.children}
+                    </ProductListingNotFound>
+
+                    {loadMoreIsLoading && <Loader className="flex flex-col items-center mt-12 mb-3">Loading</Loader>}
+
+                    <div
+                        ref={loadMoreRef}
+                        id="loadMore"
                     />
-                )}
-
-                {listingItems && listingItems.length > 0 && (
-                    <ProductListingWrapper isLoading={!loadMoreIsLoading && loading}>
-                        <Cards.Thumbnail items={listingItems} />
-                    </ProductListingWrapper>
-                )}
-
-                <ProductListingNotFound
-                    className="mt-12"
-                    show={listingIsEmpty || listingFilterIsEmpty}
-                    subtitle={notFound?.subtitle}
-                    links={notFound?.links}>
-                    {notFound?.children}
-                </ProductListingNotFound>
-
-                {loadMoreIsLoading && <Loader className="flex flex-col items-center mt-12 mb-3">Loading</Loader>}
-
-                <div
-                    ref={loadMoreRef}
-                    id="loadMore"
-                />
-            </Container>
+                </Container>
+            </Animation>
         </>
     );
 };
