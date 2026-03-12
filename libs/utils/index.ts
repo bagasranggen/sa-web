@@ -7,6 +7,7 @@ export * from './convertSearchParamsToObject';
 export * from './delay';
 export * from './getAnimationElement';
 export * from './getElementDimension';
+export * from './getEntryTypeHandle';
 export * from './getEnv';
 export * from './getInputDayPickerValue';
 export * from './getPagesData';
