@@ -8,14 +8,18 @@ import RichText, { RichTextProps } from '@/components/common/RichText';
 
 export type CbTextProps = ContentBlocksComponentProps<typeof CB_HANDLES.TEXT, Pick<RichTextProps, 'children'>>;
 
-const CbText = ({ className, isNested, children }: CbTextProps): React.ReactElement | null => {
+const CbText = ({ className, isNested, children, animation }: CbTextProps): React.ReactElement | null => {
     if (!children) return null;
 
     return (
         <CbContainer
             typeClassName="cb--text"
             isNested={isNested}
-            className={className}>
+            className={className}
+            animation={{
+                enabled: !isNested,
+                delay: animation?.delay,
+            }}>
             <RichText>{children}</RichText>
         </CbContainer>
     );

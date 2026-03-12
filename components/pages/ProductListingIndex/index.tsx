@@ -292,19 +292,21 @@ const ProductListingIndex = ({ entries }: ProductListingIndexProps): React.React
                     </ProductListingWrapper>
                 )}
 
-                <Animation
-                    type="fade-in"
-                    config={{ delay: hasFilters ? 'fadeFilter' : 'fadeBanner' }}>
-                    <div>
-                        <ProductListingNotFound
-                            className="mt-12"
-                            show={listingIsEmpty || listingFilterIsEmpty}
-                            subtitle={notFound?.subtitle}
-                            links={notFound?.links}>
-                            {notFound?.children}
-                        </ProductListingNotFound>
-                    </div>
-                </Animation>
+                {(listingIsEmpty || listingFilterIsEmpty) && (
+                    <Animation
+                        type="fade-in"
+                        config={{ delay: hasFilters ? 'fadeFilter' : 'fadeBanner' }}>
+                        <div>
+                            <ProductListingNotFound
+                                className="mt-12"
+                                show={listingIsEmpty || listingFilterIsEmpty}
+                                subtitle={notFound?.subtitle}
+                                links={notFound?.links}>
+                                {notFound?.children}
+                            </ProductListingNotFound>
+                        </div>
+                    </Animation>
+                )}
 
                 {loadMoreIsLoading && <Loader className="flex flex-col items-center mt-12 mb-3">Loading</Loader>}
 
