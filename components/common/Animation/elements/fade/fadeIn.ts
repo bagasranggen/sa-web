@@ -5,7 +5,8 @@ import { FadeProps } from '@/components/common/Animation/elements/fade/fade';
 export const fadeIn = ({ element, config, id }: FadeProps) => {
     const fadeTl = gsap.timeline({
         scrollTrigger: {
-            ...(id ? { id: `fade-in-${id}` } : {}),
+            // ...(id ? { id: `fade-in-${id}` } : {}),
+            ...(id ? { id: id } : {}),
             trigger: element,
             // start: () => `top-=${getFadeOffset({ element }) + getSpacingValue({ element }).top} 80%`,
             toggleActions: 'play pause play pause',

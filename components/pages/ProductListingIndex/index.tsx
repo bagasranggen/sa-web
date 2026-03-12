@@ -223,7 +223,9 @@ const ProductListingIndex = ({ entries }: ProductListingIndexProps): React.React
             </Suspense>
 
             {entries?.banner && (
-                <Animation type="fade-in">
+                <Animation
+                    type="fade-in"
+                    id="fadeBanner">
                     <Container className="mt-8">
                         <Heading
                             as="h1"
@@ -234,7 +236,12 @@ const ProductListingIndex = ({ entries }: ProductListingIndexProps): React.React
                 </Animation>
             )}
 
-            <Animation type="fade-in">
+            <Animation
+                type="fade-in"
+                config={{
+                    delay: 'fadeBanner',
+                    // delay: 0.173,
+                }}>
                 <Container className="mt-4 mb-15">
                     {entries.filters && (entries.filters?.sort || entries.filters?.filters) && (
                         <ProductListingFilter

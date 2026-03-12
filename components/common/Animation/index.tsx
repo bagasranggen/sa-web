@@ -17,9 +17,9 @@ export type AnimationProps = {
     as?: string;
     children: React.ReactElement;
     trigger?: number | boolean;
-} & BaseAnimationProps;
+} & (BaseAnimationProps & Partial<Pick<HTMLElement, 'id'>>);
 
-const Animation = ({ as, type, children, trigger, ...props }: AnimationProps): React.ReactElement => {
+const Animation = ({ as, type, children, trigger, id, ...props }: AnimationProps): React.ReactElement => {
     let animationRef = useRef<HTMLElement | null>(null);
     if ('ref' in children && children?.ref) animationRef = children?.ref as RefObject<HTMLElement | null>;
 
@@ -50,8 +50,7 @@ const Animation = ({ as, type, children, trigger, ...props }: AnimationProps): R
                 return;
             }
 
-            // gsap.effects[type](props.ref.current, config, id);
-            gsap.effects[type](animationProps.ref.current, config);
+            gsap.effects[type](animationProps.ref.current, config, id);
         },
         { scope: animationProps.ref, dependencies: [type, as, trigger] }
     );
