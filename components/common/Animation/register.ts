@@ -7,7 +7,7 @@ export const registerAnimation = () => {
         gsap.registerEffect({
             name,
             effect: (targets: HTMLElement[], config: any, id: number) => {
-                return handle.animation({ element: targets, config, id });
+                return handle.animation({ element: targets, config, id: `${id}` });
             },
             extendTimeline: handle?.extendTimeline,
         });

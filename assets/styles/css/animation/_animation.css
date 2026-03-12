@@ -1,0 +1,6 @@
+@layer components {
+    [data-animation='fade-in']:not([style]) {
+        opacity: 0;
+        visibility: hidden;
+    }
+}

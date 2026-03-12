@@ -1,8 +1,8 @@
 import { BaseAnimationConfigProps, BaseAnimationProps } from '@/libs/@types';
+import { getAnimationElement } from '@/libs/utils';
 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { getAnimationElement } from '@/libs/utils';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -27,29 +27,15 @@ export const fade = ({ element, config }: FadeProps) => {
     if (config?.delay && typeof config.delay === 'string') {
         const isInViewport = ScrollTrigger.isInViewport(el);
         const tl = gsap.getById(config.delay);
-        const duration = tl?.endTime();
+        const duration = tl?.duration() ?? 0;
+        const offsetDuration = duration / 1.5;
+        const delay = duration - offsetDuration;
 
-        console.log({
-            isInViewport,
-            duration,
-            tl,
-
-            delay: config.delay,
-        });
-
-        if (isInViewport && duration && duration > 0) fadeConfig = Object.assign(fadeConfig, { delay: duration });
+        if (isInViewport && duration && duration > 0) fadeConfig = Object.assign(fadeConfig, { delay });
     }
 
-    // console.log({
-    //     element,
-    //     el,
-    //     delay: config?.delay,
-    //     tl: gsap.getById(config?.id)?.endTime(),
-    //     isInViewport: ScrollTrigger.isInViewport(el),
-    // });
-
     const fromVars: gsap.TweenVars = {
-        ease: 'Power1.easeInOut',
+        // ease: 'Power1.easeInOut',
         opacity: 0,
         ...fadeConfig,
         onComplete: () => {
