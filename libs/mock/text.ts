@@ -1091,3 +1091,35 @@ export const RICH_TEXT_FULL: any = {
         direction: null,
     },
 };
+
+export const RICH_TEXT_SHORT: any = {
+    root: {
+        type: 'root',
+        format: '',
+        indent: 0,
+        version: 1,
+        children: [
+            {
+                type: 'paragraph',
+                format: '',
+                indent: 0,
+                version: 1,
+                children: [
+                    {
+                        mode: 'normal',
+                        text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci consectetur corporis culpa eveniet, nobis perspiciatis rem!',
+                        type: 'text',
+                        style: '',
+                        detail: 0,
+                        format: 0,
+                        version: 1,
+                    },
+                ],
+                direction: null,
+                textStyle: '',
+                textFormat: 0,
+            },
+        ],
+        direction: null,
+    },
+};

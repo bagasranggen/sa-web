@@ -13,13 +13,14 @@ import Heading from '@/components/common/Heading';
 import Picture, { BaseProps } from '@/components/common/Picture';
 import Button, { BaseAnchorProps } from '@/components/common/Button';
 import Marquee from '@/components/common/Marquee';
+import RichText, { RichTextProps } from '@/components/common/RichText';
 
 export type HomepageMediaItemProps = {
     link: Pick<BaseAnchorProps, 'href' | 'target'>;
 } & Pick<BaseProps, 'items'>;
 
 export type HomepageProps = {
-    description?: PropsWithChildren['children'];
+    description?: RichTextProps['children'];
     media?: HomepageMediaItemProps[];
 } & (ClassnameProps & PropsWithChildren);
 
@@ -47,7 +48,7 @@ const Homepage = ({ className, description, media, children }: HomepageProps): R
 
                         {description && (
                             <Columns.Column md={4}>
-                                <div className="text-lg">{description}</div>
+                                <RichText className="text-lg">{description}</RichText>
                             </Columns.Column>
                         )}
                     </Columns>

@@ -1,3 +1,4 @@
+import { HOMEPAGE_URI } from '@/libs/constants';
 import { PageDataParamsProps, PageDataProps } from '@/libs/@types';
 
 import { apolloClient } from '@/libs/fetchers';
@@ -32,6 +33,7 @@ export const getPagesData = async ({ uri, slug }: GetPagesDataProps) => {
                 });
             }
 
+            if (!typeHandle && uri === HOMEPAGE_URI) typeHandle = PAGES_HANDLES.HOMEPAGE;
             if (!typeHandle) typeHandle = PAGES_HANDLES.NOT_FOUND;
         }
     } catch (e) {

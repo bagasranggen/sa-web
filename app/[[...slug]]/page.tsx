@@ -6,6 +6,10 @@ import { getPagesData, getUriFromParams } from '@/libs/utils';
 import DynamicElement from '@/components/common/DynamicElement';
 import { PAGES_INDEX_HANDLES } from '@/components/pages/handlesIndex';
 
+export const generateStaticParams = async () => {
+    return [{ slug: ['collection'] }, { slug: ['collection', 'prom'] }, { slug: ['collection', 'wedding-guest'] }];
+};
+
 const Page = async ({ params: paramsProps }: PageProps): Promise<React.ReactElement> => {
     const params = await paramsProps;
     const { uri, slug } = getUriFromParams(params?.slug);
