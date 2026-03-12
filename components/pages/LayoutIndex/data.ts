@@ -1,4 +1,4 @@
-import { Footer, Navigation } from '@/libs/@types';
+import { Footer, Global, Navigation } from '@/libs/@types';
 import { createLinkItem } from '@/libs/factory';
 
 import { apolloClient } from '@/libs/fetchers';
@@ -20,6 +20,7 @@ export const LayoutData = async () => {
 
     const headerNavigation = data?.Navigation?.navigations;
     const footerNavigation = data?.Footer;
+    const global: Global = data?.Global;
 
     const header: HeaderProps['items'] = [];
 
@@ -80,17 +81,17 @@ export const LayoutData = async () => {
     }
 
     let tmpLocation: FooterProps['location'] = undefined;
-    if (footerNavigation?.locationLink) {
-        const { linkIsValid, link } = createLinkItem(footerNavigation.locationLink);
+    if (global?.locationLink) {
+        const { linkIsValid, link } = createLinkItem(global.locationLink);
 
         if (linkIsValid && link) {
             tmpLocation = Object.assign(tmpLocation ?? {}, { link });
         }
-        if (footerNavigation?.locationTitle) {
-            tmpLocation = Object.assign(tmpLocation ?? {}, { title: footerNavigation.locationTitle });
+        if (global?.locationTitle) {
+            tmpLocation = Object.assign(tmpLocation ?? {}, { title: global.locationTitle });
         }
-        if (footerNavigation?.locationAddress) {
-            tmpLocation = Object.assign(tmpLocation ?? {}, { description: footerNavigation.locationAddress });
+        if (global?.locationAddress) {
+            tmpLocation = Object.assign(tmpLocation ?? {}, { description: global.locationAddress });
         }
     }
 
