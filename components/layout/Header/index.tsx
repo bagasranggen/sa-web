@@ -84,6 +84,7 @@ const Header = ({ items }: HeaderProps): React.ReactElement => {
             </Suspense>
 
             <nav
+                suppressHydrationWarning
                 ref={headerRef as Ref<HTMLDivElement>}
                 className={navClass}>
                 <Container className="nav__container">
