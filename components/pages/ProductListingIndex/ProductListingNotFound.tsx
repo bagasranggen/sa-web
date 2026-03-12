@@ -4,7 +4,6 @@ import { ArrayStringProps, ClassnameProps } from '@/libs/@types';
 import { joinArrayString } from '@/libs/utils';
 
 import Heading from '@/components/common/Heading';
-import Animation from '@/components/common/Animation';
 import List from '@/components/common/List';
 import Button, { BaseAnchorProps } from '@/components/common/Button';
 
@@ -30,34 +29,32 @@ const ProductListingNotFound = ({
     wrapperClass = joinArrayString(wrapperClass);
 
     return (
-        <Animation type="fade-in">
-            <div className={wrapperClass}>
-                <Heading
-                    as="h3"
-                    className="uppercase text-6xl tracking-0.4 lg:max-w-3/4 mx-auto">
-                    {children}
-                </Heading>
+        <div className={wrapperClass}>
+            <Heading
+                as="h3"
+                className="uppercase text-6xl tracking-0.4 lg:max-w-3/4 mx-auto">
+                {children}
+            </Heading>
 
-                {subtitle && <p className="text-[2rem] mt-2.5 not-last:mb-1">{subtitle}</p>}
+            {subtitle && <p className="text-[2rem] mt-2.5 not-last:mb-1">{subtitle}</p>}
 
-                {links && links.length > 0 && (
-                    <List.Inline
-                        className="justify-center"
-                        items={links.map((item) => {
-                            return {
-                                children: (
-                                    <Button
-                                        as="anchor"
-                                        className="uppercase tracking-0.2 font-bold"
-                                        {...item}
-                                    />
-                                ),
-                            };
-                        })}
-                    />
-                )}
-            </div>
-        </Animation>
+            {links && links.length > 0 && (
+                <List.Inline
+                    className="justify-center"
+                    items={links.map((item) => {
+                        return {
+                            children: (
+                                <Button
+                                    as="anchor"
+                                    className="uppercase tracking-0.2 font-bold"
+                                    {...item}
+                                />
+                            ),
+                        };
+                    })}
+                />
+            )}
+        </div>
     );
 };
 

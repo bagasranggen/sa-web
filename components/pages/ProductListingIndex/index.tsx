@@ -52,6 +52,11 @@ const ProductListingIndex = ({ entries }: ProductListingIndexProps): React.React
     const [paginationPage, setPaginationPage] = useState(1);
     const [hasLoadMore, setHasLoadMore] = useState<boolean>(!!entries?.products?.hasLoadMore);
 
+    const hasFilters = !!(
+        (entries.filters?.sort && entries.filters.sort.length > 0) ||
+        (entries.filters?.filters && entries.filters.filters.length > 0)
+    );
+
     const filterIsActive = useMemo(() => {
         let data = false;
 
@@ -236,63 +241,78 @@ const ProductListingIndex = ({ entries }: ProductListingIndexProps): React.React
                 </Animation>
             )}
 
-            <Animation
-                type="fade-in"
-                config={{
-                    delay: 'fadeBanner',
-                    // delay: 0.173,
-                }}>
-                <Container className="mt-4 mb-15">
-                    {entries.filters && (entries.filters?.sort || entries.filters?.filters) && (
-                        <ProductListingFilter
-                            className="mb-2"
-                            activeFilter={filter}
-                            sort={entries.filters.sort}
-                            filters={entries.filters.filters}
-                            onOpenChange={(open, form) => {
-                                if (!open) {
-                                    const searchQuery = convertObjectToSearchParamsQuery({
-                                        obj: form,
-                                        removeParams: ['page'],
-                                    });
+            <Container className="mt-4 mb-15">
+                {hasFilters && (
+                    <Animation
+                        type="fade-in"
+                        id="fadeFilter"
+                        config={{ delay: 'fadeBanner' }}>
+                        <div>
+                            <ProductListingFilter
+                                className="mb-2"
+                                activeFilter={filter}
+                                sort={entries.filters.sort}
+                                filters={entries.filters.filters}
+                                onOpenChange={(open, form) => {
+                                    if (!open) {
+                                        const searchQuery = convertObjectToSearchParamsQuery({
+                                            obj: form,
+                                            removeParams: ['page'],
+                                        });
 
-                                    let path = pathname;
-                                    if (searchQuery) path += searchQuery;
+                                        let path = pathname;
+                                        if (searchQuery) path += searchQuery;
 
-                                    router.push(path);
-                                }
-                            }}
-                            reset={{
-                                active: filterIsActive,
-                                onResetFilters: () => {
-                                    router.push(pathname);
+                                        router.push(path);
+                                    }
+                                }}
+                                reset={{
+                                    active: filterIsActive,
+                                    onResetFilters: () => {
+                                        router.push(pathname);
+                                    },
+                                }}
+                            />
+                        </div>
+                    </Animation>
+                )}
+
+                {listingItems && listingItems.length > 0 && (
+                    <ProductListingWrapper isLoading={!loadMoreIsLoading && loading}>
+                        <Cards.Thumbnail
+                            items={listingItems}
+                            animation={{
+                                type: 'fade-in',
+                                config: {
+                                    delay: hasFilters ? 'fadeFilter' : 'fadeBanner',
                                 },
+                                trigger: filterIsActive,
                             }}
                         />
-                    )}
+                    </ProductListingWrapper>
+                )}
 
-                    {listingItems && listingItems.length > 0 && (
-                        <ProductListingWrapper isLoading={!loadMoreIsLoading && loading}>
-                            <Cards.Thumbnail items={listingItems} />
-                        </ProductListingWrapper>
-                    )}
+                <Animation
+                    type="fade-in"
+                    config={{ delay: hasFilters ? 'fadeFilter' : 'fadeBanner' }}>
+                    <div>
+                        <ProductListingNotFound
+                            className="mt-12"
+                            show={listingIsEmpty || listingFilterIsEmpty}
+                            subtitle={notFound?.subtitle}
+                            links={notFound?.links}>
+                            {notFound?.children}
+                        </ProductListingNotFound>
+                    </div>
+                </Animation>
 
-                    <ProductListingNotFound
-                        className="mt-12"
-                        show={listingIsEmpty || listingFilterIsEmpty}
-                        subtitle={notFound?.subtitle}
-                        links={notFound?.links}>
-                        {notFound?.children}
-                    </ProductListingNotFound>
+                {loadMoreIsLoading && <Loader className="flex flex-col items-center mt-12 mb-3">Loading</Loader>}
 
-                    {loadMoreIsLoading && <Loader className="flex flex-col items-center mt-12 mb-3">Loading</Loader>}
-
-                    <div
-                        ref={loadMoreRef}
-                        id="loadMore"
-                    />
-                </Container>
-            </Animation>
+                <div
+                    ref={loadMoreRef}
+                    id="loadMore"
+                />
+            </Container>
         </>
     );
 };

@@ -11,7 +11,7 @@ export type ContainerProps = {
 } & (PropsWithChildren & ClassnameProps);
 
 const Container = forwardRef<HTMLElement, ContainerProps>(
-    ({ as = 'div', type = 'regular', className, children }, ref) => {
+    ({ as = 'div', type = 'regular', className, children, ...props }, ref) => {
         let containerClass: ArrayStringProps = [];
         if (type === 'regular') containerClass.push('container');
         if (type === 'fluid') containerClass.push('container-fluid');
@@ -23,7 +23,8 @@ const Container = forwardRef<HTMLElement, ContainerProps>(
             <DynamicWrapper
                 as={as}
                 ref={ref}
-                className={containerClass}>
+                className={containerClass}
+                {...props}>
                 {children}
             </DynamicWrapper>
         );

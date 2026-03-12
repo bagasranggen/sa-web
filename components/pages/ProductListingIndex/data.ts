@@ -121,7 +121,7 @@ export const ProductListingData = async ({
     if (filterSizes) productFilters.push(filterSizes);
 
     const filters: ProductListingIndexProps['entries']['filters'] = {
-        sort: PRODUCTS_SORT,
+        sort: productsFilters.length > 0 ? PRODUCTS_SORT : [],
         filters: productFilters,
     };
 
