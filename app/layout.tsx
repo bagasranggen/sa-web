@@ -36,7 +36,6 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
                 <body className={`${aboreto.variable} ${spaceGrotesk.variable}`}>
                     <Apollo>
                         <Main>
-                            {/*TODO: Inspect as this header cause hydration issue*/}
                             <Header items={header} />
 
                             <main>{children}</main>
