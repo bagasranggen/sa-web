@@ -1,6 +1,5 @@
-import { DELIVERY_ADDRESS_PICKUP } from '@/libs/constants';
-import { PageDataParamsProps, PageDataProps, Product } from '@/libs/@types';
-import { createProductItem } from '@/libs/factory';
+import { Footer, PageDataParamsProps, PageDataProps, Product } from '@/libs/@types';
+import { createLinkItem, createProductItem } from '@/libs/factory';
 
 import { apolloClient } from '@/libs/fetchers';
 import { ORDER_INDEX_QUERY } from '@/graphql';
@@ -13,6 +12,7 @@ export const OrderData = async ({ typeHandle, uri }: PageDataParamsProps): Promi
     });
 
     const products = (data as any)?.Products;
+    const footer: Footer = (data as any)?.Footer;
 
     const collection: OrderIndexProps['entries']['form']['collection'] = [
         {
@@ -29,12 +29,23 @@ export const OrderData = async ({ typeHandle, uri }: PageDataParamsProps): Promi
         });
     }
 
+    const { linkIsValid, link } = createLinkItem(footer?.locationLink);
+    let pickupAddress: OrderIndexProps['entries']['form']['pickupAddress'] = undefined;
+
+    if (linkIsValid && link) {
+        pickupAddress = Object.assign(pickupAddress ?? {}, {
+            title: footer?.locationTitle,
+            ...link,
+            children: footer?.locationAddress,
+        });
+    }
+
     return {
         typeHandle,
         entries: {
             form: {
                 collection,
-                pickupAddress: DELIVERY_ADDRESS_PICKUP,
+                pickupAddress,
             },
         },
     };
