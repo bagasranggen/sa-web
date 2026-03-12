@@ -1,16 +1,17 @@
 'use client';
 
-import React, { PropsWithChildren, Ref, Fragment, ExoticComponent, FragmentProps } from 'react';
+import React, { PropsWithChildren, Ref } from 'react';
 
-import { ArrayStringProps, ClassnameProps, Component } from '@/libs/@types';
+import { ArrayStringProps, ClassnameProps } from '@/libs/@types';
 import { joinArrayString } from '@/libs/utils';
 import { createArrayFromNumber } from '@/libs/factory';
 
 import { useWindowSize, useMeasure } from 'react-use';
 
-import Animation, { MarqueeConfigProps } from '@/components/common/Animation';
-import Container, { ContainerProps } from '@/components/common/Container';
+import Container from '@/components/common/Container';
 import BaseItem from '@/components/common/Marquee/Base/BaseItem';
+import Animation, { MarqueeConfigProps } from '@/components/common/Animation';
+import DynamicWrapper from '@/components/common/DynamicWrapper';
 
 export type BaseProps = {
     withContainer?: boolean;
@@ -27,16 +28,13 @@ const Base = ({ className, withContainer, children, speed }: BaseProps): React.R
     if (className) marqueeClass.push(className);
     marqueeClass = joinArrayString(marqueeClass);
 
-    let MarqueeContainer: ExoticComponent<FragmentProps> | Component<ContainerProps> = Fragment;
-    if (withContainer) MarqueeContainer = Container;
-
     return (
         <Animation
             type="marquee"
             trigger={repeat}
             config={{ speed }}>
             <div className={marqueeClass}>
-                <MarqueeContainer>
+                <DynamicWrapper as={withContainer ? Container : undefined}>
                     <Animation
                         type="marquee"
                         as="wrapper">
@@ -59,7 +57,7 @@ const Base = ({ className, withContainer, children, speed }: BaseProps): React.R
                             })}
                         </div>
                     </Animation>
-                </MarqueeContainer>
+                </DynamicWrapper>
             </div>
         </Animation>
     );
