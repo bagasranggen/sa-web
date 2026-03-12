@@ -14,6 +14,7 @@ import Picture, { BaseProps } from '@/components/common/Picture';
 import Button, { BaseAnchorProps } from '@/components/common/Button';
 import Marquee from '@/components/common/Marquee';
 import RichText, { RichTextProps } from '@/components/common/RichText';
+import Animation, { AnimationProps } from '@/components/common/Animation';
 
 export type HomepageMediaItemProps = {
     link: Pick<BaseAnchorProps, 'href' | 'target'>;
@@ -22,9 +23,10 @@ export type HomepageMediaItemProps = {
 export type HomepageProps = {
     description?: RichTextProps['children'];
     media?: HomepageMediaItemProps[];
+    animation?: Omit<AnimationProps, 'children'>;
 } & (ClassnameProps & PropsWithChildren);
 
-const Homepage = ({ className, description, media, children }: HomepageProps): React.ReactElement => {
+const Homepage = ({ className, description, media, children, animation }: HomepageProps): React.ReactElement => {
     const [marqueeContainerRef, { width }] = useMeasure();
 
     let bannerClass: ArrayStringProps = ['banner banner--homepage'];
@@ -32,7 +34,7 @@ const Homepage = ({ className, description, media, children }: HomepageProps): R
     bannerClass = joinArrayString(bannerClass);
 
     return (
-        <>
+        <Animation {...(animation as AnimationProps)}>
             <section className={bannerClass}>
                 <Container>
                     <Columns
@@ -82,7 +84,7 @@ const Homepage = ({ className, description, media, children }: HomepageProps): R
                     </Marquee>
                 )}
             </section>
-        </>
+        </Animation>
     );
 };
 
