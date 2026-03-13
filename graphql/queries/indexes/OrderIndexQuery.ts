@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 import { FRAGMENT_PRODUCT_BASE } from '@/graphql/queries/indexes/fragments/FragmentProductBase';
-import { FRAGMENT_FOOTER_LOCATION } from '@/graphql/queries/common/FragmentFooterLocation';
+import { FRAGMENT_GLOBAL_LOCATION } from '@/graphql/queries/common/fragmentGlobalLocation';
 
 export const ORDER_INDEX_QUERY = gql`
     query OrderIndexQuery($categoryId: [JSON], $colorId: [JSON], $sizeId: [JSON], $limit: Int, $page: Int) {
@@ -17,11 +17,11 @@ export const ORDER_INDEX_QUERY = gql`
             }
         }
 
-        Footer {
-            ...footerLocation
+        Global {
+            ...globalLocation
         }
     }
 
     ${FRAGMENT_PRODUCT_BASE}
-    ${FRAGMENT_FOOTER_LOCATION}
+    ${FRAGMENT_GLOBAL_LOCATION}
 `;

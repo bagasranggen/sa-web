@@ -1,4 +1,4 @@
-import { Footer, PageDataParamsProps, PageDataProps, Product } from '@/libs/@types';
+import { Global, PageDataParamsProps, PageDataProps, Product } from '@/libs/@types';
 import { createLinkItem, createProductItem } from '@/libs/factory';
 
 import { apolloClient } from '@/libs/fetchers';
@@ -12,7 +12,7 @@ export const OrderData = async ({ typeHandle, uri }: PageDataParamsProps): Promi
     });
 
     const products = (data as any)?.Products;
-    const footer: Footer = (data as any)?.Footer;
+    const global: Global = (data as any)?.Global;
 
     const collection: OrderIndexProps['entries']['form']['collection'] = [
         {
@@ -29,14 +29,14 @@ export const OrderData = async ({ typeHandle, uri }: PageDataParamsProps): Promi
         });
     }
 
-    const { linkIsValid, link } = createLinkItem(footer?.locationLink);
+    const { linkIsValid, link } = createLinkItem(global?.locationLink);
     let pickupAddress: OrderIndexProps['entries']['form']['pickupAddress'] = undefined;
 
     if (linkIsValid && link) {
         pickupAddress = Object.assign(pickupAddress ?? {}, {
-            title: footer?.locationTitle,
+            title: global?.locationTitle,
             ...link,
-            children: footer?.locationAddress,
+            children: global?.locationAddress,
         });
     }
 
