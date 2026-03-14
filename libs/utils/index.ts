@@ -11,5 +11,6 @@ export * from './getEntryTypeHandle';
 export * from './getEnv';
 export * from './getInputDayPickerValue';
 export * from './getPagesData';
+export * from './getS3SignedUrl';
 export * from './getUriFromParams';
 export * from './joinArrayString';
