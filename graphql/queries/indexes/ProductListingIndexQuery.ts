@@ -3,6 +3,7 @@ import { gql } from '@apollo/client';
 import { FRAGMENT_PRODUCT_BASE } from '@/graphql/queries/indexes/fragments/FragmentProductBase';
 import { FRAGMENT_PRODUCT_FILTERS } from '@/graphql/queries/indexes/fragments/FragmentProductFilters';
 import { FRAGMENT_PAGE_BASE } from '@/graphql/queries/indexes/fragments/FragmentPageBase';
+import { FRAGMENT_PRODUCT_MEDIA_BASE } from '@/graphql/queries/indexes/fragments/FragmentProductMediaBase';
 
 export const PRODUCT_LISTING_INDEX_QUERY = gql`
     query ProductListingIndexQuery($uri: String, $typeHandle: [Page_typeHandle_Input], $categoryId: JSON, $limit: Int) {
@@ -25,6 +26,7 @@ export const PRODUCT_LISTING_INDEX_QUERY = gql`
             docs {
                 ...productBase
                 ...productFilters
+                ...productMediaBase
             }
 
             loadMore: hasNextPage
@@ -40,4 +42,5 @@ export const PRODUCT_LISTING_INDEX_QUERY = gql`
     ${FRAGMENT_PAGE_BASE}
     ${FRAGMENT_PRODUCT_BASE}
     ${FRAGMENT_PRODUCT_FILTERS}
+    ${FRAGMENT_PRODUCT_MEDIA_BASE}
 `;

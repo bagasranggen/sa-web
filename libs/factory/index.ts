@@ -6,6 +6,7 @@ export * from './createContentBlocksSpacingItem';
 export * from './createInputHooks';
 export * from './createLinkItem';
 export * from './createPicsumImage';
+export * from './createPictureItem';
 export * from './createProductFilter';
 export * from './createProductItem';
 export * from './createProductPrice';

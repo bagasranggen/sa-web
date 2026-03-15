@@ -1,3 +1,4 @@
+export * from './checkMediaStatus';
 export * from './checkStringIsNumber';
 export * from './cleanArrayString';
 export * from './cn';

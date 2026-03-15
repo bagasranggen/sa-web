@@ -1,6 +1,8 @@
 import { Product } from '@/libs/@types';
 import { createPicsumImage } from '@/libs/factory/createPicsumImage';
 import { createProductPrice } from '@/libs/factory/createProductPrice';
+import { createPictureItem } from '@/libs/factory/createPictureItem';
+import { checkMediaStatus } from '@/libs/utils/checkMediaStatus';
 
 import { ThumbnailItemProps } from '@/components/common/Cards';
 
@@ -30,13 +32,50 @@ export const createProductItem = ({
         });
     }
 
+    const media: ThumbnailItemProps['media'] = [];
+
+    if (item?.media && item.media.length > 0) {
+        item.media.forEach((item) => {
+            if (typeof item === 'number') return;
+
+            const { data } = checkMediaStatus({
+                item,
+                volumeAssets: 'mediaProducts',
+                handles: ['assets600x400', 'assets600x800'],
+            });
+
+            if (data?.['assets600x800']?.src) {
+                media.push(
+                    createPictureItem({
+                        item: data['assets600x800'],
+                        // media: data?.['assets600x400']?.src ? 768 : undefined,
+                    })
+                );
+            }
+            // if (data?.['assets600x400']?.src) {
+            //     media.push(
+            //         createPictureItem({
+            //             item: data['assets600x400'],
+            //             // media: data?.['assets600x400']?.src ? 768 : undefined,
+            //         })
+            //     );
+            // }
+        });
+    }
+
+    // if (media.length === 0) {
+    //     media.push(
+    //         ...[
+    //             createPicsumImage({ id: 151 + 1, width: 600, height: 800, media: 768 }),
+    //             createPicsumImage({ id: 151 + 1, width: 600, height: 450 }),
+    //         ]
+    //     );
+    // }
+
     return {
         slug: item?.slug,
         link: { href: item.url },
-        media: [
-            createPicsumImage({ id: 151 + (index ?? 1), width: 600, height: 800, media: 768 }),
-            createPicsumImage({ id: 151 + (index ?? 1), width: 600, height: 450 }),
-        ],
+        media,
         colors,
         price: createProductPrice(item?.prices?.[0]),
         children: item.title,
