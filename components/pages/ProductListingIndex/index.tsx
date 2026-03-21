@@ -146,7 +146,7 @@ const ProductListingIndex = ({ entries }: ProductListingIndexProps): React.React
                     setLoadMoreIsLoading(false);
 
                     if (page && page > 0) setPaginationPage(page);
-                    if (searchParams) setFilter((prevState) => ({ ...prevState, ...searchParams }));
+                    if (searchParams) setFilter(searchParams);
                 });
         });
     };

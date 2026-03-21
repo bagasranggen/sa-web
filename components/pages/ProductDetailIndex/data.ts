@@ -23,6 +23,13 @@ export const ProductDetailData = async ({
 
     if (d?.title) {
         const info: NonNullable<ProductDetailIndexProps['entries']['banner']>['info'] = [];
+
+        if (d?.shortDescription) {
+            info.push({
+                richText: d.shortDescription,
+            });
+        }
+
         if (d?.summaries && d.summaries.length > 0) {
             d.summaries.forEach((item: NonNullable<Summaries>[number]) => {
                 const tmp: NonNullable<
