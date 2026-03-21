@@ -1,17 +1,16 @@
-// import { BareMediaProps, MediaGlobal } from '@/libs/@types';
-
+import { VOLUME_ASSET_HANDLES } from '@/libs/constants';
 import { Media } from '@/libs/@types';
+
 import { BaseItemProps } from '@/components/common/Picture';
 
 export type CheckMediaStatusItemProps = Pick<BaseItemProps, 'src' | 'width' | 'height' | 'alt'>;
 
 export type CheckMediaStatusProps = {
-    // item: Omit<MediaGlobal, 'url'> & Pick<BareMediaProps, 'src'>;
     item: {
         sizes?: Record<string, Pick<Media, 'url' | 'filename' | 'height' | 'width'>>;
     } & Pick<Media, 'url' | 'alt' | 'filename' | 'height' | 'width'>;
     handles?: string[];
-    volumeAssets: string;
+    volumeAssets: (typeof VOLUME_ASSET_HANDLES)[keyof typeof VOLUME_ASSET_HANDLES];
 };
 
 export const checkMediaStatus = ({ item, handles, volumeAssets }: CheckMediaStatusProps) => {
