@@ -1,5 +1,4 @@
 import { Product } from '@/libs/@types';
-import { createPicsumImage } from '@/libs/factory/createPicsumImage';
 import { createProductPrice } from '@/libs/factory/createProductPrice';
 import { createPictureItem } from '@/libs/factory/createPictureItem';
 import { checkMediaStatus } from '@/libs/utils/checkMediaStatus';
