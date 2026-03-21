@@ -16,11 +16,19 @@ export type CbLabelContentProps = ContentBlocksComponentProps<
     }
 >;
 
-const CbLabelContent = ({ className, heading, content }: CbLabelContentProps): React.ReactElement => {
+const CbLabelContent = ({
+    className,
+    heading,
+    content,
+    isNested,
+    animation,
+}: CbLabelContentProps): React.ReactElement => {
     return (
         <CbContainer
             typeClassName="cb--labelContent"
-            className={className}>
+            isNested={isNested}
+            className={className}
+            animation={animation}>
             <Columns gutterY={1}>
                 <Columns.Column md={4}>
                     {heading && (

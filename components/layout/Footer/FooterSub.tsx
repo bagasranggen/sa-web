@@ -1,10 +1,11 @@
 import React, { PropsWithChildren } from 'react';
 
+import { ArrayStringProps, Component } from '@/libs/@types';
+import { joinArrayString } from '@/libs/utils';
+
 import Heading, { BaseProps as BaseHeadingProps } from '@/components/common/Heading';
 import List, { BaseProps as BaseListProps } from '@/components/common/List';
 import Button, { BaseAnchorProps } from '@/components/common/Button';
-import { ArrayStringProps, Component } from '@/libs/@types';
-import { joinArrayString } from '@/libs/utils';
 
 export type FooterSubItemProps = Pick<BaseAnchorProps, 'href' | 'target' | 'children' | 'className'>;
 

@@ -1,5 +1,5 @@
-import { createArrayFromNumber } from '../factory/createArrayFromNumber';
-import { createPicsumImage } from '../factory/createPicsumImage';
+import { createArrayFromNumber } from '@/libs/factory/createArrayFromNumber';
+import { createPicsumImage } from '@/libs/factory/createPicsumImage';
 
 export const CAROUSEL_THUMB_COUNT = 5;
 

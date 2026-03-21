@@ -84,6 +84,7 @@ const Header = ({ items }: HeaderProps): React.ReactElement => {
             </Suspense>
 
             <nav
+                suppressHydrationWarning
                 ref={headerRef as Ref<HTMLDivElement>}
                 className={navClass}>
                 <Container className="nav__container">
@@ -96,12 +97,14 @@ const Header = ({ items }: HeaderProps): React.ReactElement => {
                         />
                     </Button>
 
-                    <Button
-                        as="button"
-                        className="lg:hidden"
-                        onClick={() => setNavigationModalIsOpen((prevState) => !prevState)}>
-                        <Icon.Hamburger active={navigationModalIsOpen} />
-                    </Button>
+                    {items && items.length > 0 && (
+                        <Button
+                            as="button"
+                            className="lg:hidden"
+                            onClick={() => setNavigationModalIsOpen((prevState) => !prevState)}>
+                            <Icon.Hamburger active={navigationModalIsOpen} />
+                        </Button>
+                    )}
 
                     {items && items.length > 0 && (
                         <div className="nav__links">

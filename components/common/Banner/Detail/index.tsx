@@ -59,10 +59,8 @@ const Detail = ({ price, children, info, carousel, calendar, sizeGuides, button 
                                     <DetailInfo
                                         key={i}
                                         className="mt-3"
-                                        title={item.title}
-                                        list={item.list}>
-                                        {item.children}
-                                    </DetailInfo>
+                                        {...item}
+                                    />
                                 );
                             })}
                         </>
@@ -133,3 +131,5 @@ const Detail = ({ price, children, info, carousel, calendar, sizeGuides, button 
 };
 
 export default Detail;
+
+export type { DetailInfoProps };
