@@ -6,7 +6,7 @@ import { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical';
 import DynamicWrapper from '@/components/common/DynamicWrapper';
 
 export type RichTextProps = {
-    children?: SerializedEditorState;
+    children?: SerializedEditorState | any;
 } & React.HTMLAttributes<HTMLDivElement>;
 
 const RichText = ({ children, ...props }: RichTextProps): React.ReactElement | null => {

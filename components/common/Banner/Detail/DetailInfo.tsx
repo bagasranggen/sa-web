@@ -4,22 +4,26 @@ import { ClassnameProps } from '@/libs/@types';
 
 import Heading, { BaseProps } from '@/components/common/Heading';
 import List from '@/components/common/List';
+import RichText, { RichTextProps } from '@/components/common/RichText';
 
 export type DetailListItemProps = Record<'label' | 'value', React.ReactNode>;
 
 export type DetailInfoProps = {
-    title: BaseProps['children'];
+    title?: BaseProps['children'];
     list?: DetailListItemProps[];
+    richText?: RichTextProps['children'];
 } & (ClassnameProps & PropsWithChildren);
 
-const DetailInfo = ({ title, className, list, children }: DetailInfoProps): React.ReactElement => {
+const DetailInfo = ({ title, className, list, richText, children }: DetailInfoProps): React.ReactElement => {
     return (
         <div className={className}>
-            <Heading
-                as="h3"
-                className="text-md uppercase tracking-0.3 font-bold">
-                {title}:
-            </Heading>
+            {title && (
+                <Heading
+                    as="h3"
+                    className="text-md uppercase tracking-0.3 font-bold">
+                    {title}:
+                </Heading>
+            )}
 
             {list && list.length > 0 && (
                 <List
@@ -34,6 +38,8 @@ const DetailInfo = ({ title, className, list, children }: DetailInfoProps): Reac
                     }))}
                 />
             )}
+
+            {richText && <RichText>{richText}</RichText>}
 
             {children}
         </div>

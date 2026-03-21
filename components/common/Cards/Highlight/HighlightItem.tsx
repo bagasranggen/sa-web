@@ -8,12 +8,13 @@ import Columns from '@/components/common/Columns';
 import Picture, { BaseProps as BasePictureProps } from '@/components/common/Picture';
 import Heading, { BaseProps as BaseHeadingProps } from '@/components/common/Heading';
 import Button, { BaseAnchorProps } from '@/components/common/Button';
+import RichText, { RichTextProps } from '@/components/common/RichText';
 
 export type HighlightItemProps = {
     link: Pick<BaseAnchorProps, 'href' | 'target' | 'children'>;
     media: BasePictureProps['items'];
     label?: BaseHeadingProps['children'];
-    description?: PropsWithChildren['children'];
+    description?: RichTextProps['children'];
 } & (ClassnameProps & PropsWithChildren);
 
 const HighlightItem = ({
@@ -63,7 +64,7 @@ const HighlightItem = ({
                         </div>
 
                         <div className="mt-2 md:mt-5">
-                            {description && <div className="cards__description">{description}</div>}
+                            {description && <RichText className="cards__description">{description}</RichText>}
 
                             <Button.Container className="mt-2">
                                 <Button.Block
