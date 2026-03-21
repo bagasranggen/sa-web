@@ -1,5 +1,5 @@
 import { Homepage, PageDataParamsProps, PageDataProps } from '@/libs/@types';
-import { createPicsumImage, createPictureItem, createProductItem } from '@/libs/factory';
+import { createPictureItem, createProductItem } from '@/libs/factory';
 import { checkMediaStatus } from '@/libs/utils';
 
 import { apolloClient } from '@/libs/fetchers';
@@ -82,13 +82,22 @@ export const HomepageData = async ({ typeHandle }: PageDataParamsProps): Promise
         d.collections.forEach((item, i) => {
             if (typeof item === 'number') return;
             if (!item?.url) return;
+            if (typeof item?.productMedia === 'number' || !item?.productMedia) return;
+
+            const { data } = checkMediaStatus({
+                item: item?.productMedia,
+                volumeAssets: 'media',
+                handles: ['assets800x800'],
+            });
+
+            if (!data || !data?.['assets800x800']) return;
 
             tmp.push({
                 link: {
                     href: item.url,
                     children: item.title,
                 },
-                media: [createPicsumImage({ id: 151 + i, width: 800, height: 800 })],
+                media: [createPictureItem({ item: data?.['assets800x800'] })],
             });
         });
 
