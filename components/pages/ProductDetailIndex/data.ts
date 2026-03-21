@@ -1,10 +1,9 @@
-import { PRODUCT_LISTING_NO_COLORS, SIZE_GUIDES_LIGHTBOX } from '@/libs/mock';
 import { PageDataParamsProps, PageDataProps, Prettify, Product, Summaries } from '@/libs/@types';
-import { checkMediaStatus, convertIntToCurrency } from '@/libs/utils';
-import { createPictureItem } from '@/libs/factory';
+import { checkMediaStatus, convertIntToCurrency, shuffleObjectArray } from '@/libs/utils';
+import { createPictureItem, createProductItem } from '@/libs/factory';
 
 import { apolloClient } from '@/libs/fetchers';
-import { PRODUCT_DETAIL_INDEX_QUERY } from '@/graphql';
+import { PRODUCT_DETAIL_INDEX_QUERY, PRODUCT_LISTING_LOAD_QUERY } from '@/graphql';
 
 import { ProductDetailIndexProps } from '@/components/pages/ProductDetailIndex';
 
@@ -131,7 +130,7 @@ export const ProductDetailData = async ({
                     tmpThumb.push(createPictureItem({ item: media?.['assets300x300'] }));
                 }
 
-                // Carousel Lighbox
+                // Carousel Lightbox
                 if (media?.['assets1000xauto']?.src) {
                     tmpLightbox.push(
                         createPictureItem({
@@ -154,12 +153,36 @@ export const ProductDetailData = async ({
             if (carouselLightbox.length > 0) carousel = Object.assign(carousel ?? {}, { lightbox: carouselLightbox });
         }
 
+        const sizeGuides: NonNullable<ProductDetailIndexProps['entries']['banner']>['sizeGuides'] = [];
+
+        if (d?.mediaSizeGuides && d.mediaSizeGuides.length > 0) {
+            d.mediaSizeGuides.forEach((item) => {
+                const tmp: NonNullable<
+                    NonNullable<ProductDetailIndexProps['entries']['banner']>['sizeGuides']
+                >[number] = [];
+
+                if (typeof item === 'number') return;
+                if (!item?.url) return;
+
+                const { data } = checkMediaStatus({
+                    item,
+                    volumeAssets: 'mediaProducts',
+                    handles: ['assets600x800'],
+                });
+
+                if (data) tmp.push(createPictureItem({ item: data, media: 768 }));
+                if (data?.['assets600x800']?.src) tmp.push(createPictureItem({ item: data?.['assets600x800'] }));
+
+                if (tmp.length > 0) sizeGuides.push(tmp);
+            });
+        }
+
         banner = Object.assign(banner ?? {}, {
             info,
             carousel,
             price,
             calendar,
-            sizeGuides: SIZE_GUIDES_LIGHTBOX,
+            sizeGuides,
             button: {
                 href: `/order?collection=${d?.slug}`,
             },
@@ -167,7 +190,30 @@ export const ProductDetailData = async ({
         });
     }
 
-    const recommendation: ProductDetailIndexProps['entries']['recommendation'] = PRODUCT_LISTING_NO_COLORS;
+    const recommendation: ProductDetailIndexProps['entries']['recommendation'] = [];
+
+    let otherVariables = { limit: 8 };
+    if (d?.slug) {
+        otherVariables = Object.assign(otherVariables, { notSlug: d.slug });
+    }
+    // if (typeof d?.category !== 'number' && d?.category?.id) {
+    //     otherVariables = Object.assign(otherVariables, { categoryId: d.category.id });
+    // }
+
+    const { data: otherData } = await apolloClient().query({
+        query: PRODUCT_LISTING_LOAD_QUERY,
+        variables: otherVariables,
+    });
+
+    const otherProducts = shuffleObjectArray({ items: (otherData as any)?.Products?.docs, limit: 4 });
+
+    if (otherProducts.length > 0) {
+        otherProducts.forEach((item) => {
+            const product = createProductItem({ item: item as any, withColors: false });
+
+            if (product) recommendation.push(product);
+        });
+    }
 
     return {
         typeHandle,

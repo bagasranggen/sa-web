@@ -15,3 +15,4 @@ export * from './getPagesData';
 export * from './getS3SignedUrl';
 export * from './getUriFromParams';
 export * from './joinArrayString';
+export * from './shuffleObjectArray';

@@ -4,6 +4,7 @@ import Container from '@/components/common/Container';
 import Heading from '@/components/common/Heading';
 import Cards, { ThumbnailProps } from '@/components/common/Cards';
 import Banner, { DetailProps } from '@/components/common/Banner';
+import Animation from '@/components/common/Animation';
 
 export type ProductDetailIndexProps = {
     entries: {
@@ -16,28 +17,32 @@ const ProductDetailIndex = ({ entries }: ProductDetailIndexProps): React.ReactEl
     return (
         <>
             {entries?.banner && (
-                <Container
-                    as="section"
-                    className="mt-8">
-                    <Banner.Detail {...entries.banner} />
-                </Container>
+                <Animation type="fade-in">
+                    <Container
+                        as="section"
+                        className="mt-8 last:mb-15">
+                        <Banner.Detail {...entries.banner} />
+                    </Container>
+                </Animation>
             )}
 
-            <Container
-                as="section"
-                className="mt-15 mb-15">
-                <div className="text-center mb-4">
-                    <Heading
-                        as="h2"
-                        variant="section">
-                        Our Collection
-                    </Heading>
-                </div>
+            {entries?.recommendation && entries.recommendation.length > 0 && (
+                <Animation type="fade-in">
+                    <Container
+                        as="section"
+                        className="mt-15 mb-15">
+                        <div className="text-center mb-4">
+                            <Heading
+                                as="h2"
+                                variant="section">
+                                Our Collection
+                            </Heading>
+                        </div>
 
-                {entries?.recommendation && entries.recommendation.length > 0 && (
-                    <Cards.Thumbnail items={entries.recommendation} />
-                )}
-            </Container>
+                        <Cards.Thumbnail items={entries.recommendation} />
+                    </Container>
+                </Animation>
+            )}
         </>
     );
 };

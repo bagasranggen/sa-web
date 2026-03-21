@@ -12,17 +12,19 @@ export type CreateProductItemProps = {
     index?: number;
     item: Product;
     colorsFn?: (item: Exclude<ProductColorItem, number>) => void;
+    withColors?: boolean;
 };
 
 export const createProductItem = ({
     index,
     item,
     colorsFn,
+    withColors = true,
 }: CreateProductItemProps): (ThumbnailItemProps & { slug: string }) | undefined => {
     if (!item?.url) return undefined;
 
     const colors: ThumbnailItemProps['colors'] = [];
-    if (item?.colors && item.colors.length > 0) {
+    if (withColors && item?.colors && item.colors.length > 0) {
         item.colors.forEach((itm: NonNullable<Product['colors']>[number]) => {
             if (typeof itm !== 'number' && itm?.color) {
                 colors.push(itm.color);

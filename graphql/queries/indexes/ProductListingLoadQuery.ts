@@ -5,12 +5,24 @@ import { FRAGMENT_PRODUCT_FILTERS } from '@/graphql/queries/indexes/fragments/Fr
 import { FRAGMENT_PRODUCT_MEDIA_BASE } from '@/graphql/queries/indexes/fragments/FragmentProductMediaBase';
 
 export const PRODUCT_LISTING_LOAD_QUERY = gql`
-    query ProductListingLoadQuery($categoryId: [JSON], $colorId: [JSON], $sizeId: [JSON], $limit: Int, $page: Int) {
+    query ProductListingLoadQuery(
+        $notSlug: String
+        $categoryId: [JSON]
+        $colorId: [JSON]
+        $sizeId: [JSON]
+        $limit: Int
+        $page: Int
+    ) {
         Products(
             limit: $limit
             page: $page
             where: {
-                AND: [{ category: { in: $categoryId } }, { colors: { in: $colorId } }, { sizes: { in: $sizeId } }]
+                AND: [
+                    { slug: { not_equals: $notSlug } }
+                    { category: { in: $categoryId } }
+                    { colors: { in: $colorId } }
+                    { sizes: { in: $sizeId } }
+                ]
             }
         ) {
             docs {
