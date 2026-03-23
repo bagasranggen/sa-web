@@ -105,6 +105,10 @@ const Order = ({ collection, onFormSubmit, pickupAddress }: OrderProps): React.R
                                 register,
                                 name: ORDER_FORM_HANDLE.INSTAGRAM,
                                 required: true,
+                                pattern: {
+                                    value: /^@[a-zA-Z0-9_]+$/,
+                                    message: 'Please enter your username with @username format',
+                                },
                             }}
                             error={errors?.[ORDER_FORM_HANDLE.INSTAGRAM]?.message}
                         />

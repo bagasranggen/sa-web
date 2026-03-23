@@ -2,6 +2,9 @@
 
 import React from 'react';
 
+import { submitOrderForm } from '@/libs/actions';
+import { sendWhatsappMessage } from '@/libs/utils';
+
 import Container from '@/components/common/Container';
 import Heading from '@/components/common/Heading';
 import Form, { OrderProps } from '@/components/common/Form';
@@ -33,8 +36,16 @@ const OrderIndex = ({ entries }: OrderIndexProps): React.ReactElement => {
                     <Form.Order
                         collection={entries.form.collection}
                         pickupAddress={entries.form.pickupAddress}
-                        onFormSubmit={(data) => {
+                        onFormSubmit={async (data) => {
                             console.log({ data });
+                            await submitOrderForm(data).then((res) => {
+                                if (res.status === 'success') {
+                                    sendWhatsappMessage({
+                                        message: 'test',
+                                        target: '_blank',
+                                    });
+                                }
+                            });
                         }}
                     />
                 </Container>
