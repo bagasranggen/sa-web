@@ -31,17 +31,17 @@ export const HomepageData = async ({ typeHandle }: PageDataParamsProps): Promise
             const { data } = checkMediaStatus({
                 item: item?.media?.[0],
                 volumeAssets: 'mediaProducts',
-                handles: ['assets800x600'],
+                handles: ['assets800x800'],
             });
 
             if (!product?.link?.href) return;
-            if (!data?.['assets800x600']?.src) return;
+            if (!data?.['assets800x800']?.src) return;
 
             tmp.push({
                 link: {
                     href: product?.link?.href,
                 },
-                items: [createPictureItem({ item: data?.['assets800x600'] })],
+                items: [createPictureItem({ item: data?.['assets800x800'] })],
             });
         });
 

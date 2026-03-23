@@ -12,6 +12,6 @@ export const FRAGMENT_PRODUCT_MEDIA_MARQUEE = gql`
     ${FRAGMENT_MEDIA({
         on: 'MediaProduct',
         name: 'productMediaMarqueeAssets',
-        sizesHandles: ['assets800x600'],
+        sizesHandles: ['assets800x800'],
     })}
 `;
