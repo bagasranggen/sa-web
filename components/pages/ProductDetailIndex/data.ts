@@ -109,13 +109,13 @@ export const ProductDetailData = async ({
                     tmpMedia.push(
                         createPictureItem({
                             item: media?.['assets1000x1400'],
-                            media: media?.['assets600x400']?.src ? 768 : undefined,
+                            // media: media?.['assets600x400']?.src ? 768 : undefined,
                         })
                     );
                 }
-                if (media?.['assets600x400']?.src) {
-                    tmpMedia.push(createPictureItem({ item: media?.['assets600x400'] }));
-                }
+                // if (media?.['assets600x400']?.src) {
+                //     tmpMedia.push(createPictureItem({ item: media?.['assets600x400'] }));
+                // }
 
                 // Carousel Thumbnail
                 if (media?.['assets400x560']?.src) {
