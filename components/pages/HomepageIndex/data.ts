@@ -59,12 +59,15 @@ export const HomepageData = async ({ typeHandle }: PageDataParamsProps): Promise
 
             if (!product) return;
 
+            let label = undefined;
+            if (item?.tag && typeof item?.tag !== 'number') label = item?.tag.title;
+
             highlight.push({
                 link: {
                     href: product.link.href,
                     children: 'Detail',
                 },
-                label: 'New Release',
+                label,
                 media: product?.media,
                 description: item?.shortDescription,
                 children: product.children,
