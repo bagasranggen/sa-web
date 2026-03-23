@@ -49,6 +49,7 @@ const ProductListingIndex = ({ entries }: ProductListingIndexProps): React.React
     const [filter, setFilter] = useState<ProductListingFilterProps['activeFilter']>({});
     const [listingItems, setListingItems] = useState<ThumbnailProps['items']>(entries.listing);
     const [loadMoreIsLoading, setLoadMoreIsLoading] = useState(false);
+    const [filterIsLoading, setFilterIsLoading] = useState(false);
     const [paginationPage, setPaginationPage] = useState(1);
     const [hasLoadMore, setHasLoadMore] = useState<boolean>(!!entries?.products?.hasLoadMore);
 
@@ -144,6 +145,7 @@ const ProductListingIndex = ({ entries }: ProductListingIndexProps): React.React
                 })
                 .then(() => {
                     setLoadMoreIsLoading(false);
+                    setFilterIsLoading(false);
 
                     if (page && page > 0) setPaginationPage(page);
                     if (searchParams) setFilter(searchParams);
@@ -264,6 +266,7 @@ const ProductListingIndex = ({ entries }: ProductListingIndexProps): React.React
                                         if (searchQuery) path += searchQuery;
 
                                         router.push(path);
+                                        setFilterIsLoading(true);
                                     }
                                 }}
                                 reset={{
@@ -278,7 +281,7 @@ const ProductListingIndex = ({ entries }: ProductListingIndexProps): React.React
                 )}
 
                 {listingItems && listingItems.length > 0 && (
-                    <ProductListingWrapper isLoading={!loadMoreIsLoading && loading}>
+                    <ProductListingWrapper isLoading={!loadMoreIsLoading && (loading || filterIsLoading)}>
                         <Cards.Thumbnail
                             items={listingItems}
                             animation={{
