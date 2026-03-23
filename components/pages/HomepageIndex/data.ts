@@ -31,17 +31,17 @@ export const HomepageData = async ({ typeHandle }: PageDataParamsProps): Promise
             const { data } = checkMediaStatus({
                 item: item?.media?.[0],
                 volumeAssets: 'mediaProducts',
-                handles: ['assets800x600'],
+                handles: ['assets800x800'],
             });
 
             if (!product?.link?.href) return;
-            if (!data?.['assets800x600']?.src) return;
+            if (!data?.['assets800x800']?.src) return;
 
             tmp.push({
                 link: {
                     href: product?.link?.href,
                 },
-                items: [createPictureItem({ item: data?.['assets800x600'] })],
+                items: [createPictureItem({ item: data?.['assets800x800'] })],
             });
         });
 
@@ -59,12 +59,15 @@ export const HomepageData = async ({ typeHandle }: PageDataParamsProps): Promise
 
             if (!product) return;
 
+            let label = undefined;
+            if (item?.tag && typeof item?.tag !== 'number') label = item?.tag.title;
+
             highlight.push({
                 link: {
                     href: product.link.href,
                     children: 'Detail',
                 },
-                label: 'New Release',
+                label,
                 media: product?.media,
                 description: item?.shortDescription,
                 children: product.children,
