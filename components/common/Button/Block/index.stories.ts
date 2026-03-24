@@ -20,6 +20,9 @@ const meta = {
             control: 'select',
             options: ['anchor', 'button'],
         },
+        disabled: {
+            control: 'boolean',
+        },
     },
     // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#story-args
     args: { onClick: fn() },
@@ -33,10 +36,25 @@ export const Default: Story = {
     // parameters: {},
     args: {
         as: 'button',
-        // as: 'anchor',
-        // href: '#',
         size: 'md',
         children: 'Button',
+    },
+    play: async ({ canvas, userEvent, args }) => {
+        const button = canvas.getByRole('button');
+
+        await userEvent.click(button);
+
+        await expect(args.onClick).toHaveBeenCalled();
+    },
+};
+
+export const Disabled: Story = {
+    // parameters: {},
+    args: {
+        as: 'button',
+        disabled: true,
+        size: 'md',
+        children: 'Disabled',
     },
     play: async ({ canvas, userEvent, args }) => {
         const button = canvas.getByRole('button');
