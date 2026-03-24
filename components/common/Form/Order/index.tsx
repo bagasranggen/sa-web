@@ -10,7 +10,7 @@ import { MapPin } from 'lucide-react';
 import { useForm, useWatch } from 'react-hook-form';
 
 import Input, { BaseInputSelectProps } from '@/components/common/Input';
-import Button, { BaseAnchorProps } from '@/components/common/Button';
+import Button, { BaseAnchorProps, BaseButtonProps } from '@/components/common/Button';
 import Columns from '@/components/common/Columns';
 
 export const ORDER_FORM_HANDLE = {
@@ -41,9 +41,10 @@ export type OrderProps = {
         title?: React.ReactNode;
     } & Pick<BaseAnchorProps, 'target' | 'href' | 'children'>;
     onFormSubmit?: (data: OrderFormFields) => void;
+    submitButton?: Pick<BaseButtonProps, 'disabled' | 'children'>;
 };
 
-const Order = ({ collection, onFormSubmit, pickupAddress }: OrderProps): React.ReactElement => {
+const Order = ({ collection, onFormSubmit, pickupAddress, submitButton }: OrderProps): React.ReactElement => {
     const {
         register,
         handleSubmit,
@@ -251,8 +252,9 @@ const Order = ({ collection, onFormSubmit, pickupAddress }: OrderProps): React.R
                     <Button.Block
                         as="button"
                         type="submit"
-                        size="lg">
-                        Submit
+                        size="lg"
+                        disabled={submitButton?.disabled}>
+                        {submitButton?.children ?? 'Submit'}
                     </Button.Block>
                 </Button.Container>
             </form>

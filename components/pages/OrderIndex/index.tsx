@@ -18,6 +18,7 @@ export type OrderIndexProps = {
 
 const OrderIndex = ({ entries }: OrderIndexProps): React.ReactElement => {
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
+    const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
     if (isSuccess) {
         return (
@@ -65,11 +66,18 @@ const OrderIndex = ({ entries }: OrderIndexProps): React.ReactElement => {
                         <Form.Order
                             collection={entries.form.collection}
                             pickupAddress={entries.form.pickupAddress}
+                            submitButton={{
+                                disabled: isProcessing,
+                                children: isProcessing ? 'Processing' : undefined,
+                            }}
                             onFormSubmit={async (data) => {
-                                console.log({ data });
+                                // console.log({ data });
+                                setIsProcessing(true);
+
                                 await submitOrderForm(data).then((res) => {
                                     if (res.status === 'success') {
                                         setIsSuccess(true);
+                                        setIsProcessing(false);
                                         sendWhatsappMessage({
                                             message: 'test',
                                             target: '_blank',
