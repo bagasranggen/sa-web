@@ -5,6 +5,7 @@ export * from './createContentBlocks';
 export * from './createContentBlocksSpacingItem';
 export * from './createInputHooks';
 export * from './createLinkItem';
+export * from './createMessageText';
 export * from './createPicsumImage';
 export * from './createPictureItem';
 export * from './createProductFilter';
