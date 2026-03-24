@@ -18,8 +18,8 @@ export const submitOrderForm = async (data: OrderFormFields) => {
         endDate: convertDMYToMDY(endDate),
         order: data?.collection,
         deliveryMethod: data?.deliveryMethod,
-        address: data?.address,
-        addressPinPoint: data?.addressPinPoint,
+        address: data?.address ?? '',
+        addressPinPoint: data?.addressPinPoint ?? '',
     };
 
     /* Create Order Calendar Event */
