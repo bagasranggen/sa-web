@@ -11,3 +11,4 @@ export * from './createPictureItem';
 export * from './createProductFilter';
 export * from './createProductItem';
 export * from './createProductPrice';
+export * from './createWhatsappMessage';

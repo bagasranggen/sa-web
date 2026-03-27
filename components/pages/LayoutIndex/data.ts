@@ -1,5 +1,6 @@
 import { Footer, Global, Navigation } from '@/libs/@types';
-import { createLinkItem } from '@/libs/factory';
+import { createLinkItem, createMessageText, createWhatsappMessage } from '@/libs/factory';
+import { getEnv } from '@/libs/utils';
 
 import { apolloClient } from '@/libs/fetchers';
 import { GLOBAL_QUERY } from '@/graphql';
@@ -8,6 +9,8 @@ import { HeaderProps } from '@/components/layout/Header';
 import { FooterProps } from '@/components/layout/Footer';
 
 export const LayoutData = async () => {
+    const { contactPerson } = getEnv();
+
     let data: any | undefined = undefined;
 
     try {
@@ -96,6 +99,16 @@ export const LayoutData = async () => {
     }
 
     if (tmpLocation) footer = Object.assign(footer ?? {}, { location: tmpLocation });
+
+    footer = Object.assign(footer ?? {}, {
+        floatButton: {
+            href: createWhatsappMessage({
+                number: contactPerson,
+                message: createMessageText({ message: 'test test' }),
+            }),
+            target: '_blank',
+        },
+    });
 
     return {
         header,
