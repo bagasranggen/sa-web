@@ -17,7 +17,7 @@ const FooterFloat = ({ href, target }: FooterFloatProps): React.ReactElement | n
     const { enableAnimation } = getEnv();
     const [ref, { height }] = useMeasure();
 
-    let floatClass: ArrayStringProps = ['bottom-0 right-0 flex justify-end overflow-hidden'];
+    let floatClass: ArrayStringProps = ['bottom-0 right-0 z-10 flex justify-end overflow-hidden'];
     if (!enableAnimation) floatClass.push('transition-opacity');
     if (height === 0 && !enableAnimation) floatClass.push('opacity-0');
     if (height === 0) floatClass.push('fixed');
