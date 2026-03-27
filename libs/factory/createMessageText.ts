@@ -3,7 +3,7 @@ export type CreateMessageTextProps = {
     message: string;
 };
 
-export const createMessageText = ({ isEncoded, message: messageProps }: CreateMessageTextProps) => {
+export const createMessageText = ({ isEncoded = true, message: messageProps }: CreateMessageTextProps) => {
     let message = messageProps ?? '';
 
     if (isEncoded) message = encodeURIComponent(message);
