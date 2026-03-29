@@ -4,13 +4,13 @@ import { ArrayStringProps } from '@/libs/@types';
 import { joinArrayString } from '@/libs/utils';
 
 import Loader from '@/components/common/Loader';
-import DynamicWrapper from '@/components/common/DynamicWrapper';
+import Animation from '@/components/common/Animation';
 
-export type ProductListingWrapperProps = {
+export type ListingWrapperProps = {
     isLoading?: boolean;
 } & PropsWithChildren;
 
-const ProductListingWrapper = ({ isLoading, children }: ProductListingWrapperProps): React.ReactElement => {
+const ListingWrapper = ({ isLoading, children }: ListingWrapperProps): React.ReactElement => {
     let wrapperClass: ArrayStringProps = [];
     if (isLoading) {
         wrapperClass.push(
@@ -20,18 +20,20 @@ const ProductListingWrapper = ({ isLoading, children }: ProductListingWrapperPro
     wrapperClass = joinArrayString(wrapperClass);
 
     return (
-        <DynamicWrapper
-            as="div"
-            className={wrapperClass}>
+        <div className={wrapperClass}>
             {isLoading && (
-                <Loader className="flex flex-col items-center mb-[calc((57px+4rem)*-1)] sticky top-1/2 z-20">
-                    Loading
-                </Loader>
+                <Animation type="fade">
+                    <div>
+                        <Loader className="flex flex-col items-center mb-[calc((57px+4rem)*-1)] sticky top-1/2 z-20">
+                            Loading
+                        </Loader>
+                    </div>
+                </Animation>
             )}
 
             {children}
-        </DynamicWrapper>
+        </div>
     );
 };
 
-export default ProductListingWrapper;
+export default ListingWrapper;

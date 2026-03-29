@@ -7,21 +7,21 @@ import Heading from '@/components/common/Heading';
 import List from '@/components/common/List';
 import Button, { BaseAnchorProps } from '@/components/common/Button';
 
-export type ProductListingLinkItemProps = Pick<BaseAnchorProps, 'href' | 'children' | 'target'>;
+export type ListingLinkItemProps = Pick<BaseAnchorProps, 'href' | 'children' | 'target'>;
 
-export type ProductListingNotFoundProps = {
+export type ListingEmptyProps = {
     show?: boolean;
     subtitle?: string;
-    links?: ProductListingLinkItemProps[];
+    links?: ListingLinkItemProps[];
 } & (PropsWithChildren & ClassnameProps);
 
-const ProductListingNotFound = ({
+const ListingEmpty = ({
     show = false,
     subtitle,
     children,
     className,
     links,
-}: ProductListingNotFoundProps): React.ReactElement | null => {
+}: ListingEmptyProps): React.ReactElement | null => {
     if (!show) return null;
 
     let wrapperClass: ArrayStringProps = ['text-center'];
@@ -58,4 +58,4 @@ const ProductListingNotFound = ({
     );
 };
 
-export default ProductListingNotFound;
+export default ListingEmpty;

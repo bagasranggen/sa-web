@@ -7,6 +7,7 @@ import { FRAGMENT_PRODUCT_MEDIA_BASE } from '@/graphql/queries/indexes/fragments
 export const PRODUCT_LISTING_LOAD_QUERY = gql`
     query ProductListingLoadQuery(
         $notSlug: String
+        $searchTitle: String
         $categoryId: [JSON]
         $colorId: [JSON]
         $sizeId: [JSON]
@@ -18,6 +19,7 @@ export const PRODUCT_LISTING_LOAD_QUERY = gql`
             page: $page
             where: {
                 AND: [
+                    { title: { contains: $searchTitle } }
                     { slug: { not_equals: $notSlug } }
                     { category: { in: $categoryId } }
                     { colors: { in: $colorId } }

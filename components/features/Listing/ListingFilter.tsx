@@ -5,32 +5,32 @@ import { joinArrayString } from '@/libs/utils';
 
 import { useWindowSize } from 'react-use';
 
-import ProductListingFilterItem, {
-    FilterFormFields,
-    ProductListingFilterItemProps,
-} from '@/components/pages/ProductListingIndex/ProductListingFilterItem';
 import Button from '@/components/common/Button';
 import Columns from '@/components/common/Columns';
 import Animation from '@/components/common/Animation';
+import ListingFilterItem, {
+    ListingFilterItemProps,
+    FilterFormFields,
+} from '@/components/features/Listing/ListingFilterItem';
 
-export type ProductListingFilterProps = {
+export type ListingFilterProps = {
     activeFilter?: FilterFormFields;
-    filters?: Pick<ProductListingFilterItemProps, 'handle' | 'checkbox' | 'children'>[];
-    sort?: ProductListingFilterItemProps['select'];
+    filters?: Pick<ListingFilterItemProps, 'handle' | 'checkbox' | 'children'>[];
+    sort?: ListingFilterItemProps['select'];
     reset?: {
         active?: boolean;
         onResetFilters?: () => void;
     };
-} & (ClassnameProps & Pick<ProductListingFilterItemProps, 'onOpenChange'>);
+} & (ClassnameProps & Pick<ListingFilterItemProps, 'onOpenChange'>);
 
-const ProductListingFilter = ({
+const ListingFilter = ({
     className,
     sort,
     filters,
     activeFilter,
     reset,
     onOpenChange,
-}: ProductListingFilterProps): React.ReactElement | null => {
+}: ListingFilterProps): React.ReactElement | null => {
     const { width } = useWindowSize();
 
     let filterClass: ArrayStringProps = [];
@@ -87,7 +87,7 @@ const ProductListingFilter = ({
                                 }
 
                                 return (
-                                    <ProductListingFilterItem
+                                    <ListingFilterItem
                                         key={i}
                                         group={{ className: 'px-1.5 py-1' }}
                                         handle={item.handle}
@@ -99,7 +99,7 @@ const ProductListingFilter = ({
                                         active={activeFilter}
                                         checkbox={item?.checkbox}>
                                         {children}
-                                    </ProductListingFilterItem>
+                                    </ListingFilterItem>
                                 );
                             })}
 
@@ -125,7 +125,7 @@ const ProductListingFilter = ({
                     <Columns.Column
                         md="auto"
                         className="order-1 md:order-2">
-                        <ProductListingFilterItem
+                        <ListingFilterItem
                             content={{
                                 align: 'end',
                                 className: 'max-md:w-[calc(100vw-3rem)]',
@@ -137,7 +137,7 @@ const ProductListingFilter = ({
                             onOpenChange={onOpenChange}
                             select={sort}>
                             {sortChildren}
-                        </ProductListingFilterItem>
+                        </ListingFilterItem>
                     </Columns.Column>
                 )}
             </Columns>
@@ -145,4 +145,4 @@ const ProductListingFilter = ({
     );
 };
 
-export default ProductListingFilter;
+export default ListingFilter;
