@@ -7,6 +7,8 @@ export type NavigationState = {
     setActiveDropdown: React.Dispatch<React.SetStateAction<NavigationState['activeDropdown']>>;
     navigationModalIsOpen: boolean;
     setNavigationModalIsOpen: React.Dispatch<React.SetStateAction<NavigationState['navigationModalIsOpen']>>;
+    searchModalIsOpen: boolean;
+    setSearchModalIsOpen: React.Dispatch<React.SetStateAction<NavigationState['searchModalIsOpen']>>;
 };
 
 export const NavigationStateContext = createContext<NavigationState>({
@@ -14,11 +16,14 @@ export const NavigationStateContext = createContext<NavigationState>({
     setActiveDropdown: () => {},
     navigationModalIsOpen: false,
     setNavigationModalIsOpen: () => {},
+    searchModalIsOpen: false,
+    setSearchModalIsOpen: () => {},
 });
 
 export const NavigationStateContextProvider = ({ children }: PropsWithChildren) => {
     const [activeDropdown, setActiveDropdown] = useState<NavigationState['activeDropdown']>();
     const [navigationModalIsOpen, setNavigationModalIsOpen] = useState<NavigationState['navigationModalIsOpen']>(false);
+    const [searchModalIsOpen, setSearchModalIsOpen] = useState<NavigationState['searchModalIsOpen']>(false);
 
     // lock window scroll on modal open
     useEffect(() => {
@@ -31,7 +36,14 @@ export const NavigationStateContextProvider = ({ children }: PropsWithChildren) 
         if (!navigationModalIsOpen) body.classList.remove(windowScrollLock);
     }, [navigationModalIsOpen]);
 
-    const defaultContext = { activeDropdown, setActiveDropdown, navigationModalIsOpen, setNavigationModalIsOpen };
+    const defaultContext = {
+        activeDropdown,
+        setActiveDropdown,
+        navigationModalIsOpen,
+        setNavigationModalIsOpen,
+        searchModalIsOpen,
+        setSearchModalIsOpen,
+    };
 
     return <NavigationStateContext.Provider value={defaultContext}>{children}</NavigationStateContext.Provider>;
 };
