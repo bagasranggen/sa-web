@@ -21,12 +21,12 @@ import Input from '@/components/common/Input';
 
 export type FilterFormFields = Partial<Record<string, string[]>>;
 
-export type ProductListingCheckboxItemProps = Record<'label' | 'value', string>;
+export type ListingCheckboxItemProps = Record<'label' | 'value', string>;
 
-export type ProductListingFilterItemProps = {
+export type ListingFilterItemProps = {
     button?: Pick<BlockProps, 'active' | 'className'>;
-    checkbox?: ProductListingCheckboxItemProps[];
-    select?: ProductListingCheckboxItemProps[];
+    checkbox?: ListingCheckboxItemProps[];
+    select?: ListingCheckboxItemProps[];
     content?: Pick<DropdownMenuContentProps, 'align' | 'className'>;
     group?: Pick<DropdownMenuGroupProps, 'className'>;
     handle?: string;
@@ -35,7 +35,7 @@ export type ProductListingFilterItemProps = {
     onOpenChange?: (open: boolean, form?: any) => void;
 };
 
-const ProductListingFilterItem = ({
+const ListingFilterItem = ({
     onOpenChange,
     content,
     group,
@@ -45,7 +45,7 @@ const ProductListingFilterItem = ({
     select,
     active,
     children,
-}: ProductListingFilterItemProps): React.ReactElement | null => {
+}: ListingFilterItemProps): React.ReactElement | null => {
     const { register, getValues, setValue } = useForm<FilterFormFields>({
         mode: 'onChange',
         defaultValues: active,
@@ -130,4 +130,4 @@ const ProductListingFilterItem = ({
     );
 };
 
-export default ProductListingFilterItem;
+export default ListingFilterItem;

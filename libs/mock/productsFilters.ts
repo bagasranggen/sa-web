@@ -1,11 +1,11 @@
-import { ProductListingFilterProps } from '@/components/pages/ProductListingIndex/ProductListingFilter';
+import { ListingFilterProps } from '@/components/features/Listing/ListingFilter';
 
-export const PRODUCTS_SORT: ProductListingFilterProps['sort'] = [
+export const PRODUCTS_SORT: ListingFilterProps['sort'] = [
     { value: 'a-z', label: 'a-z' },
     { value: 'z-a', label: 'z-a' },
 ];
 
-export const PRODUCTS_FILTERS: ProductListingFilterProps['filters'] = [
+export const PRODUCTS_FILTERS: ListingFilterProps['filters'] = [
     {
         handle: 'color',
         children: 'Color',

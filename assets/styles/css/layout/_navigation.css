@@ -12,12 +12,24 @@
 
         .nav__links {
             @apply hidden lg:flex flex-wrap lg:justify-end;
+            @apply lg:ms-auto;
             @apply lg:gap-x-2 xl:gap-x-3;
             @apply gap-y-0.5;
         }
 
         .nav__link {
             @apply uppercase font-bold lg:text-md xl:text-lg tracking-[.25rem];
+        }
+
+        .nav__search {
+            @apply ms-2;
+            @apply lg:mb-[0.25rem];
+            @apply max-lg:ms-auto;
+            @apply max-lg:me-2;
+
+            svg {
+                @apply w-2 h-2;
+            }
         }
     }
 

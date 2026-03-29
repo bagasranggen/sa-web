@@ -1,6 +1,6 @@
-import { ProductListingFilterProps } from '@/components/pages/ProductListingIndex/ProductListingFilter';
+import { ListingFilterProps } from '@/components/features/Listing/ListingFilter';
 
-export type ProductFilterItemProps = NonNullable<ProductListingFilterProps['filters']>[number];
+export type ProductFilterItemProps = NonNullable<ListingFilterProps['filters']>[number];
 
 export type CreateProductFilterProps = {
     map: Map<string, string>;

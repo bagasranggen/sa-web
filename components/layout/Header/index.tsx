@@ -1,6 +1,7 @@
 'use client';
 
 import React, { Ref, Suspense, useEffect, useMemo, useRef } from 'react';
+import { useRouter } from 'next/navigation';
 
 import { useLayoutStateContext, useNavigationStateContext } from '@/store/context';
 import { ArrayStringProps } from '@/libs/@types';
@@ -8,6 +9,7 @@ import { joinArrayString } from '@/libs/utils';
 import { NavigationEvents, useCheckSamePath } from '@/libs/hooks';
 
 import { useMeasure, useWindowScroll, useWindowSize } from 'react-use';
+import { Search } from 'lucide-react';
 
 import LogoText from '@/assets/images/logo-sekar-text.png';
 
@@ -17,6 +19,7 @@ import Picture, { BaseItemProps } from '@/components/common/Picture';
 import Icon from '@/components/common/Icon';
 import HeaderModal from '@/components/layout/Header/HeaderModal';
 import HeaderLink, { HeaderLinkProps } from '@/components/layout/Header/HeaderLink';
+import HeaderSearch from '@/components/layout/Header/HeaderSearch';
 
 export type HeaderProps = {
     items?: HeaderLinkProps[];
@@ -24,9 +27,16 @@ export type HeaderProps = {
 
 const Header = ({ items }: HeaderProps): React.ReactElement => {
     const { setHeaderHeight } = useLayoutStateContext();
-    const { navigationModalIsOpen, setNavigationModalIsOpen, activeDropdown, setActiveDropdown } =
-        useNavigationStateContext();
+    const {
+        navigationModalIsOpen,
+        setNavigationModalIsOpen,
+        searchModalIsOpen,
+        setSearchModalIsOpen,
+        activeDropdown,
+        setActiveDropdown,
+    } = useNavigationStateContext();
     const { isSamePath } = useCheckSamePath();
+    const router = useRouter();
     const [headerRef, { height }] = useMeasure();
     const currentScroll = useRef<number>(0);
     const { y } = useWindowScroll();
@@ -79,6 +89,7 @@ const Header = ({ items }: HeaderProps): React.ReactElement => {
                 <NavigationEvents
                     endHandler={() => {
                         setNavigationModalIsOpen(false);
+                        setSearchModalIsOpen(false);
                     }}
                 />
             </Suspense>
@@ -94,17 +105,9 @@ const Header = ({ items }: HeaderProps): React.ReactElement => {
                         <Picture
                             imageClassName="max-w-[18rem]"
                             items={[LogoText as BaseItemProps]}
+                            loading="eager"
                         />
                     </Button>
-
-                    {items && items.length > 0 && (
-                        <Button
-                            as="button"
-                            className="lg:hidden"
-                            onClick={() => setNavigationModalIsOpen((prevState) => !prevState)}>
-                            <Icon.Hamburger active={navigationModalIsOpen} />
-                        </Button>
-                    )}
 
                     {items && items.length > 0 && (
                         <div className="nav__links">
@@ -119,6 +122,22 @@ const Header = ({ items }: HeaderProps): React.ReactElement => {
                                 );
                             })}
                         </div>
+                    )}
+
+                    <Button
+                        as="button"
+                        className="nav__search"
+                        onClick={() => setSearchModalIsOpen(true)}>
+                        <Search />
+                    </Button>
+
+                    {items && items.length > 0 && (
+                        <Button
+                            as="button"
+                            className="lg:hidden"
+                            onClick={() => setNavigationModalIsOpen((prevState) => !prevState)}>
+                            <Icon.Hamburger active={navigationModalIsOpen} />
+                        </Button>
                     )}
                 </Container>
             </nav>
@@ -148,6 +167,17 @@ const Header = ({ items }: HeaderProps): React.ReactElement => {
                     </Container>
                 </HeaderModal>
             )}
+
+            <HeaderSearch
+                open={searchModalIsOpen}
+                onOpenChange={setSearchModalIsOpen}
+                form={{
+                    onFormSubmit: (data) => {
+                        if (data?.search) router.push(`/search?q=${data.search}`);
+                        if (!data?.search) setSearchModalIsOpen(false);
+                    },
+                }}
+            />
         </>
     );
 };
