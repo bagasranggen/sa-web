@@ -19,7 +19,7 @@ export type BaseProps = {
     style?: React.CSSProperties;
     // events?: React.DOMAttributes<HTMLPictureElement>;
     items: BaseItemProps[];
-} & React.DOMAttributes<HTMLPictureElement>;
+} & (React.DOMAttributes<HTMLPictureElement> & Pick<React.ImgHTMLAttributes<HTMLImageElement>, 'loading'>);
 
 const Base = forwardRef<HTMLPictureElement, BaseProps>(({ className, imageClassName, items, style, ...props }, ref) => {
     if (!items || items.length === 0) return null;
