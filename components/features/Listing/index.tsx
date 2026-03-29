@@ -1,12 +1,5 @@
 import React, { Suspense, useRef } from 'react';
 
-import {
-    PRODUCT_MESSAGE_EMPTY_SUBTITLE,
-    PRODUCT_MESSAGE_EMPTY_TITLE,
-    PRODUCT_MESSAGE_FILTER_EMPTY_SUBTITLE,
-    PRODUCT_MESSAGE_FILTER_EMPTY_TITLE,
-} from '@/libs/constants';
-
 import Cards, { ThumbnailProps } from '@/components/common/Cards';
 import Animation from '@/components/common/Animation';
 import Loader from '@/components/common/Loader';
@@ -69,10 +62,12 @@ const Listing = ({
     }
 
     if (listingFilterIsEmpty) {
-        notFound = Object.assign(notFound, {
-            children: PRODUCT_MESSAGE_FILTER_EMPTY_TITLE,
-            subtitle: PRODUCT_MESSAGE_FILTER_EMPTY_SUBTITLE,
-        });
+        if (message?.notFoundFilterTitle) {
+            notFound = Object.assign(notFound, { children: message.notFoundFilterTitle });
+        }
+        if (message?.notFoundFilterSubtitle) {
+            notFound = Object.assign(notFound, { subtitle: message.notFoundFilterSubtitle });
+        }
     }
 
     return (
