@@ -23,7 +23,7 @@ export type HomepageMediaItemProps = {
 export type HomepageProps = {
     description?: RichTextProps['children'];
     media?: HomepageMediaItemProps[];
-    animation?: Omit<AnimationProps, 'children'>;
+    animation?: Pick<AnimationProps, 'id'>;
 } & (ClassnameProps & PropsWithChildren);
 
 const Homepage = ({ className, description, media, children, animation }: HomepageProps): React.ReactElement => {
@@ -33,58 +33,80 @@ const Homepage = ({ className, description, media, children, animation }: Homepa
     if (className) bannerClass.push(className);
     bannerClass = joinArrayString(bannerClass);
 
+    const hasMarquee = !!(media && media.length > 0);
+
+    let textAnimationId = 'homepageBannerText';
+    if (!hasMarquee && animation?.id) textAnimationId = animation.id;
+
+    let marqueeAnimationId = 'homepageBannerMarquee';
+    if (hasMarquee && animation?.id) marqueeAnimationId = animation.id;
+
     return (
-        <Animation {...(animation as AnimationProps)}>
+        <>
             <section className={bannerClass}>
-                <Container>
-                    <Columns
-                        className="justify-between items-end"
-                        gutterY={2}>
-                        <Columns.Column md={7}>
-                            <Heading
-                                as="h1"
-                                variant="page">
-                                {children}
-                            </Heading>
-                        </Columns.Column>
-
-                        {description && (
-                            <Columns.Column md={4}>
-                                <RichText className="text-lg">{description}</RichText>
+                <Animation
+                    type="fade-in"
+                    id={textAnimationId}>
+                    <Container>
+                        <Columns
+                            className="justify-between items-end"
+                            gutterY={2}>
+                            <Columns.Column md={7}>
+                                <Heading
+                                    as="h1"
+                                    variant="page">
+                                    {children}
+                                </Heading>
                             </Columns.Column>
-                        )}
-                    </Columns>
-                </Container>
 
-                {media && media.length > 0 && (
-                    <Marquee
-                        withContainer
-                        className="marquee-gap-3 banner__marquee"
-                        speed={1.25}>
-                        <div
-                            ref={marqueeContainerRef as Ref<HTMLDivElement>}
-                            className="marquee__media">
-                            {media.map((item, i) => {
-                                if (!item?.link?.href) return null;
-                                if (!item?.items || item.items.length === 0) return null;
+                            {description && (
+                                <Columns.Column md={4}>
+                                    <RichText className="text-lg">{description}</RichText>
+                                </Columns.Column>
+                            )}
+                        </Columns>
+                    </Container>
+                </Animation>
 
-                                return (
-                                    <Button
-                                        key={i}
-                                        as="anchor"
-                                        {...item.link}>
-                                        <Picture
-                                            items={item.items}
-                                            style={{ '--image-width': `${width}px` } as React.CSSProperties}
-                                        />
-                                    </Button>
-                                );
-                            })}
+                {hasMarquee && (
+                    <Animation
+                        type="fade-in"
+                        id={marqueeAnimationId}
+                        config={{
+                            direction: 'left',
+                            delay: textAnimationId,
+                        }}>
+                        <div>
+                            <Marquee
+                                withContainer
+                                className="marquee-gap-3 banner__marquee"
+                                speed={1.25}>
+                                <div
+                                    ref={marqueeContainerRef as Ref<HTMLDivElement>}
+                                    className="marquee__media">
+                                    {media.map((item, i) => {
+                                        if (!item?.link?.href) return null;
+                                        if (!item?.items || item.items.length === 0) return null;
+
+                                        return (
+                                            <Button
+                                                key={i}
+                                                as="anchor"
+                                                {...item.link}>
+                                                <Picture
+                                                    items={item.items}
+                                                    style={{ '--image-width': `${width}px` } as React.CSSProperties}
+                                                />
+                                            </Button>
+                                        );
+                                    })}
+                                </div>
+                            </Marquee>
                         </div>
-                    </Marquee>
+                    </Animation>
                 )}
             </section>
-        </Animation>
+        </>
     );
 };
 
