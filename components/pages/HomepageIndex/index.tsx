@@ -23,10 +23,7 @@ const HomepageIndex = ({ entries }: HomepageIndexProps): React.ReactElement => {
             {entries?.banner && (
                 <Banner.Homepage
                     className="mt-3 md:mt-8"
-                    animation={{
-                        type: 'fade-in',
-                        id: 'fadeBanner',
-                    }}
+                    animation={{ id: 'fadeBanner' }}
                     {...entries.banner}
                 />
             )}
