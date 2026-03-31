@@ -46,19 +46,22 @@ const HomepageIndex = ({ entries }: HomepageIndexProps): React.ReactElement => {
             {entries?.collection?.items && entries.collection.items.length > 0 && (
                 <Animation type="fade-in">
                     <Container
-                        type="full-screen"
+                        as="section"
+                        type="none"
                         className="px-0 mt-10 md:mt-15 mb-10 md:mb-15">
                         {entries?.collection?.title && (
-                            <div className="text-center mb-3">
+                            <Container className="text-center mb-3">
                                 <Heading
                                     as="h2"
                                     variant="section">
                                     {entries.collection.title}
                                 </Heading>
-                            </div>
+                            </Container>
                         )}
 
-                        <Cards.Media items={entries.collection.items} />
+                        <Container type="full-screen">
+                            <Cards.Media items={entries.collection.items} />
+                        </Container>
                     </Container>
                 </Animation>
             )}

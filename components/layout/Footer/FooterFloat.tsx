@@ -36,7 +36,7 @@ const FooterFloat = ({ href, target }: FooterFloatProps): React.ReactElement | n
             className={floatClass}>
             <Animation
                 type="fade"
-                config={{ delay: 3, direction: 'left' }}>
+                config={{ delay: 1.5, direction: 'left' }}>
                 <div className="pb-2 pe-2">
                     <Button
                         as="anchor"
