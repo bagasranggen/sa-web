@@ -1,15 +1,16 @@
 'use client';
 
-import React, { Suspense } from 'react';
+import React, { Suspense, useMemo } from 'react';
 
 import { DELIVERY_OPTIONS, DELIVERY_OPTIONS_HANDLE } from '@/libs/mock';
+import { Product } from '@/libs/@types';
 import { ParamsEvents } from '@/libs/hooks';
 import { getInputDayPickerValue } from '@/libs/utils';
 
 import { MapPin } from 'lucide-react';
 import { useForm, useWatch } from 'react-hook-form';
 
-import Input, { BaseInputSelectProps } from '@/components/common/Input';
+import Input, { BaseInputSelectProps, BaseInputDayPickerProps } from '@/components/common/Input';
 import Button, { BaseAnchorProps, BaseButtonProps } from '@/components/common/Button';
 import Columns from '@/components/common/Columns';
 
@@ -18,6 +19,7 @@ export const ORDER_FORM_HANDLE = {
     INSTAGRAM: 'instagram',
     CONTACT: 'contact',
     COLLECTION: 'collection',
+    COLLECTION_LABEL: 'collectionLabel',
     DATE: 'date',
     DELIVERY_METHOD: 'deliveryMethod',
     ADDRESS: 'address',
@@ -29,13 +31,18 @@ export type OrderFormFields = {
     [ORDER_FORM_HANDLE.INSTAGRAM]: string;
     [ORDER_FORM_HANDLE.CONTACT]: string;
     [ORDER_FORM_HANDLE.COLLECTION]: string;
+    [ORDER_FORM_HANDLE.COLLECTION_LABEL]: string;
     [ORDER_FORM_HANDLE.DATE]: string;
     [ORDER_FORM_HANDLE.DELIVERY_METHOD]: string;
     [ORDER_FORM_HANDLE.ADDRESS]: string;
     [ORDER_FORM_HANDLE.ADDRESS_PIN_POINT]: string;
 };
 
+export type OrderProductItemProps = Pick<Product, 'title' | 'slug'> &
+    Pick<NonNullable<BaseInputDayPickerProps['calendar']>, 'disabled'>;
+
 export type OrderProps = {
+    products?: OrderProductItemProps[];
     collection?: BaseInputSelectProps['items'];
     pickupAddress?: {
         title?: React.ReactNode;
@@ -44,7 +51,7 @@ export type OrderProps = {
     submitButton?: Pick<BaseButtonProps, 'disabled' | 'children'>;
 };
 
-const Order = ({ collection, onFormSubmit, pickupAddress, submitButton }: OrderProps): React.ReactElement => {
+const Order = ({ products, collection, onFormSubmit, pickupAddress, submitButton }: OrderProps): React.ReactElement => {
     const {
         register,
         handleSubmit,
@@ -54,9 +61,27 @@ const Order = ({ collection, onFormSubmit, pickupAddress, submitButton }: OrderP
         formState: { errors },
     } = useForm<OrderFormFields>({ mode: 'onChange' });
 
+    const collectionOption = useWatch({ control, name: ORDER_FORM_HANDLE.COLLECTION });
     const deliveryOption = useWatch({ control, name: ORDER_FORM_HANDLE.DELIVERY_METHOD });
     const showDeliveryAddress = [DELIVERY_OPTIONS_HANDLE.OJOL, DELIVERY_OPTIONS_HANDLE.PAXEL].includes(deliveryOption);
     const showPickupAddress = [DELIVERY_OPTIONS_HANDLE.PICKUP].includes(deliveryOption);
+
+    const activeProduct = useMemo(() => {
+        let data = undefined;
+
+        if (collectionOption && products && products.length > 0) {
+            const find = products?.find((item) => item.slug === collectionOption);
+
+            if (find) {
+                setValue(ORDER_FORM_HANDLE.COLLECTION_LABEL, find.title);
+
+                data = find;
+            }
+        }
+
+        return data;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [collectionOption, products]);
 
     return (
         <>
@@ -147,6 +172,16 @@ const Order = ({ collection, onFormSubmit, pickupAddress, submitButton }: OrderP
                                 }}
                                 error={errors?.[ORDER_FORM_HANDLE.COLLECTION]?.message}
                             />
+                            <Input.Label
+                                type="text"
+                                id={ORDER_FORM_HANDLE.COLLECTION_LABEL}
+                                label="Collection Label"
+                                hidden
+                                hook={{
+                                    register,
+                                    name: ORDER_FORM_HANDLE.COLLECTION_LABEL,
+                                }}
+                            />
                         </Columns.Column>
                     )}
 
@@ -172,6 +207,7 @@ const Order = ({ collection, onFormSubmit, pickupAddress, submitButton }: OrderP
                                         clearErrors(ORDER_FORM_HANDLE.DATE);
                                     }
                                 },
+                                disabled: activeProduct?.disabled,
                             }}
                             error={errors?.[ORDER_FORM_HANDLE.DATE]?.message}
                         />

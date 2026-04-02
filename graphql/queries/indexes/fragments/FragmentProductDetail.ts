@@ -14,10 +14,5 @@ export const FRAGMENT_PRODUCT_DETAIL = gql`
                 value
             }
         }
-
-        bookedDates {
-            from
-            to
-        }
     }
 `;

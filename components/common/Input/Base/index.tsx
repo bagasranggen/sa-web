@@ -100,4 +100,4 @@ const Base = forwardRef<BaseInputRef, BaseProps>(({ error, ...props }, ref) => {
 Base.displayName = 'Base';
 export default Base;
 
-export type { BaseInputSelectProps, InputSelectItemProps };
+export type { BaseInputSelectProps, InputSelectItemProps, BaseInputDayPickerProps };

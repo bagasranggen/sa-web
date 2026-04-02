@@ -18,3 +18,4 @@ export * from './getUriFromParams';
 export * from './joinArrayString';
 export * from './sendWhatsappMessage';
 export * from './shuffleObjectArray';
+export * from './updateSearchParams';
