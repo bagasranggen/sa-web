@@ -23,7 +23,8 @@ export type AnimationProps = {
 const Animation = ({ as, type, children, trigger, id, ...props }: AnimationProps): React.ReactElement => {
     const { enableAnimation } = getEnv();
 
-    const animationRef = useRef<HTMLElement | null>(null);
+    let animationRef = useRef<HTMLElement | null>(null);
+    if ((children?.props as any)?.ref) animationRef = (children?.props as any)?.ref as RefObject<HTMLElement | null>;
 
     let animationProps: any = { ref: animationRef };
 
