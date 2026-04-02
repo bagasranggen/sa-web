@@ -16,7 +16,7 @@ export const submitOrderForm = async (data: OrderFormFields) => {
         contact: data?.contact,
         startDate: convertDMYToMDY(startDate),
         endDate: convertDMYToMDY(endDate),
-        order: data?.collection,
+        order: data?.collectionLabel ?? data?.collection,
         deliveryMethod: data?.deliveryMethod,
         address: data?.address ?? '',
         addressPinPoint: data?.addressPinPoint ?? '',
