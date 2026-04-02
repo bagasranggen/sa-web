@@ -8,6 +8,7 @@ export * from './createLinkItem';
 export * from './createMessageText';
 export * from './createPicsumImage';
 export * from './createPictureItem';
+export * from './createProductDetailItem';
 export * from './createProductFilter';
 export * from './createProductItem';
 export * from './createProductPrice';
