@@ -1,6 +1,7 @@
 import { gql } from '@apollo/client';
 
 import { FRAGMENT_PRODUCT_BASE } from '@/graphql/queries/indexes/fragments/FragmentProductBase';
+import { FRAGMENT_PRODUCT_CALENDAR } from '@/graphql/queries/indexes/fragments/FragmentProductCalendar';
 import { FRAGMENT_GLOBAL_LOCATION } from '@/graphql/queries/common/fragmentGlobalLocation';
 
 export const ORDER_INDEX_QUERY = gql`
@@ -14,6 +15,7 @@ export const ORDER_INDEX_QUERY = gql`
         ) {
             docs {
                 ...productBase
+                ...productCalendar
             }
         }
 
@@ -23,5 +25,6 @@ export const ORDER_INDEX_QUERY = gql`
     }
 
     ${FRAGMENT_PRODUCT_BASE}
+    ${FRAGMENT_PRODUCT_CALENDAR}
     ${FRAGMENT_GLOBAL_LOCATION}
 `;
