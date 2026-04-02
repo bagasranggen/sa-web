@@ -24,15 +24,17 @@ export const submitOrderForm = async (data: OrderFormFields) => {
 
     /* Create Order Calendar Event */
     if (data?.date && startDate && endDate) {
+        const collection = data?.collectionLabel ?? data?.collection;
+
         let title = 'Sekar Ayu Booking';
-        if (data?.collection) title += ` | ${data.collection}`;
+        if (collection) title += ` | ${collection}`;
 
         let options = {};
         if (data?.addressPinPoint) Object.assign(options, { location: data?.addressPinPoint });
 
         let description = '';
         if (data?.name && data?.contact) description += `Name: ${data?.name} (${data?.contact})\n`;
-        if (data?.collection) description += `Order: ${data?.collection}\n`;
+        if (collection) description += `Order: ${collection}\n`;
         if (description) options = Object.assign(options, { description });
 
         submitData = Object.assign(submitData, {
