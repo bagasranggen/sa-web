@@ -16,12 +16,12 @@ import {
     DropdownMenuGroup,
     DropdownMenuTrigger,
 } from '@/components/shadcn/DropdownMenu';
-import Calendar from '@/components/common/Calendar';
+import Calendar, { CalendarProps } from '@/components/common/Calendar';
 
 export type BaseInputDayPickerProps = {
     calendar?: {
         onSelect?: (day: DateRange | Date) => void;
-    } & (PropsSingle | PropsRange);
+    } & ((PropsSingle | PropsRange) & Pick<CalendarProps, 'disabled'>);
     icon?: Pick<LucideProps, 'size'>;
 } & Omit<BaseRegularInputProps, 'type' | 'disabled' | 'placeholder' | 'value'>;
 
@@ -52,7 +52,9 @@ const InputDayPicker = forwardRef<InputRegularRef, InputDayPickerProps>(({ hook,
 
     return (
         <>
-            <DropdownMenu open={isOpen}>
+            <DropdownMenu
+                open={isOpen}
+                onOpenChange={setIsOpen}>
                 <div className="flex items-center gap-x-1">
                     <input
                         type="text"
