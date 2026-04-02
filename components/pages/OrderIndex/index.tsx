@@ -1,9 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 import { submitOrderForm } from '@/libs/actions';
-import { sendWhatsappMessage } from '@/libs/utils';
+import { sendWhatsappMessage, updateSearchParams } from '@/libs/utils';
+import { ParamsEvents } from '@/libs/hooks';
 
 import Container from '@/components/common/Container';
 import Heading from '@/components/common/Heading';
@@ -12,11 +14,13 @@ import Animation from '@/components/common/Animation';
 
 export type OrderIndexProps = {
     entries: {
-        form: Pick<OrderProps, 'collection' | 'pickupAddress'>;
+        form: Pick<OrderProps, 'products' | 'collection' | 'pickupAddress'>;
     };
 };
 
 const OrderIndex = ({ entries }: OrderIndexProps): React.ReactElement => {
+    const router = useRouter();
+
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
@@ -41,6 +45,14 @@ const OrderIndex = ({ entries }: OrderIndexProps): React.ReactElement => {
 
     return (
         <>
+            <Suspense fallback={null}>
+                <ParamsEvents
+                    onChange={({ params }) => {
+                        if (params.status === 'success') setIsSuccess(true);
+                    }}
+                />
+            </Suspense>
+
             <Animation
                 type="fade-in"
                 id="headingFade">
@@ -64,6 +76,7 @@ const OrderIndex = ({ entries }: OrderIndexProps): React.ReactElement => {
                         as="section"
                         className="mt-8 mb-15">
                         <Form.Order
+                            products={entries.form.products}
                             collection={entries.form.collection}
                             pickupAddress={entries.form.pickupAddress}
                             submitButton={{
@@ -72,11 +85,12 @@ const OrderIndex = ({ entries }: OrderIndexProps): React.ReactElement => {
                             }}
                             onFormSubmit={async (data) => {
                                 // console.log({ data });
+
                                 setIsProcessing(true);
 
                                 await submitOrderForm(data).then((res) => {
                                     if (res.status === 'success') {
-                                        setIsSuccess(true);
+                                        router.push(updateSearchParams({ set: [{ key: 'status', value: 'success' }] }));
                                         setIsProcessing(false);
                                         sendWhatsappMessage({
                                             message: 'test',

@@ -1,5 +1,5 @@
 import { Global, PageDataParamsProps, PageDataProps, Product } from '@/libs/@types';
-import { createLinkItem, createProductItem } from '@/libs/factory';
+import { createLinkItem, createProductDetailItem } from '@/libs/factory';
 
 import { apolloClient } from '@/libs/fetchers';
 import { ORDER_INDEX_QUERY } from '@/graphql';
@@ -14,6 +14,8 @@ export const OrderData = async ({ typeHandle, uri }: PageDataParamsProps): Promi
     const products = (data as any)?.Products;
     const global: Global = (data as any)?.Global;
 
+    const formProducts: OrderIndexProps['entries']['form']['products'] = [];
+
     const collection: OrderIndexProps['entries']['form']['collection'] = [
         {
             value: '',
@@ -23,9 +25,20 @@ export const OrderData = async ({ typeHandle, uri }: PageDataParamsProps): Promi
 
     if (products?.docs && products.docs.length > 0) {
         products.docs.forEach((item: Product, i: number) => {
-            const product = createProductItem({ item, index: i });
+            const detail = createProductDetailItem({ item });
 
-            if (product) collection.push({ value: product.slug, label: product.children as string });
+            if (detail && detail?.children && detail?.slug) {
+                formProducts.push({
+                    title: detail.children as string,
+                    slug: detail?.slug,
+                    disabled: detail?.calendar?.disabled,
+                });
+
+                collection.push({
+                    value: detail.slug,
+                    label: detail.children as string,
+                });
+            }
         });
     }
 
@@ -44,6 +57,7 @@ export const OrderData = async ({ typeHandle, uri }: PageDataParamsProps): Promi
         typeHandle,
         entries: {
             form: {
+                products: formProducts,
                 collection,
                 pickupAddress,
             },
