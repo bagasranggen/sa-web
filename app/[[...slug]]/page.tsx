@@ -1,18 +1,21 @@
 import React from 'react';
 
 import { PageProps } from '@/libs/@types';
-import { getPagesData, getUriFromParams } from '@/libs/utils';
+import { getPagesData, getPagesUri, getUriFromParams } from '@/libs/utils';
 
 import DynamicElement from '@/components/common/DynamicElement';
 import { PAGES_INDEX_HANDLES } from '@/components/pages/handlesIndex';
+import { PAGES_HANDLES } from '@/components/pages/handles';
 
 export const generateStaticParams = async () => {
-    return [
-        { slug: [''] },
-        { slug: ['collection'] },
-        { slug: ['collection', 'prom'] },
-        { slug: ['collection', 'wedding-guest'] },
-    ];
+    return await getPagesUri({
+        typeHandles: [
+            PAGES_HANDLES.PRODUCT_DETAIL,
+            PAGES_HANDLES.PRODUCT_LISTING,
+            PAGES_HANDLES.PRODUCT_CATEGORIES,
+            PAGES_HANDLES.STATIC_PAGES,
+        ],
+    });
 };
 
 const Page = async ({ params: paramsProps }: PageProps): Promise<React.ReactElement> => {
