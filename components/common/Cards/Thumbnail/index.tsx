@@ -1,5 +1,8 @@
 import React from 'react';
 
+import { ArrayStringProps } from '@/libs/@types';
+import { joinArrayString } from '@/libs/utils';
+
 import Columns from '@/components/common/Columns';
 import Button, { BaseAnchorProps } from '@/components/common/Button';
 import Picture, { BaseProps } from '@/components/common/Picture';
@@ -10,6 +13,7 @@ export type ThumbnailItemProps = {
     link: Pick<BaseAnchorProps, 'href' | 'target'>;
     media: BaseProps['items'];
     colors?: string[];
+    badge?: string;
     price?: BaseHeadingProps['children'];
     children: BaseHeadingProps['children'];
 };
@@ -21,6 +25,10 @@ export type ThumbnailProps = {
 
 const Thumbnail = ({ items, animation }: ThumbnailProps): React.ReactElement | null => {
     if (!items || items.length === 0) return null;
+
+    let itemClass: ArrayStringProps = ['cards__item'];
+    if (animation) itemClass.push('block');
+    itemClass = joinArrayString(itemClass);
 
     return (
         <Columns
@@ -37,9 +45,11 @@ const Thumbnail = ({ items, animation }: ThumbnailProps): React.ReactElement | n
                         <Animation {...(animation as AnimationProps)}>
                             <Button
                                 as="anchor"
-                                className={animation ? 'block' : undefined}
+                                className={itemClass}
                                 {...item.link}>
                                 <Picture items={item.media} />
+
+                                {item?.badge && <div className="cards__badge">{item.badge}</div>}
 
                                 {item?.colors && item.colors.length > 0 && (
                                     <div className="cards__colors">

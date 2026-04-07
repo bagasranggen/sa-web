@@ -42,6 +42,17 @@
     }
 
     &.cards--thumbnail {
+        .cards__item {
+            @apply relative;
+        }
+
+        .cards__badge {
+            @apply absolute top-1 right-1;
+            @apply bg-sekar-accent px-1 py-0.5;
+            @apply max-w-[calc(80%-2rem)];
+            @apply uppercase font-bold tracking-0.2 text-sm;
+        }
+
         .cards__colors {
             @apply flex flex-wrap gap-x-0.5 mt-1;
         }
