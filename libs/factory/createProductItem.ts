@@ -73,11 +73,15 @@ export const createProductItem = ({
     //     );
     // }
 
+    let badge: ThumbnailItemProps['badge'] = undefined;
+    if (item?.tag && typeof item?.tag !== 'number') badge = item.tag.title;
+
     return {
         slug: item?.slug,
         link: { href: item.url },
         media,
         colors,
+        badge,
         price: createProductPrice(item?.prices?.[0]),
         children: item.title,
     };
