@@ -23,10 +23,8 @@ const ListingWrapper = ({ isLoading, children }: ListingWrapperProps): React.Rea
         <div className={wrapperClass}>
             {isLoading && (
                 <Animation type="fade">
-                    <div>
-                        <Loader className="flex flex-col items-center mb-[calc((57px+4rem)*-1)] sticky top-1/2 z-20">
-                            Loading
-                        </Loader>
+                    <div className="mb-[calc((57px+4rem)*-1)] sticky top-1/2 z-20">
+                        <Loader className="flex flex-col items-center ">Loading</Loader>
                     </div>
                 </Animation>
             )}
