@@ -3,8 +3,9 @@ import {
     CAROUSEL_MEDIA_PREVIEW,
     CAROUSEL_MEDIA_THUMB,
     SIZE_GUIDES_LIGHTBOX,
-} from './carousel';
-import { MARQUEE_HOMEPAGE } from './marquee';
+} from '@/libs/mock/carousel';
+import { MARQUEE_HOMEPAGE } from '@/libs/mock/marquee';
+import { RICH_TEXT_SHORT } from '@/libs/mock/text';
 
 import parse from 'html-react-parser';
 
@@ -12,9 +13,7 @@ import { DetailProps, HomepageProps } from '@/components/common/Banner';
 
 export const BANNER_HOMEPAGE: HomepageProps = {
     media: MARQUEE_HOMEPAGE,
-    description: parse(
-        `<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci consectetur corporis culpa eveniet, nobis perspiciatis rem!</p>`
-    ),
+    description: RICH_TEXT_SHORT,
     children: parse(` Lorem ipsum dolor sit amet, consectetur adipisicing elit.`),
 };
 

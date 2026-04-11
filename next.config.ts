@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
     /* config options here */
     images: {
         remotePatterns: REMOTE_HOSTNAMES.map((item: string) => ({ hostname: item })),
+        localPatterns: [{ pathname: '/api/media/*' }],
     },
 };
 

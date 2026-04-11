@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
-import { getEnv } from '@/libs/utils';
+import { ArrayStringProps, ClassnameProps, ContentBlocksBaseProp } from '@/libs/@types';
+import { getEnv, joinArrayString } from '@/libs/utils';
 
 import { CB_COMPONENT_HANDLES } from '@/components/common/ContentBlocks/handlesIndex';
 
@@ -12,9 +13,9 @@ export type ContentBlocksItemProps = CbLabelContentProps | CbTextProps;
 
 export type ContentBlocksProps = {
     items?: ContentBlocksItemProps[];
-};
+} & (Pick<ContentBlocksBaseProp, 'isNested' | 'animation'> & ClassnameProps);
 
-const ContentBlocks = ({ items }: ContentBlocksProps): React.ReactElement | null => {
+const ContentBlocks = ({ items, isNested, animation, className }: ContentBlocksProps): React.ReactElement | null => {
     const { isProduction } = getEnv();
 
     if (!items || items.length === 0) return null;
@@ -25,16 +26,25 @@ const ContentBlocks = ({ items }: ContentBlocksProps): React.ReactElement | null
                 const component = CB_COMPONENT_HANDLES?.[item?.typeHandle as keyof typeof CB_COMPONENT_HANDLES];
 
                 if (!component) {
-                    if (!isProduction) return <>typeHandle: {item.typeHandle}</>;
+                    if (!isProduction) return <Fragment key={i}>typeHandle: {item.typeHandle}</Fragment>;
 
                     if (isProduction) return null;
                 }
+
+                let classProps: ArrayStringProps = item?.className ? [item.className] : [];
+                if (className) classProps.push(className);
+                classProps = joinArrayString(classProps);
+
+                let props = item;
+                if (isNested) props = Object.assign(props, { isNested });
+                if (animation) props = Object.assign(props, { animation });
+                if (classProps) props = Object.assign(props, { className: classProps });
 
                 return (
                     <DynamicElement
                         key={i}
                         component={component as any}
-                        props={item}>
+                        props={props}>
                         {'children' in item && item?.children}
                     </DynamicElement>
                 );

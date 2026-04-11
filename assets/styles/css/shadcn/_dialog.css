@@ -1,0 +1,16 @@
+@layer components {
+    .dialog__content {
+        @apply fixed z-1040;
+        @apply top-[50%] left-[50%];
+        @apply translate-x-[-50%] translate-y-[-50%];
+        @apply grid;
+        /*@apply gap-4;*/
+        /*@apply rounded-lg border bg-background p-6 shadow-lg;*/
+        @apply bg-background;
+        @apply outline-none;
+        @apply w-full max-w-[calc(100%-2rem)];
+        /*@apply sm:max-w-lg;*/
+        @apply duration-200;
+        @apply data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95;
+    }
+}

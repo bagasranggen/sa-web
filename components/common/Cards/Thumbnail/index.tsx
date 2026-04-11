@@ -1,24 +1,34 @@
 import React from 'react';
 
+import { ArrayStringProps } from '@/libs/@types';
+import { joinArrayString } from '@/libs/utils';
+
 import Columns from '@/components/common/Columns';
 import Button, { BaseAnchorProps } from '@/components/common/Button';
 import Picture, { BaseProps } from '@/components/common/Picture';
 import Heading, { BaseProps as BaseHeadingProps } from '@/components/common/Heading';
+import Animation, { AnimationProps } from '@/components/common/Animation';
 
 export type ThumbnailItemProps = {
     link: Pick<BaseAnchorProps, 'href' | 'target'>;
     media: BaseProps['items'];
     colors?: string[];
+    badge?: string;
     price?: BaseHeadingProps['children'];
     children: BaseHeadingProps['children'];
 };
 
 export type ThumbnailProps = {
     items: ThumbnailItemProps[];
+    animation?: Omit<AnimationProps, 'children'>;
 };
 
-const Thumbnail = ({ items }: ThumbnailProps): React.ReactElement | null => {
+const Thumbnail = ({ items, animation }: ThumbnailProps): React.ReactElement | null => {
     if (!items || items.length === 0) return null;
+
+    let itemClass: ArrayStringProps = ['cards__item'];
+    if (animation) itemClass.push('block');
+    itemClass = joinArrayString(itemClass);
 
     return (
         <Columns
@@ -32,40 +42,45 @@ const Thumbnail = ({ items }: ThumbnailProps): React.ReactElement | null => {
                     <Columns.Column
                         key={i}
                         md={3}>
-                        <Button
-                            as="anchor"
-                            {...item.link}>
-                            <Picture items={item.media} />
+                        <Animation {...(animation as AnimationProps)}>
+                            <Button
+                                as="anchor"
+                                className={itemClass}
+                                {...item.link}>
+                                <Picture items={item.media} />
 
-                            {item?.colors && item.colors.length > 0 && (
-                                <div className="cards__colors">
-                                    {item.colors.map((color, idx) => (
-                                        <div
-                                            key={idx}
-                                            style={{ '--thumbnail-color': color } as React.CSSProperties}
-                                            className="cards__color"
-                                        />
-                                    ))}
-                                </div>
-                            )}
+                                {item?.badge && <div className="cards__badge">{item.badge}</div>}
 
-                            <div className="mt-1">
-                                <Heading
-                                    as="h3"
-                                    family="aboreto"
-                                    className="text-lg">
-                                    {item.children}
-                                </Heading>
-
-                                {item?.price && (
-                                    <Heading
-                                        as="h4"
-                                        className="cards__price">
-                                        Rp130,000/3day(s)
-                                    </Heading>
+                                {item?.colors && item.colors.length > 0 && (
+                                    <div className="cards__colors">
+                                        {item.colors.map((color, idx) => (
+                                            <div
+                                                key={idx}
+                                                style={{ '--thumbnail-color': color } as React.CSSProperties}
+                                                className="cards__color"
+                                            />
+                                        ))}
+                                    </div>
                                 )}
-                            </div>
-                        </Button>
+
+                                <div className="mt-1">
+                                    <Heading
+                                        as="h3"
+                                        family="aboreto"
+                                        className="text-lg">
+                                        {item.children}
+                                    </Heading>
+
+                                    {item?.price && (
+                                        <Heading
+                                            as="h4"
+                                            className="cards__price">
+                                            {item.price}
+                                        </Heading>
+                                    )}
+                                </div>
+                            </Button>
+                        </Animation>
                     </Columns.Column>
                 );
             })}

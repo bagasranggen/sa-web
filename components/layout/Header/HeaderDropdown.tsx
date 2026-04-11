@@ -70,16 +70,18 @@ const HeaderDropdown = ({ link, children }: HeaderDropdownProps): React.ReactEle
                     </DropdownMenuTrigger>
                 </Button>
 
-                <DropdownMenuContent
-                    align="end"
-                    className="px-2 py-1 bg-sekar-accent border-sekar-accent"
-                    onInteractOutside={() => {
-                        setTimeout(() => {
-                            if (isOpen) setIsOpen(false);
-                        }, 150);
-                    }}>
-                    {children}
-                </DropdownMenuContent>
+                <Suspense fallback={null}>
+                    <DropdownMenuContent
+                        align="end"
+                        className="px-2 py-1 bg-sekar-accent border-sekar-accent"
+                        onInteractOutside={() => {
+                            setTimeout(() => {
+                                if (isOpen) setIsOpen(false);
+                            }, 150);
+                        }}>
+                        {children}
+                    </DropdownMenuContent>
+                </Suspense>
             </DropdownMenu>
         </>
     );

@@ -3,6 +3,7 @@
 import React, { cloneElement, RefObject, useRef } from 'react';
 
 import { AnimationProps as BaseAnimationProps } from '@/libs/@types';
+import { getEnv } from '@/libs/utils';
 
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
@@ -17,11 +18,13 @@ export type AnimationProps = {
     as?: string;
     children: React.ReactElement;
     trigger?: number | boolean;
-} & BaseAnimationProps;
+} & (BaseAnimationProps & Partial<Pick<HTMLElement, 'id'>>);
 
-const Animation = ({ as, type, children, trigger, ...props }: AnimationProps): React.ReactElement => {
+const Animation = ({ as, type, children, trigger, id, ...props }: AnimationProps): React.ReactElement => {
+    const { enableAnimation } = getEnv();
+
     let animationRef = useRef<HTMLElement | null>(null);
-    if ('ref' in children && children?.ref) animationRef = children?.ref as RefObject<HTMLElement | null>;
+    if ((children?.props as any)?.ref) animationRef = (children?.props as any)?.ref as RefObject<HTMLElement | null>;
 
     let animationProps: any = { ref: animationRef };
 
@@ -40,6 +43,7 @@ const Animation = ({ as, type, children, trigger, ...props }: AnimationProps): R
 
     useGSAP(
         () => {
+            if (!enableAnimation) return;
             if (as) return;
             if (!type) return;
             if (type && !gsap.effects[type]) {
@@ -50,14 +54,13 @@ const Animation = ({ as, type, children, trigger, ...props }: AnimationProps): R
                 return;
             }
 
-            // gsap.effects[type](props.ref.current, config, id);
-            gsap.effects[type](animationProps.ref.current, config);
+            gsap.effects[type](animationProps.ref.current, config, id);
         },
         { scope: animationProps.ref, dependencies: [type, as, trigger] }
     );
 
     // eslint-disable-next-line react-hooks/refs
-    return cloneElement(children, animationProps);
+    return cloneElement(children, enableAnimation ? animationProps : {});
 };
 
 export default Animation;
