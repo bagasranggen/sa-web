@@ -1,4 +1,4 @@
-import { PageDataParamsProps, PageDataProps } from '@/libs/@types';
+import { Page, PageDataParamsProps, PageDataProps } from '@/libs/@types';
 import { createContentBlocks } from '@/libs/factory';
 
 import { apolloClient } from '@/libs/fetchers';
@@ -17,12 +17,12 @@ export const StaticPageData = async ({
         },
     });
 
-    const d = (data as any)?.Pages?.docs?.[0];
+    const d: Page = (data as any)?.Pages?.docs?.[0];
 
     return {
         typeHandle,
         entries: {
-            header: 'Terms & Conditions',
+            header: d?.title,
             contentBlocks: createContentBlocks({ items: d?.contentBlocks?.blocks }),
         },
     };
