@@ -17,7 +17,6 @@ export type CreateProductItemProps = {
 };
 
 export const createProductItem = ({
-    index,
     item,
     colorsFn,
     withColors = true,
@@ -65,15 +64,6 @@ export const createProductItem = ({
             // }
         });
     }
-
-    // if (media.length === 0) {
-    //     media.push(
-    //         ...[
-    //             createPicsumImage({ id: 151 + 1, width: 600, height: 800, media: 768 }),
-    //             createPicsumImage({ id: 151 + 1, width: 600, height: 450 }),
-    //         ]
-    //     );
-    // }
 
     let badge: ThumbnailItemProps['badge'] = undefined;
     if (item?.tag && typeof item?.tag !== 'number') badge = item.tag.title;
