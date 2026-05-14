@@ -68,10 +68,14 @@ export const ProductListingData = async ({
 
     if (productsFilters && productsFilters.length > 0) {
         productsFilters.forEach((item: Product) => {
-            if (item?.category && typeof item.category !== 'number' && isAllProducts) {
-                if (!tmpCategoryMap.has(item.category.slug)) {
-                    tmpCategoryMap.set(item.category.slug, item.category.title);
-                }
+            if (item?.category && item.category.length > 0 && isAllProducts) {
+                item.category.forEach((itm: NonNullable<Product['category']>[number]) => {
+                    if (typeof itm !== 'number') {
+                        if (!tmpCategoryMap.has(itm.slug)) {
+                            tmpCategoryMap.set(itm.slug, itm.title);
+                        }
+                    }
+                });
             }
 
             if (item?.sizes && item.sizes.length > 0) {

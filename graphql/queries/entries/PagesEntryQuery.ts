@@ -6,7 +6,7 @@ export const PAGES_ENTRY_QUERY = gql`
         $uri: String
         $pagesTypeHandle: Page_typeHandle_Input
         $productsTypeHandle: Product_typeHandle_Input
-        $productsCategory: JSON
+        $productsCategory: [JSON]
     ) {
         Products(
             limit: $limit
@@ -14,7 +14,7 @@ export const PAGES_ENTRY_QUERY = gql`
                 AND: [
                     { uri: { equals: $uri } }
                     { typeHandle: { equals: $productsTypeHandle } }
-                    { category: { equals: $productsCategory } }
+                    { category: { in: $productsCategory } }
                 ]
             }
         ) {

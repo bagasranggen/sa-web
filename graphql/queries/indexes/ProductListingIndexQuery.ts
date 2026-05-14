@@ -6,7 +6,12 @@ import { FRAGMENT_PAGE_BASE } from '@/graphql/queries/indexes/fragments/Fragment
 import { FRAGMENT_PRODUCT_MEDIA_BASE } from '@/graphql/queries/indexes/fragments/FragmentProductMediaBase';
 
 export const PRODUCT_LISTING_INDEX_QUERY = gql`
-    query ProductListingIndexQuery($uri: String, $typeHandle: [Page_typeHandle_Input], $categoryId: JSON, $limit: Int) {
+    query ProductListingIndexQuery(
+        $uri: String
+        $typeHandle: [Page_typeHandle_Input]
+        $categoryId: [JSON]
+        $limit: Int
+    ) {
         Pages(where: { uri: { equals: $uri } }) {
             docs {
                 ...pageBase
@@ -22,7 +27,7 @@ export const PRODUCT_LISTING_INDEX_QUERY = gql`
             }
         }
 
-        Products(limit: $limit, where: { category: { equals: $categoryId } }) {
+        Products(limit: $limit, where: { category: { in: $categoryId } }) {
             docs {
                 ...productBase
                 ...productFilters
@@ -32,7 +37,7 @@ export const PRODUCT_LISTING_INDEX_QUERY = gql`
             loadMore: hasNextPage
         }
 
-        ProductsFilters: Products(where: { category: { equals: $categoryId } }) {
+        ProductsFilters: Products(where: { category: { in: $categoryId } }) {
             docs {
                 ...productFilters
             }
