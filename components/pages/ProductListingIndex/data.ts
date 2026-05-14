@@ -1,4 +1,3 @@
-import { PRODUCTS_SORT } from '@/libs/mock';
 import { PRODUCT_LOAD_LIMIT } from '@/libs/constants';
 import { Page, PageDataParamsProps, PageDataProps, Product } from '@/libs/@types';
 import { createProductFilter, createProductItem } from '@/libs/factory';
@@ -125,7 +124,6 @@ export const ProductListingData = async ({
     if (filterSizes) productFilters.push(filterSizes);
 
     const filters: ProductListingIndexProps['entries']['filters'] = {
-        sort: productsFilters.length > 0 ? PRODUCTS_SORT : [],
         filters: productFilters,
     };
 
