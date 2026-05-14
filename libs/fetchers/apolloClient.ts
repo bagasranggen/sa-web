@@ -1,4 +1,4 @@
-import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
+import { ApolloClient, InMemoryCache, HttpLink, OperationVariables } from '@apollo/client';
 import { SetContextLink } from '@apollo/client/link/context';
 import { loadDevMessages, loadErrorMessages } from '@apollo/client/dev';
 
@@ -39,6 +39,8 @@ export const apolloClient = (props?: { isServer: boolean }) => {
         },
     });
 };
+
+export type { OperationVariables };
 
 if (process.env.NODE_ENV !== 'production') {
     loadDevMessages();

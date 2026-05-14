@@ -35,6 +35,7 @@ const StaticPageIndex = ({ entries }: StaticPageIndexProps): React.ReactElement 
                 <ContentBlocks
                     items={entries.contentBlocks}
                     animation={{ delay: 'fadeBanner' }}
+                    className="last:mb-15"
                 />
             )}
         </>
