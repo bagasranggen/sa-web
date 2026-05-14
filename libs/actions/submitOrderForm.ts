@@ -7,15 +7,13 @@ import { OrderFormFields } from '@/components/common/Form';
 const GOOGLE_APP_URL = process.env.GAS_URL as string;
 
 export const submitOrderForm = async (data: OrderFormFields) => {
-    const [startDate, endDate] = data?.date ? data?.date.split(' - ') : [];
-
     let submitData = {
         name: data?.name,
         instagram: data?.instagram,
         instagramLink: data?.instagram ? `https://www.instagram.com/${data.instagram.replace('@', '')}/` : '',
         contact: data?.contact,
-        startDate: convertDMYToMDY(startDate),
-        endDate: convertDMYToMDY(endDate),
+        startDate: convertDMYToMDY(data?.date),
+        endDate: '',
         order: data?.collectionLabel ?? data?.collection,
         deliveryMethod: data?.deliveryMethod,
         address: data?.address ?? '',
@@ -23,7 +21,7 @@ export const submitOrderForm = async (data: OrderFormFields) => {
     };
 
     /* Create Order Calendar Event */
-    if (data?.date && startDate && endDate) {
+    if (data?.date) {
         const collection = data?.collectionLabel ?? data?.collection;
 
         let title = 'Sekar Ayu Booking';
@@ -40,8 +38,7 @@ export const submitOrderForm = async (data: OrderFormFields) => {
         submitData = Object.assign(submitData, {
             orderCalendar: {
                 title,
-                startTime: new Date(convertDMYToMDY(startDate)).toISOString(),
-                endTime: new Date(convertDMYToMDY(endDate)).toISOString(),
+                startTime: new Date(convertDMYToMDY(data.date)).toISOString(),
                 options,
             },
         });
