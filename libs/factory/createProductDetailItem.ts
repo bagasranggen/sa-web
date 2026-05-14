@@ -26,10 +26,11 @@ export const createProductDetailItem = ({ item }: { item: Product }) => {
                 if (item && item?.details && item.details.length > 0) {
                     item.details.forEach((itm: NonNullable<NonNullable<Summaries>[number]['details']>[number]) => {
                         if (!itm?.value) return;
-                        if (!itm?.label || typeof itm.label === 'number' || !itm?.label?.title) return;
+                        if (typeof itm.label === 'number') return;
+                        // if (!itm?.label || typeof itm.label === 'number' || !itm?.label?.title) return;
 
                         tmp.push({
-                            label: itm.label.title,
+                            label: itm?.label?.title,
                             value: itm.value,
                         });
                     });
