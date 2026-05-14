@@ -196,11 +196,9 @@ const Order = ({ products, collection, onFormSubmit, pickupAddress, submitButton
                                 required: true,
                             }}
                             calendar={{
-                                mode: 'range',
-                                min: 1,
-                                max: 2,
+                                mode: 'single',
                                 onSelect: (selected) => {
-                                    const date = getInputDayPickerValue({ date: selected, mode: 'range' });
+                                    const date = getInputDayPickerValue({ date: selected });
 
                                     if (date) {
                                         setValue(ORDER_FORM_HANDLE.DATE, date);

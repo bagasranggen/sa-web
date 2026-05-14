@@ -19,4 +19,6 @@ export * from './getUriFromParams';
 export * from './joinArrayString';
 export * from './sendWhatsappMessage';
 export * from './shuffleObjectArray';
+export * from './sortArrayObject';
+export * from './sortLexicoArrayObject';
 export * from './updateSearchParams';

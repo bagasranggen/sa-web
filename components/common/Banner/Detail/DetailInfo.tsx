@@ -28,14 +28,20 @@ const DetailInfo = ({ title, className, list, richText, children }: DetailInfoPr
             {list && list.length > 0 && (
                 <List
                     className="mt-0.5"
-                    items={list.map((item: DetailListItemProps) => ({
-                        children: (
-                            <div className="flex justify-between">
-                                <div>{item.label}</div>
-                                <div>{item.value}</div>
-                            </div>
-                        ),
-                    }))}
+                    items={list.map((item: DetailListItemProps) => {
+                        let children = <>{item.value}</>;
+
+                        if (item?.value && item?.label) {
+                            children = (
+                                <div className="flex justify-between">
+                                    <div>{item.label}</div>
+                                    <div>{item.value}</div>
+                                </div>
+                            );
+                        }
+
+                        return { children };
+                    })}
                 />
             )}
 

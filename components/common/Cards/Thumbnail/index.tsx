@@ -12,6 +12,7 @@ import Animation, { AnimationProps } from '@/components/common/Animation';
 export type ThumbnailItemProps = {
     link: Pick<BaseAnchorProps, 'href' | 'target'>;
     media: BaseProps['items'];
+    sizes?: BaseHeadingProps['children'];
     colors?: string[];
     badge?: string;
     price?: BaseHeadingProps['children'];
@@ -61,6 +62,14 @@ const Thumbnail = ({ items, animation }: ThumbnailProps): React.ReactElement | n
                                             />
                                         ))}
                                     </div>
+                                )}
+
+                                {item?.sizes && (
+                                    <Heading
+                                        as="h5"
+                                        className="cards__sizes">
+                                        Size: {item.sizes}
+                                    </Heading>
                                 )}
 
                                 <div className="mt-1">

@@ -1,4 +1,3 @@
-import { PRODUCTS_SORT } from '@/libs/mock';
 import { PRODUCT_LOAD_LIMIT } from '@/libs/constants';
 import { Page, PageDataParamsProps, PageDataProps, Product } from '@/libs/@types';
 import { createProductFilter, createProductItem } from '@/libs/factory';
@@ -68,10 +67,14 @@ export const ProductListingData = async ({
 
     if (productsFilters && productsFilters.length > 0) {
         productsFilters.forEach((item: Product) => {
-            if (item?.category && typeof item.category !== 'number' && isAllProducts) {
-                if (!tmpCategoryMap.has(item.category.slug)) {
-                    tmpCategoryMap.set(item.category.slug, item.category.title);
-                }
+            if (item?.category && item.category.length > 0 && isAllProducts) {
+                item.category.forEach((itm: NonNullable<Product['category']>[number]) => {
+                    if (typeof itm !== 'number') {
+                        if (!tmpCategoryMap.has(itm.slug)) {
+                            tmpCategoryMap.set(itm.slug, itm.title);
+                        }
+                    }
+                });
             }
 
             if (item?.sizes && item.sizes.length > 0) {
@@ -121,7 +124,6 @@ export const ProductListingData = async ({
     if (filterSizes) productFilters.push(filterSizes);
 
     const filters: ProductListingIndexProps['entries']['filters'] = {
-        sort: productsFilters.length > 0 ? PRODUCTS_SORT : [],
         filters: productFilters,
     };
 

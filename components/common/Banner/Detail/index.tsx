@@ -15,6 +15,7 @@ import LightBox, { LightBoxProps } from '@/components/common/Lightbox';
 export type DetailProps = {
     info?: DetailInfoProps[];
     price?: BaseProps['children'];
+    sizeFit?: BaseProps['children'];
     carousel?: Pick<ThumbnailProps, 'thumbnail' | 'media' | 'lightbox'>;
     calendar?: Pick<DetailCalendarProps, 'disabled'>;
     sizeGuides?: LightBoxProps['items'];
@@ -22,7 +23,16 @@ export type DetailProps = {
     children: BaseProps['children'];
 };
 
-const Detail = ({ price, children, info, carousel, calendar, sizeGuides, button }: DetailProps): React.ReactElement => {
+const Detail = ({
+    price,
+    sizeFit,
+    children,
+    info,
+    carousel,
+    calendar,
+    sizeGuides,
+    button,
+}: DetailProps): React.ReactElement => {
     const [lightboxIndex, setLightboxIndex] = useState<number>(-1);
     const [selectedDate, setSelectedDate] = useState<DetailCalendarProps['selected']>();
 
@@ -49,6 +59,14 @@ const Detail = ({ price, children, info, carousel, calendar, sizeGuides, button 
                             family="space-grotesk"
                             className="mt-1.5 font-bold text-[2.2rem] uppercase tracking-[.35rem]">
                             {price}
+                        </Heading>
+                    )}
+
+                    {sizeFit && (
+                        <Heading
+                            as="h3"
+                            className="font-extrabold tracking-0.1 uppercase text-md">
+                            Size: {sizeFit}
                         </Heading>
                     )}
 
