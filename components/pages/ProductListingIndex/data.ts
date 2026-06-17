@@ -129,6 +129,7 @@ export const ProductListingData = async ({
 
     return {
         typeHandle,
+        meta: page?.meta,
         entries: {
             category: { id: categoryId },
             products: { hasLoadMore: products?.loadMore },

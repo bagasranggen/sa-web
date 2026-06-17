@@ -1,4 +1,5 @@
 import React from 'react';
+import { Metadata } from 'next';
 
 import { PageProps } from '@/libs/@types';
 import { getPagesData, getPagesUri, getUriFromParams } from '@/libs/utils';
@@ -16,6 +17,26 @@ export const generateStaticParams = async () => {
             PAGES_HANDLES.STATIC_PAGES,
         ],
     });
+};
+
+export const generateMetadata = async ({ params: paramsProps }: PageProps): Promise<Metadata | null> => {
+    const params = await paramsProps;
+    const { uri, slug } = getUriFromParams(params?.slug);
+
+    const data = await getPagesData({ uri, slug });
+    const meta = data?.meta;
+
+    if (!meta) return null;
+
+    return {
+        title: meta?.title,
+        description: meta?.description,
+        openGraph: {
+            type: 'website',
+            title: meta?.title,
+            description: meta?.description,
+        },
+    };
 };
 
 const Page = async ({ params: paramsProps }: PageProps): Promise<React.ReactElement> => {

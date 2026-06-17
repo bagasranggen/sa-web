@@ -1,5 +1,6 @@
 import { gql } from '@apollo/client';
 
+import { FRAGMENT_META } from '@/graphql/queries/common/FragmentMeta';
 import { FRAGMENT_PRODUCT_BASE } from '@/graphql/queries/indexes/fragments/FragmentProductBase';
 import { FRAGMENT_PAGE_BASE } from '@/graphql/queries/indexes/fragments/FragmentPageBase';
 import { FRAGMENT_PRODUCT_MEDIA_BASE } from '@/graphql/queries/indexes/fragments/FragmentProductMediaBase';
@@ -11,6 +12,10 @@ export const HOMEPAGE_INDEX_QUERY = gql`
     query HomepageIndexQuery {
         Homepage {
             typeHandle
+
+            meta {
+                ...meta
+            }
 
             bannerTitle
             bannerSubTitle
@@ -35,6 +40,7 @@ export const HOMEPAGE_INDEX_QUERY = gql`
         }
     }
 
+    ${FRAGMENT_META}
     ${FRAGMENT_PRODUCT_BASE}
     ${FRAGMENT_PRODUCT_DESCRIPTION}
     ${FRAGMENT_PRODUCT_MEDIA_BASE}

@@ -109,6 +109,7 @@ export const HomepageData = async ({ typeHandle }: PageDataParamsProps): Promise
 
     return {
         typeHandle,
+        meta: d?.meta,
         entries: {
             banner,
             highlight,

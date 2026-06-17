@@ -4,6 +4,7 @@ import { FRAGMENT_PRODUCT_BASE } from '@/graphql/queries/indexes/fragments/Fragm
 import { FRAGMENT_PRODUCT_FILTERS } from '@/graphql/queries/indexes/fragments/FragmentProductFilters';
 import { FRAGMENT_PAGE_BASE } from '@/graphql/queries/indexes/fragments/FragmentPageBase';
 import { FRAGMENT_PRODUCT_MEDIA_BASE } from '@/graphql/queries/indexes/fragments/FragmentProductMediaBase';
+import { FRAGMENT_META } from '@/graphql/queries/common/FragmentMeta';
 
 export const PRODUCT_LISTING_INDEX_QUERY = gql`
     query ProductListingIndexQuery(
@@ -14,6 +15,10 @@ export const PRODUCT_LISTING_INDEX_QUERY = gql`
     ) {
         Pages(where: { uri: { equals: $uri } }) {
             docs {
+                meta {
+                    ...meta
+                }
+
                 ...pageBase
             }
         }
@@ -44,6 +49,7 @@ export const PRODUCT_LISTING_INDEX_QUERY = gql`
         }
     }
 
+    ${FRAGMENT_META}
     ${FRAGMENT_PAGE_BASE}
     ${FRAGMENT_PRODUCT_BASE}
     ${FRAGMENT_PRODUCT_FILTERS}
