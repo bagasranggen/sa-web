@@ -76,6 +76,7 @@ export const ProductDetailData = async ({
 
     return {
         typeHandle,
+        meta: d?.meta,
         entries: {
             banner,
             recommendation,
