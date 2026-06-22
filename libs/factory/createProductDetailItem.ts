@@ -23,6 +23,9 @@ export const createProductDetailItem = ({ item }: { item: Product }) => {
             item.summaries.forEach((item: NonNullable<Summaries>[number]) => {
                 const tmp: NonNullable<DetailProps['info']>[number]['list'] = [];
 
+                let title = undefined;
+                if (item?.title && typeof item.title !== 'number') title = item.title.title;
+
                 if (item && item?.details && item.details.length > 0) {
                     item.details.forEach((itm: NonNullable<NonNullable<Summaries>[number]['details']>[number]) => {
                         if (!itm?.value) return;
@@ -39,7 +42,7 @@ export const createProductDetailItem = ({ item }: { item: Product }) => {
                 if (tmp.length === 0 && !item?.title) return;
 
                 info.push({
-                    title: item.title,
+                    title,
                     list: tmp,
                 });
             });
