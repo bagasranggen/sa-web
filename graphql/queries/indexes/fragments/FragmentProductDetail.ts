@@ -3,7 +3,10 @@ import { gql } from '@apollo/client';
 export const FRAGMENT_PRODUCT_DETAIL = gql`
     fragment productDetail on Product {
         summaries {
-            title
+            title {
+                slug
+                title
+            }
 
             details {
                 label {
