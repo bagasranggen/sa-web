@@ -1,0 +1,10 @@
+@import 'tailwindcss';
+
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+@import './shadcn/shadcn.css';
+@import './reset/reset.css';
+@import './theme/theme.css';
+@import './layout/layout.css';
+@import './animation/animation.css';
+@import './component/component.css';

@@ -1,0 +1,54 @@
+@layer components {
+    .btn-container {
+        @apply flex flex-wrap;
+    }
+
+    .btn {
+        &.btn--disabled,
+        &[disabled] {
+            @apply opacity-50 pointer-events-none;
+            @apply relative;
+            @apply after:content-[''];
+            @apply after:w-full after:h-full;
+            @apply after:z-10 after:absolute after:top-0 after:left-0;
+            @apply after:pointer-events-auto after:cursor-wait;
+        }
+
+        &:not(.btn--block) {
+            @variant hover {
+                @apply md:transition-colors;
+                @apply md:text-sekar-primary;
+            }
+        }
+
+        &.btn--block {
+            @apply uppercase font-bold;
+            @apply tracking-[.35rem];
+            @apply border border-dark;
+            @apply md:transition-colors;
+
+            &:not(.btn--lg) {
+                @apply py-[0.6rem] px-[1.8rem];
+                @apply text-sm;
+            }
+
+            &.btn--light {
+                &:not([disabled]):not(.btn--disabled) {
+                    @variant hover {
+                        @apply bg-dark text-light;
+                    }
+                }
+
+                &.btn--active,
+                &[aria-expanded='true'] {
+                    @apply bg-dark text-light;
+                }
+            }
+
+            &.btn--lg {
+                @apply py-[0.8rem] px-2.5;
+                @apply text-[1.8rem];
+            }
+        }
+    }
+}

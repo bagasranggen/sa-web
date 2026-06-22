@@ -1,0 +1,100 @@
+import React from 'react';
+
+import { ArrayStringProps } from '@/libs/@types';
+import { joinArrayString } from '@/libs/utils';
+
+import Columns from '@/components/common/Columns';
+import Button, { BaseAnchorProps } from '@/components/common/Button';
+import Picture, { BaseProps } from '@/components/common/Picture';
+import Heading, { BaseProps as BaseHeadingProps } from '@/components/common/Heading';
+import Animation, { AnimationProps } from '@/components/common/Animation';
+
+export type ThumbnailItemProps = {
+    link: Pick<BaseAnchorProps, 'href' | 'target'>;
+    media: BaseProps['items'];
+    sizes?: BaseHeadingProps['children'];
+    colors?: string[];
+    badge?: string;
+    price?: BaseHeadingProps['children'];
+    children: BaseHeadingProps['children'];
+};
+
+export type ThumbnailProps = {
+    items: ThumbnailItemProps[];
+    animation?: Omit<AnimationProps, 'children'>;
+};
+
+const Thumbnail = ({ items, animation }: ThumbnailProps): React.ReactElement | null => {
+    if (!items || items.length === 0) return null;
+
+    let itemClass: ArrayStringProps = ['cards__item'];
+    if (animation) itemClass.push('block');
+    itemClass = joinArrayString(itemClass);
+
+    return (
+        <Columns
+            className="cards cards--thumbnail"
+            gutterX={0}
+            gutterY={4}>
+            {items.map((item, i) => {
+                if (!item?.link || !item?.link?.href) return null;
+
+                return (
+                    <Columns.Column
+                        key={i}
+                        md={3}>
+                        <Animation {...(animation as AnimationProps)}>
+                            <Button
+                                as="anchor"
+                                className={itemClass}
+                                {...item.link}>
+                                <Picture items={item.media} />
+
+                                {item?.badge && <div className="cards__badge">{item.badge}</div>}
+
+                                {item?.colors && item.colors.length > 0 && (
+                                    <div className="cards__colors">
+                                        {item.colors.map((color, idx) => (
+                                            <div
+                                                key={idx}
+                                                style={{ '--thumbnail-color': color } as React.CSSProperties}
+                                                className="cards__color"
+                                            />
+                                        ))}
+                                    </div>
+                                )}
+
+                                {item?.sizes && (
+                                    <Heading
+                                        as="h5"
+                                        className="cards__sizes">
+                                        Size: {item.sizes}
+                                    </Heading>
+                                )}
+
+                                <div className="mt-1">
+                                    <Heading
+                                        as="h3"
+                                        family="aboreto"
+                                        className="text-lg">
+                                        {item.children}
+                                    </Heading>
+
+                                    {item?.price && (
+                                        <Heading
+                                            as="h4"
+                                            className="cards__price">
+                                            {item.price}
+                                        </Heading>
+                                    )}
+                                </div>
+                            </Button>
+                        </Animation>
+                    </Columns.Column>
+                );
+            })}
+        </Columns>
+    );
+};
+
+export default Thumbnail;

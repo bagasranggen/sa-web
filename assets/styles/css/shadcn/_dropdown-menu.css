@@ -1,0 +1,36 @@
+@layer components {
+    [data-radix-popper-content-wrapper] {
+        @apply z-1040!;
+    }
+
+    .dropdown__content {
+        @apply bg-background text-foreground;
+        @apply data-[state=open]:animate-in data-[state=closed]:animate-out;
+        @apply data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0;
+        @apply data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95;
+        @apply data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2;
+        @apply z-50;
+        @apply max-h-(--radix-dropdown-menu-content-available-height) min-w-8;
+        @apply origin-(--radix-dropdown-menu-content-transform-origin);
+        @apply overflow-x-hidden overflow-y-auto;
+        /*@apply rounded-md ;*/
+        /*@apply p-1;*/
+        @apply border  shadow-md;
+    }
+
+    .dropdown__item {
+        @apply focus:bg-accent focus:text-accent-foreground;
+        @apply data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 dark:data-[variant=destructive]:focus:bg-destructive/20 data-[variant=destructive]:focus:text-destructive data-[variant=destructive]:*:[svg]:!text-destructive;
+        @apply data-[disabled]:pointer-events-none data-[disabled]:opacity-50;
+        @apply data-[inset]:pl-8;
+        @apply [&_svg:not([class*='text-'])]:text-muted-foreground;
+        @apply [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4;
+        @apply relative;
+        @apply flex items-center gap-2;
+        @apply cursor-default;
+        @apply px-2 py-1.5;
+        /*@apply rounded-sm;*/
+        @apply text-md;
+        @apply outline-hidden select-none;
+    }
+}

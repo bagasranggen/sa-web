@@ -1,0 +1,47 @@
+@layer components {
+    .nav {
+        @apply sticky top-0 z-1040;
+        @apply bg-light;
+        @apply transition-transform;
+        @apply [&.nav--hide]:-translate-y-full;
+
+        .nav__container {
+            @apply py-2;
+            @apply flex items-center justify-between;
+        }
+
+        .nav__links {
+            @apply hidden lg:flex flex-wrap lg:justify-end;
+            @apply lg:ms-auto;
+            @apply lg:gap-x-2 xl:gap-x-3;
+            @apply gap-y-0.5;
+        }
+
+        .nav__link {
+            @apply uppercase font-bold lg:text-md xl:text-lg tracking-[.25rem];
+        }
+
+        .nav__search {
+            @apply ms-2;
+            @apply lg:mb-[0.25rem];
+            @apply max-lg:ms-auto;
+            @apply max-lg:me-2;
+
+            svg {
+                @apply w-2 h-2;
+            }
+        }
+    }
+
+    .dropdown__content {
+        .nav__link {
+            @apply uppercase font-bold text-md tracking-[.25rem];
+        }
+    }
+
+    .drawer__content {
+        .nav__link {
+            @apply uppercase font-bold text-lg tracking-[.25rem];
+        }
+    }
+}

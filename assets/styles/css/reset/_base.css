@@ -1,0 +1,19 @@
+@layer base {
+    body,
+    #storybook-root > main {
+        @apply antialiased bg-light text-dark text-base font-space-grotesk;
+    }
+
+    p:not(:last-child) {
+        @apply mb-2.5;
+    }
+
+    a,
+    button {
+        @apply cursor-pointer;
+    }
+
+    button {
+        @apply focus-visible:outline-0;
+    }
+}

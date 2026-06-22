@@ -1,0 +1,74 @@
+.cards {
+    &.cards--highlight {
+        .cards__item {
+            &.cards__item--even {
+                @apply flex-row-reverse;
+            }
+        }
+
+        .cards__content {
+            @apply flex flex-col justify-between;
+            @apply min-h-[calc(100%-10rem)];
+            @apply bg-sekar-accent;
+            @apply pt-1.5 pb-2 px-2;
+        }
+
+        .cards__description {
+            @apply text-dark!;
+            @apply line-clamp-3 sm:line-clamp-5 xl:line-clamp-8;
+        }
+    }
+
+    &.cards--media {
+        @apply justify-center;
+
+        .cards__item {
+            @apply block relative  overflow-hidden;
+        }
+
+        .cards__media {
+            @apply md:transition-transform group-hover:scale-110;
+        }
+
+        .cards__label {
+            @apply absolute top-0 right-0;
+            @apply bg-sekar-accent px-1.5 py-0.5;
+            @apply [writing-mode:sideways-lr];
+        }
+
+        .cards__heading {
+            @apply text-[2rem] text-dark!;
+        }
+    }
+
+    &.cards--thumbnail {
+        .cards__item {
+            @apply relative;
+        }
+
+        .cards__badge {
+            @apply absolute top-1 right-1;
+            @apply bg-sekar-accent px-1 py-0.5;
+            @apply max-w-[calc(80%-2rem)];
+            @apply uppercase font-bold tracking-0.2 text-sm;
+        }
+
+        .cards__sizes {
+            @apply mt-0.25;
+            @apply uppercase font-bold tracking-0.2 text-[1rem];
+        }
+
+        .cards__colors {
+            @apply flex flex-wrap gap-x-0.5 mt-1;
+        }
+
+        .cards__color {
+            @apply h-1 w-1 border;
+            @apply bg-(--thumbnail-color);
+        }
+
+        .cards__price {
+            @apply text-[1.4rem] uppercase font-bold text-dark! tracking-[.2rem] mt-0.5;
+        }
+    }
+}

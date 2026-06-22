@@ -1,0 +1,45 @@
+@theme {
+    --animate-dots-loader: dots-loader 1s infinite linear;
+
+    @keyframes dots-loader {
+        20% {
+            background-position:
+                0% 0%,
+                50% 50%,
+                100% 50%;
+        }
+        40% {
+            background-position:
+                0% 100%,
+                50% 0%,
+                100% 50%;
+        }
+        60% {
+            background-position:
+                0% 50%,
+                50% 100%,
+                100% 0%;
+        }
+        80% {
+            background-position:
+                0% 50%,
+                50% 50%,
+                100% 100%;
+        }
+    }
+}
+
+@layer components {
+    .loader {
+        @apply w-6 aspect-[2];
+        @apply animate-dots-loader;
+
+        --bg-loader: no-repeat radial-gradient(circle closest-side, var(--color-sekar-primary) 90%, #0000);
+
+        background:
+            var(--bg-loader) 0% 50%,
+            var(--bg-loader) 50% 50%,
+            var(--bg-loader) 100% 50%;
+        background-size: calc(100% / 3) 50%;
+    }
+}

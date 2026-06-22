@@ -1,0 +1,12 @@
+.heading {
+    &.heading--page {
+        @apply font-aboreto;
+        @apply text-[3rem] md:text-[4.5rem];
+        @apply leading-3.5 md:leading-5;
+    }
+
+    &.heading--section {
+        @apply font-aboreto;
+        @apply text-[4rem];
+    }
+}

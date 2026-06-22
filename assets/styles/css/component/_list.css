@@ -1,0 +1,22 @@
+@utility list-inline-spacing-* {
+    --list-inline-spacing: --spacing(--value(integer));
+}
+
+@layer components {
+    .list {
+        &.list--inline {
+            @apply flex flex-wrap;
+
+            .list__item {
+                &:not(:last-child) {
+                    margin-right: var(--list-inline-spacing, 1rem);
+
+                    &:after {
+                        content: '|';
+                        margin-left: var(--list-inline-spacing, 1rem);
+                    }
+                }
+            }
+        }
+    }
+}
