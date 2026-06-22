@@ -1,5 +1,5 @@
-import { PageDataParamsProps, PageDataProps, Product } from '@/libs/@types';
-import { shuffleObjectArray } from '@/libs/utils';
+import { ArrayStringProps, PageDataParamsProps, PageDataProps, Product } from '@/libs/@types';
+import { joinArrayString, shuffleObjectArray, sortLexicoArrayObject } from '@/libs/utils';
 import { createProductDetailItem, createProductItem } from '@/libs/factory';
 
 import { apolloClient } from '@/libs/fetchers';
@@ -23,10 +23,23 @@ export const ProductDetailData = async ({
     if (d?.title) {
         const detail = createProductDetailItem({ item: d });
 
+        const sizes = sortLexicoArrayObject({ items: d?.sizes ? [...d.sizes] : [], key: '_order' }) as Product['sizes'];
+        let sizeFit: ArrayStringProps = [];
+        if (sizes && sizes.length > 0) {
+            sizes.forEach((item, i: number, arr) => {
+                if (typeof item === 'number') return;
+                if (!Array.isArray(sizeFit)) return;
+
+                if (item.title && (i === 0 || i === arr.length - 1)) sizeFit.push(item.title);
+            });
+        }
+        sizeFit = joinArrayString(sizeFit, ' - ');
+
         banner = Object.assign(banner ?? {}, {
             info: detail?.info,
             carousel: detail?.carousel,
             price: detail?.price,
+            sizeFit: sizeFit ?? undefined,
             calendar: detail?.calendar,
             sizeGuides: detail?.sizeGuides,
             button: {
@@ -63,6 +76,7 @@ export const ProductDetailData = async ({
 
     return {
         typeHandle,
+        meta: d?.meta,
         entries: {
             banner,
             recommendation,

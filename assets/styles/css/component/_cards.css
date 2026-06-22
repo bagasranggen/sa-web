@@ -53,6 +53,11 @@
             @apply uppercase font-bold tracking-0.2 text-sm;
         }
 
+        .cards__sizes {
+            @apply mt-0.25;
+            @apply uppercase font-bold tracking-0.2 text-[1rem];
+        }
+
         .cards__colors {
             @apply flex flex-wrap gap-x-0.5 mt-1;
         }

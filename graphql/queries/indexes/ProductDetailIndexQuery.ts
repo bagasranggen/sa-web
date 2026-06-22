@@ -7,11 +7,16 @@ import { FRAGMENT_PRODUCT_DETAIL } from '@/graphql/queries/indexes/fragments/Fra
 import { FRAGMENT_PRODUCT_MEDIA_BASE } from '@/graphql/queries/indexes/fragments/FragmentProductMediaBase';
 import { FRAGMENT_PRODUCT_MEDIA_DETAIL } from '@/graphql/queries/indexes/fragments/FragmentProductMediaDetail';
 import { FRAGMENT_PRODUCT_DESCRIPTION } from '@/graphql/queries/indexes/fragments/FragmentProductDescription';
+import { FRAGMENT_META } from '@/graphql/queries/common/FragmentMeta';
 
 export const PRODUCT_DETAIL_INDEX_QUERY = gql`
     query ProductDetailIndexQuery($uri: String) {
         Products(where: { uri: { equals: $uri } }) {
             docs {
+                meta {
+                    ...meta
+                }
+
                 ...productBase
                 ...productDescription
                 ...productFilters
@@ -23,6 +28,7 @@ export const PRODUCT_DETAIL_INDEX_QUERY = gql`
         }
     }
 
+    ${FRAGMENT_META}
     ${FRAGMENT_PRODUCT_BASE}
     ${FRAGMENT_PRODUCT_DESCRIPTION}
     ${FRAGMENT_PRODUCT_FILTERS}

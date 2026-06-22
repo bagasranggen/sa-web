@@ -4,11 +4,21 @@ import { FRAGMENT_PRODUCT_BASE } from '@/graphql/queries/indexes/fragments/Fragm
 import { FRAGMENT_PRODUCT_FILTERS } from '@/graphql/queries/indexes/fragments/FragmentProductFilters';
 import { FRAGMENT_PAGE_BASE } from '@/graphql/queries/indexes/fragments/FragmentPageBase';
 import { FRAGMENT_PRODUCT_MEDIA_BASE } from '@/graphql/queries/indexes/fragments/FragmentProductMediaBase';
+import { FRAGMENT_META } from '@/graphql/queries/common/FragmentMeta';
 
 export const PRODUCT_LISTING_INDEX_QUERY = gql`
-    query ProductListingIndexQuery($uri: String, $typeHandle: [Page_typeHandle_Input], $categoryId: JSON, $limit: Int) {
+    query ProductListingIndexQuery(
+        $uri: String
+        $typeHandle: [Page_typeHandle_Input]
+        $categoryId: [JSON]
+        $limit: Int
+    ) {
         Pages(where: { uri: { equals: $uri } }) {
             docs {
+                meta {
+                    ...meta
+                }
+
                 ...pageBase
             }
         }
@@ -22,7 +32,7 @@ export const PRODUCT_LISTING_INDEX_QUERY = gql`
             }
         }
 
-        Products(limit: $limit, where: { category: { equals: $categoryId } }) {
+        Products(limit: $limit, where: { category: { in: $categoryId } }) {
             docs {
                 ...productBase
                 ...productFilters
@@ -32,13 +42,14 @@ export const PRODUCT_LISTING_INDEX_QUERY = gql`
             loadMore: hasNextPage
         }
 
-        ProductsFilters: Products(where: { category: { equals: $categoryId } }) {
+        ProductsFilters: Products(where: { category: { in: $categoryId } }) {
             docs {
                 ...productFilters
             }
         }
     }
 
+    ${FRAGMENT_META}
     ${FRAGMENT_PAGE_BASE}
     ${FRAGMENT_PRODUCT_BASE}
     ${FRAGMENT_PRODUCT_FILTERS}

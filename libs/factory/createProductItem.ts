@@ -1,7 +1,9 @@
-import { Product } from '@/libs/@types';
+import { ArrayStringProps, Product } from '@/libs/@types';
 import { createProductPrice } from '@/libs/factory/createProductPrice';
 import { createPictureItem } from '@/libs/factory/createPictureItem';
 import { checkMediaStatus } from '@/libs/utils/checkMediaStatus';
+import { joinArrayString } from '@/libs/utils/joinArrayString';
+import { sortLexicoArrayObject } from '@/libs/utils/sortLexicoArrayObject';
 
 import { ThumbnailItemProps } from '@/components/common/Cards';
 
@@ -15,7 +17,6 @@ export type CreateProductItemProps = {
 };
 
 export const createProductItem = ({
-    index,
     item,
     colorsFn,
     withColors = true,
@@ -64,17 +65,23 @@ export const createProductItem = ({
         });
     }
 
-    // if (media.length === 0) {
-    //     media.push(
-    //         ...[
-    //             createPicsumImage({ id: 151 + 1, width: 600, height: 800, media: 768 }),
-    //             createPicsumImage({ id: 151 + 1, width: 600, height: 450 }),
-    //         ]
-    //     );
-    // }
-
     let badge: ThumbnailItemProps['badge'] = undefined;
     if (item?.tag && typeof item?.tag !== 'number') badge = item.tag.title;
+
+    const sizesSorted = sortLexicoArrayObject({
+        items: item?.sizes ? [...item.sizes] : [],
+        key: '_order',
+    }) as Product['sizes'];
+    let sizes: ArrayStringProps = [];
+    if (sizesSorted && sizesSorted.length > 0) {
+        sizesSorted.forEach((item, i: number, arr) => {
+            if (typeof item === 'number') return;
+            if (!Array.isArray(sizes)) return;
+
+            if (item?.slug && (i === 0 || i === arr.length - 1)) sizes.push(item.slug);
+        });
+    }
+    sizes = joinArrayString(sizes, ' - ');
 
     return {
         slug: item?.slug,
@@ -82,6 +89,7 @@ export const createProductItem = ({
         media,
         colors,
         badge,
+        sizes,
         price: createProductPrice(item?.prices?.[0]),
         children: item.title,
     };

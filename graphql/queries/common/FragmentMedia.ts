@@ -6,22 +6,22 @@ export type FragmentMediaProps = {
     sizesHandles?: string[];
 };
 
-export const FRAGMENT_MEDIA = (props?: FragmentMediaProps) => {
-    const base = `
-        url
-        filename
-        width
-        height
-        mimeType
-    `;
+export const BASE_FRAGMENT_MEDIA = `
+    url
+    filename
+    width
+    height
+    mimeType
+`;
 
+export const FRAGMENT_MEDIA = (props?: FragmentMediaProps) => {
     let sizes = '';
     if (props?.sizesHandles && props.sizesHandles.length > 0) {
         props.sizesHandles.forEach((handle) => {
             sizes += ' ';
             sizes += `
                 ${handle} {
-                    ${base}
+                    ${BASE_FRAGMENT_MEDIA}
                 }
             `;
         });
@@ -36,7 +36,7 @@ export const FRAGMENT_MEDIA = (props?: FragmentMediaProps) => {
     return gql`
         ${`
             fragment ${fragmentName} on ${assetVolume} {
-                ${base}
+                ${BASE_FRAGMENT_MEDIA}
                 alt
                 
                 ${sizes ? `sizes {${sizes}}` : ''}
