@@ -13,7 +13,7 @@ export const getEnv = () => {
         prerenderLimitPages = parseInt(PRERENDER_LIMIT_PAGES);
     }
 
-    let prerenderLimitProducts: undefined | number = undefined;
+    let prerenderLimitProducts: undefined | number = -1;
     if (PRERENDER_LIMIT_PRODUCTS && checkStringIsNumber(PRERENDER_LIMIT_PRODUCTS)) {
         prerenderLimitProducts = parseInt(PRERENDER_LIMIT_PRODUCTS);
     }
