@@ -11,11 +11,8 @@ import { NavigationEvents, useCheckSamePath } from '@/libs/hooks';
 import { useMeasure, useWindowScroll, useWindowSize } from 'react-use';
 import { Search } from 'lucide-react';
 
-import LogoText from '@/assets/images/logo-sekar-text.png';
-
 import Container from '@/components/common/Container';
 import Button from '@/components/common/Button';
-import Picture, { BaseItemProps } from '@/components/common/Picture';
 import Icon from '@/components/common/Icon';
 import HeaderModal from '@/components/layout/Header/HeaderModal';
 import HeaderLink, { HeaderLinkProps } from '@/components/layout/Header/HeaderLink';
@@ -102,11 +99,7 @@ const Header = ({ items }: HeaderProps): React.ReactElement => {
                     <Button
                         as="anchor"
                         href="/">
-                        <Picture
-                            imageClassName="max-w-[18rem]"
-                            items={[LogoText as BaseItemProps]}
-                            loading="eager"
-                        />
+                        <Icon.Sekar className="max-w-2xs h-auto" />
                     </Button>
 
                     {items && items.length > 0 && (
