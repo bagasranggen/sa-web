@@ -3,6 +3,7 @@
 import React, { Suspense, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
+import { ORDER_CONTACT_MESSAGE } from '@/libs/constants';
 import { submitOrderForm } from '@/libs/actions';
 import { sendWhatsappMessage, updateSearchParams } from '@/libs/utils';
 import { ParamsEvents } from '@/libs/hooks';
@@ -93,7 +94,10 @@ const OrderIndex = ({ entries }: OrderIndexProps): React.ReactElement => {
                                         router.push(updateSearchParams({ set: [{ key: 'status', value: 'success' }] }));
                                         setIsProcessing(false);
                                         sendWhatsappMessage({
-                                            message: 'test',
+                                            message: ORDER_CONTACT_MESSAGE({
+                                                name: data?.collectionLabel ?? '',
+                                                date: data?.date ?? '',
+                                            }),
                                             target: '_blank',
                                         });
                                     }
