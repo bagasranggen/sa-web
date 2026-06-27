@@ -97,6 +97,7 @@ const OrderIndex = ({ entries }: OrderIndexProps): React.ReactElement => {
                                             message: ORDER_CONTACT_MESSAGE({
                                                 name: data?.collectionLabel ?? '',
                                                 date: data?.date ?? '',
+                                                id: data?.productId ?? '',
                                             }),
                                             target: '_blank',
                                         });
