@@ -16,6 +16,7 @@ import Columns from '@/components/common/Columns';
 
 export const ORDER_FORM_HANDLE = {
     NAME: 'name',
+    PRODUCT_ID: 'productId',
     INSTAGRAM: 'instagram',
     CONTACT: 'contact',
     COLLECTION: 'collection',
@@ -28,6 +29,7 @@ export const ORDER_FORM_HANDLE = {
 
 export type OrderFormFields = {
     [ORDER_FORM_HANDLE.NAME]: string;
+    [ORDER_FORM_HANDLE.PRODUCT_ID]: string;
     [ORDER_FORM_HANDLE.INSTAGRAM]: string;
     [ORDER_FORM_HANDLE.CONTACT]: string;
     [ORDER_FORM_HANDLE.COLLECTION]: string;
@@ -42,7 +44,7 @@ export type OrderProductItemProps = Pick<Product, 'title' | 'slug'> &
     Pick<NonNullable<BaseInputDayPickerProps['calendar']>, 'disabled'>;
 
 export type OrderProps = {
-    products?: OrderProductItemProps[];
+    products?: (OrderProductItemProps & Partial<Pick<Product, 'productId'>>)[];
     collection?: BaseInputSelectProps['items'];
     pickupAddress?: {
         title?: React.ReactNode;
@@ -74,6 +76,7 @@ const Order = ({ products, collection, onFormSubmit, pickupAddress, submitButton
 
             if (find) {
                 setValue(ORDER_FORM_HANDLE.COLLECTION_LABEL, find.title);
+                if (find?.productId) setValue(ORDER_FORM_HANDLE.PRODUCT_ID, find.productId);
 
                 data = find;
             }
@@ -180,6 +183,16 @@ const Order = ({ products, collection, onFormSubmit, pickupAddress, submitButton
                                 hook={{
                                     register,
                                     name: ORDER_FORM_HANDLE.COLLECTION_LABEL,
+                                }}
+                            />
+                            <Input.Label
+                                type="text"
+                                id={ORDER_FORM_HANDLE.PRODUCT_ID}
+                                label="Product ID"
+                                hidden
+                                hook={{
+                                    register,
+                                    name: ORDER_FORM_HANDLE.PRODUCT_ID,
                                 }}
                             />
                         </Columns.Column>

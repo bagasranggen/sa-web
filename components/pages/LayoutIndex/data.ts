@@ -1,3 +1,4 @@
+import { GENERAL_CONTACT_MESSAGE } from '@/libs/constants';
 import { Footer, Global, Navigation } from '@/libs/@types';
 import { createLinkItem, createMessageText, createWhatsappMessage } from '@/libs/factory';
 import { getEnv } from '@/libs/utils';
@@ -104,7 +105,7 @@ export const LayoutData = async () => {
         floatButton: {
             href: createWhatsappMessage({
                 number: contactPerson,
-                message: createMessageText({ message: 'test test' }),
+                message: createMessageText({ message: GENERAL_CONTACT_MESSAGE }),
             }),
             target: '_blank',
         },

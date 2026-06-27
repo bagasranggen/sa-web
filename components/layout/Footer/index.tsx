@@ -5,12 +5,10 @@ import { joinArrayString } from '@/libs/utils';
 
 import { MapPin } from 'lucide-react';
 
-import Logo from '@/assets/images/logo-sekar.png';
-
 import Columns from '@/components/common/Columns';
-import Picture, { BaseItemProps } from '@/components/common/Picture';
 import Button, { BaseAnchorProps } from '@/components/common/Button';
 import Container from '@/components/common/Container';
+import Icon from '@/components/common/Icon';
 import FooterSub, { FooterSubProps } from '@/components/layout/Footer/FooterSub';
 import FooterFloat, { FooterFloatProps } from '@/components/layout/Footer/FooterFloat';
 
@@ -26,8 +24,8 @@ export type FooterProps = {
 const Footer = ({ location, generalInfo, socials, floatButton }: FooterProps): React.ReactElement => {
     const hasContent = location || generalInfo || socials;
 
-    let logoClass: ArrayStringProps = ['text-center'];
-    if (hasContent) logoClass.push('mt-5');
+    let logoClass: ArrayStringProps = [];
+    if (hasContent) logoClass.push('mt-7');
     logoClass = joinArrayString(logoClass);
 
     return (
@@ -97,11 +95,7 @@ const Footer = ({ location, generalInfo, socials, floatButton }: FooterProps): R
                     )}
 
                     <div className={logoClass}>
-                        <Picture
-                            className="inline-block"
-                            imageClassName="max-w-[18rem]"
-                            items={[Logo as BaseItemProps]}
-                        />
+                        <Icon.Sekar className="max-w-2xs h-auto mx-auto" />
                     </div>
                 </Container>
             </footer>
