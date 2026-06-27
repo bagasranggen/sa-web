@@ -6,6 +6,7 @@ export const FRAGMENT_PRODUCT_BASE = gql`
         uri
         title
         slug
+        productId
 
         tag {
             title

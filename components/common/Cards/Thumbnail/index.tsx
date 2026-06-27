@@ -39,6 +39,10 @@ const Thumbnail = ({ items, animation }: ThumbnailProps): React.ReactElement | n
             {items.map((item, i) => {
                 if (!item?.link || !item?.link?.href) return null;
 
+                let sizesClass: ArrayStringProps = ['cards__sizes'];
+                if (!item?.colors || item.colors.length === 0) sizesClass.push('mt-1!');
+                sizesClass = joinArrayString(sizesClass);
+
                 return (
                     <Columns.Column
                         key={i}
@@ -67,7 +71,7 @@ const Thumbnail = ({ items, animation }: ThumbnailProps): React.ReactElement | n
                                 {item?.sizes && (
                                     <Heading
                                         as="h5"
-                                        className="cards__sizes">
+                                        className={sizesClass}>
                                         Size: {item.sizes}
                                     </Heading>
                                 )}

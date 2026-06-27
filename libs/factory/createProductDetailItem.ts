@@ -5,11 +5,14 @@ import { createPictureItem } from '@/libs/factory/createPictureItem';
 import { DetailProps } from '@/components/common/Banner';
 
 export const createProductDetailItem = ({ item }: { item: Product }) => {
-    let data: (Partial<DetailProps> & Partial<Pick<Product, 'slug'>>) | undefined = undefined;
+    let data:
+        | (Partial<DetailProps> & Partial<Pick<Product, 'slug'> & Partial<Pick<Product, 'productId'>>>)
+        | undefined = undefined;
 
     if (item && item?.title) {
         if (item?.title) data = Object.assign(data ?? {}, { children: item.title });
         if (item?.slug) data = Object.assign(data ?? {}, { slug: item.slug });
+        if (item?.productId) data = Object.assign(data ?? {}, { productId: item.productId });
 
         const info: DetailProps['info'] = [];
 

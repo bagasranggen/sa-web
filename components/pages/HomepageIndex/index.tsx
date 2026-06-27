@@ -22,7 +22,7 @@ const HomepageIndex = ({ entries }: HomepageIndexProps): React.ReactElement => {
         <>
             {entries?.banner && (
                 <Banner.Homepage
-                    className="mt-3 md:mt-8"
+                    className="mt-3 md:mt-8 mb-10 md:mb-15"
                     animation={{ id: 'fadeBanner' }}
                     {...entries.banner}
                 />
@@ -34,7 +34,7 @@ const HomepageIndex = ({ entries }: HomepageIndexProps): React.ReactElement => {
                     config={{ delay: 'fadeBanner' }}>
                     <Container
                         as="section"
-                        className="mt-10 md:mt-15">
+                        className="mt-10 md:mt-15 mb-10 md:mb-15">
                         <Cards.Highlight
                             className="*:not-first:mt-3 md:*:not-first:mt-8"
                             items={entries.highlight}

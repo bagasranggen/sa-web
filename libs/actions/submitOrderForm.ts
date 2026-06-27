@@ -9,6 +9,7 @@ const GOOGLE_APP_URL = process.env.GAS_URL as string;
 export const submitOrderForm = async (data: OrderFormFields) => {
     let submitData = {
         name: data?.name,
+        productId: data?.productId,
         instagram: data?.instagram,
         instagramLink: data?.instagram ? `https://www.instagram.com/${data.instagram.replace('@', '')}/` : '',
         contact: data?.contact,

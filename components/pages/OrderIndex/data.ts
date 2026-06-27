@@ -32,6 +32,7 @@ export const OrderData = async ({ typeHandle, uri }: PageDataParamsProps): Promi
                     title: detail.children as string,
                     slug: detail?.slug,
                     disabled: detail?.calendar?.disabled,
+                    productId: detail?.productId || '',
                 });
 
                 collection.push({
